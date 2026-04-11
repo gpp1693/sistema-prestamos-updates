@@ -1,5 +1,5 @@
 {
-    "version": "5.0.3",
+    "version": "5.0.2",
     "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.0.2/Instalar_SistemaPrestamos_v5.exe",
     "notas": "- Corrección de cambio de contraseña\n- Recordatorios por WhatsApp a clientes atrasados\n- Sistema de captura y reporte de errores\n- Versión Demo actualizada"
 }
