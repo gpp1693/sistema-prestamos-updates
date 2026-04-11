@@ -1,5 +1,5 @@
 {
-    "version": "5.0.2",
-    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.0.2/Instalar_SistemaPrestamos_v5.exe",
-    "notas": "- Corrección de cambio de contraseña\n- Recordatorios por WhatsApp a clientes atrasados\n- Sistema de captura y reporte de errores\n- Versión Demo actualizada"
+    "version": "5.1.0",
+    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.1.0/Instalar_CapitalPro_v5.1.exe",
+    "notas": "- Nombre cambiado a CapitalPro\n- Icono profesional\n- Recuperacion de contrasena por email\n- Email agregado a usuarios"
 }
