@@ -1,5 +1,5 @@
 {
-    "version": "5.2.0",
-    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.2.0/Instalar_CapitalPro_v5.1.exe",
-    "notas": "- Sistema de Rutas/Zonas\n- Renovacion de prestamos\n- Mora automatica por atraso\n- Diseno iOS Dark Mode\n- Nuevo Prestamo rediseñado\n- Reportes mejorados\n- Hover en botones"
+    "version": "5.2.1",
+    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.2.1/Instalar_CapitalPro_v5.1.exe",
+    "notas": "- Base de datos movida a AppData\n- Datos seguros en actualizaciones\n- Correccion ventana cliente\n- Reportes mejorados"
 }
