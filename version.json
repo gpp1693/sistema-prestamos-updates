@@ -1,5 +1,5 @@
 {
-    "version": "5.3.6",
-    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.3.6/Instalar_CapitalPro_v5.3.6.exe",
-    "notas": "- Correccion error Python DLL al actualizar\n- Instalador con permisos de administrador\n- Correccion guardar prestamo Solo Interes\n- Capital y Ganancias auto-refresh\n- Fecha formato DD/MM/AAAA"
+    "version": "5.3.8",
+    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.3.8/Instalar_CapitalPro_v5.3.8.exe",
+    "notas": "- Correccion formato de fecha DD/MM/AAAA\n- Correccion registro de pago Solo Interes\n- Capital y Ganancias auto-refresh\n- Instalador mejorado"
 }
