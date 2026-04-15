@@ -1,5 +1,5 @@
 {
-    "version": "5.3.8",
-    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.3.8/Instalar_CapitalPro_v5.3.8.exe",
-    "notas": "- Correccion formato de fecha DD/MM/AAAA\n- Correccion registro de pago Solo Interes\n- Capital y Ganancias auto-refresh\n- Instalador mejorado"
+    "version": "5.3.9",
+    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.3.9/Instalar_CapitalPro_v5.3.9.exe",
+    "notas": "- Columnas de prestamos correctamente alineadas"
 }
