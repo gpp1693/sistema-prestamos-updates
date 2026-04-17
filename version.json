@@ -1,5 +1,5 @@
 {
-    "version": "5.3.9",
-    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.3.9/Instalar_CapitalPro_v5.3.9.exe",
-    "notas": "- Columnas de prestamos correctamente alineadas"
+    "version": "5.4.2",
+    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.4.2/Instalar_CapitalPro_v5.4.2.exe",
+    "notas": "- Colores en prestamos: amarillo=atraso, rojo=mora\n- Editar frecuencia y tipo de prestamo\n- WhatsApp solo muestra monto total\n- Fecha DD/MM/AAAA en todas las secciones"
 }
