@@ -1,5 +1,5 @@
 {
-    "version": "5.5.0",
-    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.0/Instalar_CapitalPro_v5.5.0.exe",
-    "notas": "- Notificacion cuotas de hoy\n- Imprimir listado clientes PDF\n- Importar clientes desde Excel\n- Reporte financiero por ruta\n- Correcciones generales"
+    "version": "5.5.1",
+    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.1/Instalar_CapitalPro_v5.5.1.exe",
+    "notas": "- Telemetria de uso via Gmail\n- Notificacion cuotas de hoy\n- Imprimir listado clientes PDF\n- Importar clientes desde Excel\n- Reporte financiero por ruta"
 }
