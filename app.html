@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CapitalPro</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#1C1C1E;color:#F2F2F7;font-family:-apple-system,sans-serif;max-width:480px;margin:0 auto;min-height:100vh}
+.screen{display:none;flex-direction:column;min-height:100vh}
+.screen.active{display:flex}
+.topbar{background:#2C2C2E;padding:16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #3A3A3C}
+.topbar h1{font-size:18px;font-weight:700}
+.content{flex:1;padding:16px;overflow-y:auto}
+.card{background:#2C2C2E;border-radius:12px;padding:14px;margin-bottom:12px}
+.card-label{color:#8E8E93;font-size:11px;margin-bottom:4px}
+.card-val{font-size:20px;font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.green{color:#30D158}.blue{color:#0A84FF}.orange{color:#FF9F0A}.red{color:#FF453A}.white{color:#F2F2F7}
+.item{background:#2C2C2E;border-radius:12px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.item:active{background:#3A3A3C}
+.item-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.item-sub{color:#8E8E93;font-size:11px}
+.badge{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700}
+.badge-green{background:rgba(48,209,88,.15);color:#30D158}
+.badge-yellow{background:rgba(255,159,10,.15);color:#FF9F0A}
+.badge-red{background:rgba(255,69,58,.15);color:#FF453A}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:10px}
+.btn-blue{background:#0A84FF;color:white}
+.btn-green{background:#30D158;color:white}
+.btn-gray{background:#3A3A3C;color:#F2F2F7}
+.field{width:100%;background:#2C2C2E;border:1px solid #3A3A3C;border-radius:10px;padding:12px;color:#F2F2F7;font-size:16px;margin-bottom:12px}
+.field:focus{border-color:#0A84FF;outline:none}
+label{color:#8E8E93;font-size:12px;font-weight:600;display:block;margin-bottom:6px;text-transform:uppercase}
+.section-title{color:#8E8E93;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.bottomnav{background:#2C2C2E;border-top:1px solid #3A3A3C;display:flex;justify-content:space-around;padding:10px 0 20px}
+.navitem{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 12px}
+.navitem span{font-size:20px}
+.navitem p{font-size:9px;color:#8E8E93}
+.navitem.active p{color:#0A84FF}
+.info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #3A3A3C}
+.info-label{color:#8E8E93;font-size:13px}
+.info-val{font-size:13px;font-weight:600}
+.logo{text-align:center;padding:40px 20px 20px}
+.logo-icon{width:72px;height:72px;background:#0A84FF;border-radius:18px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:32px}
+.logo h2{font-size:26px;font-weight:800}
+.logo p{color:#8E8E93;font-size:13px;margin-top:4px}
+.error{background:rgba(255,69,58,.15);color:#FF453A;padding:10px;border-radius:8px;font-size:13px;margin-bottom:12px;display:none}
+</style>
+</head>
+<body>
+<div id="loginScreen" class="screen active">
+  <div class="logo">
+    <div class="logo-icon">💳</div>
+    <h2>CapitalPro</h2>
+    <p>Financial System</p>
+  </div>
+  <div class="content">
+    <div id="loginError" class="error"></div>
+    <label>Usuario</label>
+    <input id="usuario" class="field" type="text" placeholder="admin">
+    <label>Contraseña</label>
+    <input id="password" class="field" type="password" placeholder="••••••••">
+    <button class="btn btn-blue" onclick="doLogin()">Iniciar Sesión →</button>
+  </div>
+</div>
+<div id="dashScreen" class="screen">
+  <div class="topbar">
+    <div><h1>CapitalPro</h1><span id="userLabel" style="color:#8E8E93;font-size:13px">Hola</span></div>
+    <span onclick="logout()" style="cursor:pointer;color:#FF453A;font-size:14px">Salir</span>
+  </div>
+  <div class="content" id="dashContent"></div>
+  <div class="bottomnav">
+    <div class="navitem active" onclick="showDash()"><span>🏠</span><p>Inicio</p></div>
+    <div class="navitem" onclick="showClientes()"><span>👥</span><p>Clientes</p></div>
+    <div class="navitem" onclick="showRuta()"><span>🗺️</span><p>Mi Ruta</p></div>
+    <div class="navitem" onclick="showPrestamos()"><span>💳</span><p>Préstamos</p></div>
+  </div>
+</div>
+<div id="clientesScreen" class="screen">
+  <div class="topbar"><h1>👥 Clientes</h1></div>
+  <div class="content" id="clientesContent"></div>
+  <div class="bottomnav">
+    <div class="navitem" onclick="showDash()"><span>🏠</span><p>Inicio</p></div>
+    <div class="navitem active" onclick="showClientes()"><span>👥</span><p>Clientes</p></div>
+    <div class="navitem" onclick="showRuta()"><span>🗺️</span><p>Mi Ruta</p></div>
+    <div class="navitem" onclick="showPrestamos()"><span>💳</span><p>Préstamos</p></div>
+  </div>
+</div>
+<div id="rutaScreen" class="screen">
+  <div class="topbar"><h1>🗺️ Mi Ruta Hoy</h1></div>
+  <div class="content" id="rutaContent"></div>
+  <div class="bottomnav">
+    <div class="navitem" onclick="showDash()"><span>🏠</span><p>Inicio</p></div>
+    <div class="navitem" onclick="showClientes()"><span>👥</span><p>Clientes</p></div>
+    <div class="navitem active" onclick="showRuta()"><span>🗺️</span><p>Mi Ruta</p></div>
+    <div class="navitem" onclick="showPrestamos()"><span>💳</span><p>Préstamos</p></div>
+  </div>
+</div>
+<div id="prestamosScreen" class="screen">
+  <div class="topbar"><h1>💳 Préstamos</h1></div>
+  <div class="content" id="prestamosContent"></div>
+  <div class="bottomnav">
+    <div class="navitem" onclick="showDash()"><span>🏠</span><p>Inicio</p></div>
+    <div class="navitem" onclick="showClientes()"><span>👥</span><p>Clientes</p></div>
+    <div class="navitem" onclick="showRuta()"><span>🗺️</span><p>Mi Ruta</p></div>
+    <div class="navitem active" onclick="showPrestamos()"><span>💳</span><p>Préstamos</p></div>
+  </div>
+</div>
+<div id="pagoScreen" class="screen">
+  <div class="topbar">
+    <h1>💰 Registrar Pago</h1>
+    <span onclick="showRuta()" style="cursor:pointer;color:#0A84FF">Volver</span>
+  </div>
+  <div class="content" id="pagoContent"></div>
+</div>
+<script>
+const API='http://165.22.0.15:5000';
+let session=null,currentPrestamo=null;
+function fmt(n){return 'RD$ '+parseFloat(n).toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+async function doLogin(){
+  const u=document.getElementById('usuario').value;
+  const p=document.getElementById('password').value;
+  const err=document.getElementById('loginError');
+  err.style.display='none';
+  try{
+    const r=await fetch(API+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({usuario:u,password:p})});
+    const d=await r.json();
+    if(d.ok){session=d;document.getElementById('userLabel').textContent='Hola, '+d.nombre;showDash();}
+    else{err.textContent=d.msg;err.style.display='block';}
+  }catch(e){err.textContent='Error de conexión';err.style.display='block';}
+}
+function logout(){session=null;showScreen('loginScreen');}
+async function showDash(){
+  showScreen('dashScreen');
+  const r=await fetch(API+'/api/dashboard');
+  const d=await r.json();
+  document.getElementById('dashContent').innerHTML=`
+    <div class="section-title">Resumen Global</div>
+    <div class="grid2">
+      <div class="card"><div class="card-label">Capital en Calle</div><div class="card-val orange">${fmt(d.capital_calle)}</div></div>
+      <div class="card"><div class="card-label">Intereses del Mes</div><div class="card-val green">${fmt(d.intereses_mes)}</div></div>
+      <div class="card"><div class="card-label">Préstamos Activos</div><div class="card-val blue">${d.activos}</div></div>
+      <div class="card"><div class="card-label">Clientes</div><div class="card-val white">${d.clientes}</div></div>
+    </div>
+    <button class="btn btn-blue" onclick="showRuta()">📍 Ver Mi Ruta de Hoy</button>`;
+}
+async function showClientes(){
+  showScreen('clientesScreen');
+  const r=await fetch(API+'/api/clientes');
+  const c=await r.json();
+  document.getElementById('clientesContent').innerHTML=c.length?c.map(x=>`<div class="item"><div><div class="item-name">${x.nombre}</div><div class="item-sub">📋 ${x.cedula||''} ${x.telefono?'• 📞 '+x.telefono:''}</div></div></div>`).join(''):'<div class="card"><p style="color:#8E8E93;text-align:center">No hay clientes</p></div>';
+}
+async function showPrestamos(){
+  showScreen('prestamosScreen');
+  const r=await fetch(API+'/api/prestamos');
+  const rows=await r.json();
+  document.getElementById('prestamosContent').innerHTML=rows.length?rows.map(p=>`<div class="item" onclick='cobrar(${JSON.stringify(p)})'><div><div class="item-name">${p.cliente_nombre}</div><div class="item-sub">${p.frecuencia} • Cuota ${p.cuotas_pagadas}/${p.plazo_cuotas}</div></div><div style="text-align:right"><div class="item-name green">${fmt(p.cuota_monto)}</div></div></div>`).join(''):'<div class="card"><p style="color:#8E8E93;text-align:center">No hay préstamos</p></div>';
+}
+async function showRuta(){
+  showScreen('rutaScreen');
+  const r=await fetch(API+'/api/ruta-hoy');
+  const rows=await r.json();
+  const total=rows.reduce((a,r)=>a+r.cuota_monto,0);
+  document.getElementById('rutaContent').innerHTML=`
+    <div class="card" style="margin-bottom:16px"><div class="card-label">Total a cobrar hoy</div><div class="card-val green">${fmt(total)}</div><div class="card-label" style="margin-top:4px">${rows.length} cliente(s)</div></div>
+    ${rows.map(p=>{
+      const badge=p.estado_pago=='mora'?'badge-red':p.estado_pago=='atraso'?'badge-yellow':'badge-green';
+      const label=p.estado_pago=='mora'?'MORA':p.estado_pago=='atraso'?p.dias_atraso+' DÍAS':'AL DÍA';
+      const nameColor=p.estado_pago=='mora'?'red':p.estado_pago=='atraso'?'orange':'';
+      return `<div class="item" onclick='cobrar(${JSON.stringify(p)})'><div><div class="item-name ${nameColor}">${p.nombre}</div><div class="item-sub">📞 ${p.telefono||'—'}</div><div class="item-sub">${p.direccion||'—'}</div></div><div style="text-align:right"><div class="item-name">${fmt(p.cuota_monto)}</div><div class="badge ${badge}" style="margin-top:4px">${label}</div></div></div>`;
+    }).join('')}`;
+}
+function cobrar(p){
+  currentPrestamo=p;
+  showScreen('pagoScreen');
+  const int_q=(p.monto*(p.tasa_interes/100)).toFixed(2);
+  document.getElementById('pagoContent').innerHTML=`
+    <div class="card" style="background:#0A84FF;margin-bottom:16px"><div style="font-size:15px;font-weight:700">${p.nombre||p.cliente_nombre}</div><div style="color:rgba(255,255,255,.7);font-size:12px">Préstamo #${p.id} • Cuota ${p.cuotas_pagadas+1}/${p.plazo_cuotas}</div></div>
+    <div class="info-row"><span class="info-label">Saldo pendiente</span><span class="info-val orange">${fmt(p.saldo_pendiente)}</span></div>
+    <div class="info-row"><span class="info-label">Cuota</span><span class="info-val green">${fmt(p.cuota_monto)}</span></div>
+    <div class="info-row" style="border:none"><span class="info-label">Interés fijo</span><span class="info-val">${fmt(int_q)}</span></div>
+    <br>
+    <label>Monto a cobrar (RD$)</label>
+    <input id="montoPago" class="field" type="number" value="${p.cuota_monto}" step="0.01">
+    <label>Fecha de pago</label>
+    <input id="fechaPago" class="field" type="date" value="${new Date().toISOString().split('T')[0]}">
+    <label>Mora (RD$)</label>
+    <input id="moraPago" class="field" type="number" value="0" step="0.01">
+    <label>Notas</label>
+    <input id="notasPago" class="field" type="text" placeholder="Opcional">
+    <button class="btn btn-green" onclick="guardarPago()">💾 Guardar Pago</button>
+    <button class="btn btn-gray" onclick="showRuta()">✖ Cancelar</button>`;
+}
+async function guardarPago(){
+  const monto=parseFloat(document.getElementById('montoPago').value);
+  const fecha=document.getElementById('fechaPago').value;
+  const mora=parseFloat(document.getElementById('moraPago').value)||0;
+  const notas=document.getElementById('notasPago').value;
+  try{
+    const r=await fetch(API+'/api/pago',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prestamo_id:currentPrestamo.id,monto,fecha,mora,notas})});
+    const d=await r.json();
+    if(d.ok){alert('Pago registrado.\nNuevo saldo: '+fmt(d.nuevo_saldo)+(d.estado=='pagado'?'\n\nPRESTAMO SALDADO!':''));showRuta();}
+    else{alert('Error: '+d.msg);}
+  }catch(e){alert('Error de conexión');}
+}
+document.getElementById('password').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
+</script>
+</body>
+</html>
