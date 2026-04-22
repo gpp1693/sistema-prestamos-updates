@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CapitalPro — Demo</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#1C1C1E;color:#F2F2F7;font-family:-apple-system,sans-serif;max-width:480px;margin:0 auto;min-height:100vh}
+.screen{display:none;flex-direction:column;min-height:100vh}
+.screen.active{display:flex}
+.topbar{background:#2C2C2E;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #3A3A3C}
+.topbar h1{font-size:17px;font-weight:700}
+.content{flex:1;padding:16px;overflow-y:auto}
+.card{background:#2C2C2E;border-radius:12px;padding:14px;margin-bottom:12px}
+.card-label{color:#8E8E93;font-size:11px;margin-bottom:4px}
+.card-val{font-size:20px;font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.green{color:#30D158}.blue{color:#0A84FF}.orange{color:#FF9F0A}.red{color:#FF453A}
+.item{background:#2C2C2E;border-radius:12px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.item:active{background:#3A3A3C}
+.item-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.item-sub{color:#8E8E93;font-size:11px}
+.badge{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700}
+.badge-green{background:rgba(48,209,88,.15);color:#30D158}
+.badge-yellow{background:rgba(255,159,10,.15);color:#FF9F0A}
+.badge-red{background:rgba(255,69,58,.15);color:#FF453A}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;font-family:-apple-system,sans-serif}
+.btn-blue{background:#0A84FF;color:white}
+.btn-green{background:#30D158;color:white}
+.btn-gray{background:#3A3A3C;color:#F2F2F7}
+.btn-whatsapp{background:#25D366;color:white}
+.field{width:100%;background:#2C2C2E;border:1px solid #3A3A3C;border-radius:10px;padding:12px;color:#F2F2F7;font-size:15px;margin-bottom:12px;font-family:-apple-system,sans-serif}
+.field:focus{border-color:#0A84FF;outline:none}
+label{color:#8E8E93;font-size:12px;font-weight:600;display:block;margin-bottom:6px;text-transform:uppercase}
+.section-title{color:#8E8E93;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.bottomnav{background:#2C2C2E;border-top:1px solid #3A3A3C;display:flex;justify-content:space-around;padding:10px 0 20px}
+.navitem{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 12px}
+.navitem span{font-size:20px}
+.navitem p{font-size:9px;color:#8E8E93}
+.navitem.active p{color:#0A84FF}
+.info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #3A3A3C}
+.info-label{color:#8E8E93;font-size:13px}
+.info-val{font-size:13px;font-weight:600}
+/* DEMO BANNER */
+.demo-banner{background:linear-gradient(135deg,#0A84FF,#0066CC);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.demo-banner-text{font-size:12px;font-weight:600;color:white}
+.demo-banner-sub{font-size:10px;color:rgba(255,255,255,.7);margin-top:2px}
+.demo-banner-btn{background:white;color:#0A84FF;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;text-decoration:none;white-space:nowrap}
+/* ADMIN BANNER */
+.admin-banner{background:#2C2C2E;border:1px solid rgba(10,132,255,.3);border-radius:12px;padding:14px;margin-bottom:16px;text-align:center}
+.admin-banner-icon{font-size:28px;margin-bottom:8px}
+.admin-banner-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.admin-banner-sub{font-size:12px;color:#8E8E93;margin-bottom:12px;line-height:1.5}
+/* SPLASH */
+.splash{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center}
+.splash-icon{width:80px;height:80px;background:#0A84FF;border-radius:22px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:36px}
+.splash h1{font-size:28px;font-weight:800;margin-bottom:6px}
+.splash-sub{color:#8E8E93;font-size:14px;margin-bottom:32px;line-height:1.5}
+.splash-demo-badge{background:rgba(255,159,10,.15);border:1px solid rgba(255,159,10,.3);color:#FF9F0A;padding:6px 14px;border-radius:100px;font-size:12px;font-weight:700;margin-bottom:24px;display:inline-block}
+.total-card{background:#2C2C2E;border-radius:12px;padding:12px;margin-bottom:14px;text-align:center}
+.total-label{color:#8E8E93;font-size:10px;margin-bottom:4px}
+.total-val{color:#30D158;font-size:22px;font-weight:800}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splashScreen" class="screen active">
+  <div class="splash">
+    <div class="splash-icon">💳</div>
+    <h1>CapitalPro</h1>
+    <div class="splash-demo-badge">⚡ MODO DEMO</div>
+    <p class="splash-sub">Estás viendo la <strong>vista del cobrador</strong>.<br>Explora con datos de ejemplo.</p>
+    <button class="btn btn-blue" onclick="entrarDemo()">Ver Demo de Cobrador →</button>
+    <div style="margin:16px 0;color:#8E8E93;font-size:13px">¿Quieres ver el panel de administrador?</div>
+    <a href="https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.1-demo/Instalar_SistemaPrestamos_DEMO.exe" class="btn btn-gray" style="display:block;text-align:center;text-decoration:none;padding:14px;border-radius:12px;font-weight:700;font-size:14px">💻 Descarga el Demo para PC</a>
+    <div style="margin-top:12px;color:#8E8E93;font-size:11px;line-height:1.5">El administrador solo está disponible<br>en la versión de escritorio para Windows</div>
+  </div>
+</div>
+
+<!-- RUTA HOY -->
+<div id="rutaScreen" class="screen">
+  <div class="demo-banner">
+    <div>
+      <div class="demo-banner-text">⚡ Modo Demo — Vista Cobrador</div>
+      <div class="demo-banner-sub">Datos ficticios de ejemplo</div>
+    </div>
+    <a href="https://wa.me/18093412682" target="_blank" class="demo-banner-btn">Comprar</a>
+  </div>
+  <div class="topbar"><h1>🗺️ Mi Ruta Hoy</h1></div>
+  <div class="content" id="rutaContent">
+    <div class="admin-banner">
+      <div class="admin-banner-icon">🖥️</div>
+      <div class="admin-banner-title">¿Quieres ver el panel completo?</div>
+      <div class="admin-banner-sub">El administrador con reportes, préstamos, capital y ganancias está disponible en la versión de escritorio.</div>
+      <a href="https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.1-demo/Instalar_SistemaPrestamos_DEMO.exe" class="btn btn-blue" style="display:block;text-align:center;text-decoration:none;padding:12px;border-radius:10px;font-weight:700;font-size:13px">📥 Descargar Demo para PC (Gratis)</a>
+    </div>
+    <div class="section-title">Cargando ruta...</div>
+  </div>
+  <div class="bottomnav">
+    <div class="navitem active" onclick="showRuta()"><span>🗺️</span><p>Mi Ruta</p></div>
+    <div class="navitem" onclick="showClientes()"><span>👥</span><p>Clientes</p></div>
+  </div>
+</div>
+
+<!-- CLIENTES -->
+<div id="clientesScreen" class="screen">
+  <div class="demo-banner">
+    <div>
+      <div class="demo-banner-text">⚡ Modo Demo — Vista Cobrador</div>
+      <div class="demo-banner-sub">Datos ficticios de ejemplo</div>
+    </div>
+    <a href="https://wa.me/18093412682" target="_blank" class="demo-banner-btn">Comprar</a>
+  </div>
+  <div class="topbar"><h1>👥 Clientes Demo</h1></div>
+  <div class="content" id="clientesContent"></div>
+  <div class="bottomnav">
+    <div class="navitem" onclick="showRuta()"><span>🗺️</span><p>Mi Ruta</p></div>
+    <div class="navitem active" onclick="showClientes()"><span>👥</span><p>Clientes</p></div>
+  </div>
+</div>
+
+<!-- PAGO -->
+<div id="pagoScreen" class="screen">
+  <div class="demo-banner">
+    <div>
+      <div class="demo-banner-text">⚡ Modo Demo</div>
+      <div class="demo-banner-sub">Los pagos no se guardan</div>
+    </div>
+    <a href="https://wa.me/18093412682" target="_blank" class="demo-banner-btn">Comprar</a>
+  </div>
+  <div class="topbar">
+    <h1>💰 Registrar Pago</h1>
+    <span onclick="showRuta()" style="cursor:pointer;color:#0A84FF">Volver</span>
+  </div>
+  <div class="content" id="pagoContent"></div>
+</div>
+
+<script>
+const API = 'https://app.capitalprosystem.com';
+const DEMO_ID = 'CP-DEMO';
+let currentPrestamo = null;
+
+function fmt(n){return 'RD$ '+parseFloat(n).toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
+function entrarDemo(){
+  showRuta();
+}
+
+async function showRuta(){
+  showScreen('rutaScreen');
+  try{
+    const r = await fetch(API+'/api/ruta-hoy', {headers:{'X-Empresa-ID':DEMO_ID}});
+    const rows = await r.json();
+    const total = rows.reduce((a,r)=>a+r.cuota_monto,0);
+    document.getElementById('rutaContent').innerHTML = `
+      <div class="admin-banner">
+        <div class="admin-banner-icon">🖥️</div>
+        <div class="admin-banner-title">¿Quieres ver el panel completo?</div>
+        <div class="admin-banner-sub">El administrador con reportes, capital y ganancias está en la versión de escritorio.</div>
+        <a href="https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.1-demo/Instalar_SistemaPrestamos_DEMO.exe" class="btn btn-blue" style="display:block;text-align:center;text-decoration:none;padding:12px;border-radius:10px;font-weight:700;font-size:13px">📥 Descargar Demo para PC (Gratis)</a>
+      </div>
+      <div class="total-card">
+        <div class="total-label">Total a cobrar hoy (Demo)</div>
+        <div class="total-val">${fmt(total)}</div>
+        <div class="total-label" style="margin-top:4px">${rows.length} clientes de ejemplo</div>
+      </div>
+      ${rows.map(p=>{
+        const badge=p.estado_pago=='mora'?'badge-red':p.estado_pago=='atraso'?'badge-yellow':'badge-green';
+        const label=p.estado_pago=='mora'?'MORA':p.estado_pago=='atraso'?p.dias_atraso+' DÍAS':'AL DÍA';
+        const nc=p.estado_pago=='mora'?'red':p.estado_pago=='atraso'?'orange':'';
+        return `<div class="item" onclick='cobrar(${JSON.stringify(p)})'>
+          <div>
+            <div class="item-name ${nc}">${p.nombre}</div>
+            <div class="item-sub">📞 ${p.telefono||'—'}</div>
+            <div class="item-sub">${p.direccion||'—'}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="item-name">${fmt(p.cuota_monto)}</div>
+            <div class="badge ${badge}" style="margin-top:4px">${label}</div>
+          </div>
+        </div>`;
+      }).join('')}`;
+  }catch(e){
+    document.getElementById('rutaContent').innerHTML='<div class="card"><p style="color:#8E8E93;text-align:center">Error cargando datos demo</p></div>';
+  }
+}
+
+async function showClientes(){
+  showScreen('clientesScreen');
+  try{
+    const r = await fetch(API+'/api/clientes',{headers:{'X-Empresa-ID':DEMO_ID}});
+    const clientes = await r.json();
+    document.getElementById('clientesContent').innerHTML = `
+      <div class="admin-banner">
+        <div class="admin-banner-icon">🖥️</div>
+        <div class="admin-banner-title">Gestión completa en la PC</div>
+        <div class="admin-banner-sub">Agrega, edita y administra clientes ilimitados desde el sistema de escritorio.</div>
+        <a href="https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.1-demo/Instalar_SistemaPrestamos_DEMO.exe" class="btn btn-blue" style="display:block;text-align:center;text-decoration:none;padding:12px;border-radius:10px;font-weight:700;font-size:13px">📥 Descargar Demo para PC (Gratis)</a>
+      </div>
+      <div class="section-title">Clientes de ejemplo</div>
+      ${clientes.map(c=>`
+        <div class="item">
+          <div>
+            <div class="item-name">${c.nombre}</div>
+            <div class="item-sub">📞 ${c.telefono||'—'} • ${c.direccion||'—'}</div>
+          </div>
+        </div>`).join('')}`;
+  }catch(e){
+    document.getElementById('clientesContent').innerHTML='<div class="card"><p style="color:#8E8E93;text-align:center">Error cargando datos</p></div>';
+  }
+}
+
+function cobrar(p){
+  currentPrestamo=p;
+  showScreen('pagoScreen');
+  const int_q=(p.monto*(p.tasa_interes/100)).toFixed(2);
+  document.getElementById('pagoContent').innerHTML=`
+    <div class="card" style="background:#0A84FF;margin-bottom:16px">
+      <div style="font-size:15px;font-weight:700">${p.nombre}</div>
+      <div style="color:rgba(255,255,255,.7);font-size:12px">Préstamo #${p.id} • Cuota ${p.cuotas_pagadas+1}/${p.plazo_cuotas}</div>
+    </div>
+    <div class="info-row"><span class="info-label">Saldo pendiente</span><span class="info-val orange">${fmt(p.saldo_pendiente)}</span></div>
+    <div class="info-row"><span class="info-label">Cuota</span><span class="info-val green">${fmt(p.cuota_monto)}</span></div>
+    <div class="info-row" style="border:none"><span class="info-label">Interés fijo</span><span class="info-val">${fmt(int_q)}</span></div>
+    <br>
+    <label>Monto a cobrar (RD$)</label>
+    <input id="montoPago" class="field" type="number" value="${p.cuota_monto}" step="0.01">
+    <label>Notas</label>
+    <input id="notasPago" class="field" type="text" placeholder="Opcional">
+    <button class="btn btn-green" onclick="simularPago()">✓ Simular Cobro (Demo)</button>
+    <button class="btn btn-gray" onclick="showRuta()">✖ Cancelar</button>
+    <div style="background:#2C2C2E;border-radius:10px;padding:12px;margin-top:8px;text-align:center">
+      <div style="color:#8E8E93;font-size:12px;margin-bottom:8px">⚠ En el demo los pagos son simulados y no se guardan</div>
+      <a href="https://wa.me/18093412682" target="_blank" style="color:#0A84FF;font-size:13px;font-weight:600;text-decoration:none">💬 Adquiere el sistema completo →</a>
+    </div>`;
+}
+
+function simularPago(){
+  const monto = parseFloat(document.getElementById('montoPago').value);
+  alert('✅ ¡Pago simulado exitosamente!\n\nEn el sistema completo este pago se guardaría y sincronizaría automáticamente.\n\n💬 ¿Te gustó? Contáctanos por WhatsApp para adquirir el sistema.');
+  showRuta();
+}
+</script>
+</body>
+</html>
