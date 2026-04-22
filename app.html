@@ -46,6 +46,7 @@ label{color:#8E8E93;font-size:12px;font-weight:600;display:block;margin-bottom:6
 .logo h2{font-size:26px;font-weight:800}
 .logo p{color:#8E8E93;font-size:13px;margin-top:4px}
 .error{background:rgba(255,69,58,.15);color:#FF453A;padding:10px;border-radius:8px;font-size:13px;margin-bottom:12px;display:none}
+.empresa-code{background:#2C2C2E;border-radius:8px;padding:8px 12px;font-size:11px;color:#8E8E93;text-align:center;margin-bottom:16px}
 </style>
 </head>
 <body>
@@ -57,6 +58,8 @@ label{color:#8E8E93;font-size:12px;font-weight:600;display:block;margin-bottom:6
   </div>
   <div class="content">
     <div id="loginError" class="error"></div>
+    <label>Código de Empresa</label>
+    <input id="empresaId" class="field" type="text" placeholder="CP-XXXXXX">
     <label>Usuario</label>
     <input id="usuario" class="field" type="text" placeholder="admin">
     <label>Contraseña</label>
@@ -116,25 +119,39 @@ label{color:#8E8E93;font-size:12px;font-weight:600;display:block;margin-bottom:6
 </div>
 <script>
 const API='http://165.22.0.15:5000';
-let session=null,currentPrestamo=null;
+let session=null,currentPrestamo=null,empresaId=null;
+
+function hdrs(){return {"Content-Type":"application/json","X-Empresa-ID":empresaId||""};}
 function fmt(n){return 'RD$ '+parseFloat(n).toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+
 async function doLogin(){
+  const eid=document.getElementById('empresaId').value.trim().toUpperCase();
   const u=document.getElementById('usuario').value;
   const p=document.getElementById('password').value;
   const err=document.getElementById('loginError');
   err.style.display='none';
+  if(!eid){err.textContent='Ingrese el código de empresa';err.style.display='block';return;}
   try{
-    const r=await fetch(API+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({usuario:u,password:p})});
+    const r=await fetch(API+'/api/login',{method:'POST',headers:{"Content-Type":"application/json"},body:JSON.stringify({usuario:u,password:p,empresa_id:eid})});
     const d=await r.json();
-    if(d.ok){session=d;document.getElementById('userLabel').textContent='Hola, '+d.nombre;showDash();}
-    else{err.textContent=d.msg;err.style.display='block';}
+    if(d.ok){
+      session=d;
+      empresaId=eid;
+      localStorage.setItem('empresa_id',eid);
+      document.getElementById('userLabel').textContent='Hola, '+d.nombre;
+      showDash();
+    } else {
+      err.textContent=d.msg;err.style.display='block';
+    }
   }catch(e){err.textContent='Error de conexión';err.style.display='block';}
 }
-function logout(){session=null;showScreen('loginScreen');}
+
+function logout(){session=null;empresaId=null;showScreen('loginScreen');}
+
 async function showDash(){
   showScreen('dashScreen');
-  const r=await fetch(API+'/api/dashboard');
+  const r=await fetch(API+'/api/dashboard',{headers:hdrs()});
   const d=await r.json();
   document.getElementById('dashContent').innerHTML=`
     <div class="section-title">Resumen Global</div>
@@ -144,23 +161,27 @@ async function showDash(){
       <div class="card"><div class="card-label">Préstamos Activos</div><div class="card-val blue">${d.activos}</div></div>
       <div class="card"><div class="card-label">Clientes</div><div class="card-val white">${d.clientes}</div></div>
     </div>
+    <div class="empresa-code">Empresa: ${empresaId}</div>
     <button class="btn btn-blue" onclick="showRuta()">📍 Ver Mi Ruta de Hoy</button>`;
 }
+
 async function showClientes(){
   showScreen('clientesScreen');
-  const r=await fetch(API+'/api/clientes');
+  const r=await fetch(API+'/api/clientes',{headers:hdrs()});
   const c=await r.json();
   document.getElementById('clientesContent').innerHTML=c.length?c.map(x=>`<div class="item"><div><div class="item-name">${x.nombre}</div><div class="item-sub">📋 ${x.cedula||''} ${x.telefono?'• 📞 '+x.telefono:''}</div></div></div>`).join(''):'<div class="card"><p style="color:#8E8E93;text-align:center">No hay clientes</p></div>';
 }
+
 async function showPrestamos(){
   showScreen('prestamosScreen');
-  const r=await fetch(API+'/api/prestamos');
+  const r=await fetch(API+'/api/prestamos',{headers:hdrs()});
   const rows=await r.json();
   document.getElementById('prestamosContent').innerHTML=rows.length?rows.map(p=>`<div class="item" onclick='cobrar(${JSON.stringify(p)})'><div><div class="item-name">${p.cliente_nombre}</div><div class="item-sub">${p.frecuencia} • Cuota ${p.cuotas_pagadas}/${p.plazo_cuotas}</div></div><div style="text-align:right"><div class="item-name green">${fmt(p.cuota_monto)}</div></div></div>`).join(''):'<div class="card"><p style="color:#8E8E93;text-align:center">No hay préstamos</p></div>';
 }
+
 async function showRuta(){
   showScreen('rutaScreen');
-  const r=await fetch(API+'/api/ruta-hoy');
+  const r=await fetch(API+'/api/ruta-hoy',{headers:hdrs()});
   const rows=await r.json();
   const total=rows.reduce((a,r)=>a+r.cuota_monto,0);
   document.getElementById('rutaContent').innerHTML=`
@@ -168,10 +189,11 @@ async function showRuta(){
     ${rows.map(p=>{
       const badge=p.estado_pago=='mora'?'badge-red':p.estado_pago=='atraso'?'badge-yellow':'badge-green';
       const label=p.estado_pago=='mora'?'MORA':p.estado_pago=='atraso'?p.dias_atraso+' DÍAS':'AL DÍA';
-      const nameColor=p.estado_pago=='mora'?'red':p.estado_pago=='atraso'?'orange':'';
-      return `<div class="item" onclick='cobrar(${JSON.stringify(p)})'><div><div class="item-name ${nameColor}">${p.nombre}</div><div class="item-sub">📞 ${p.telefono||'—'}</div><div class="item-sub">${p.direccion||'—'}</div></div><div style="text-align:right"><div class="item-name">${fmt(p.cuota_monto)}</div><div class="badge ${badge}" style="margin-top:4px">${label}</div></div></div>`;
+      const nc=p.estado_pago=='mora'?'red':p.estado_pago=='atraso'?'orange':'';
+      return `<div class="item" onclick='cobrar(${JSON.stringify(p)})'><div><div class="item-name ${nc}">${p.nombre}</div><div class="item-sub">📞 ${p.telefono||'—'}</div><div class="item-sub">${p.direccion||'—'}</div></div><div style="text-align:right"><div class="item-name">${fmt(p.cuota_monto)}</div><div class="badge ${badge}" style="margin-top:4px">${label}</div></div></div>`;
     }).join('')}`;
 }
+
 function cobrar(p){
   currentPrestamo=p;
   showScreen('pagoScreen');
@@ -193,18 +215,23 @@ function cobrar(p){
     <button class="btn btn-green" onclick="guardarPago()">💾 Guardar Pago</button>
     <button class="btn btn-gray" onclick="showRuta()">✖ Cancelar</button>`;
 }
+
 async function guardarPago(){
   const monto=parseFloat(document.getElementById('montoPago').value);
   const fecha=document.getElementById('fechaPago').value;
   const mora=parseFloat(document.getElementById('moraPago').value)||0;
   const notas=document.getElementById('notasPago').value;
   try{
-    const r=await fetch(API+'/api/pago',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prestamo_id:currentPrestamo.id,monto,fecha,mora,notas})});
+    const r=await fetch(API+'/api/pago',{method:'POST',headers:hdrs(),body:JSON.stringify({prestamo_id:currentPrestamo.id,monto,fecha,mora,notas,empresa_id:empresaId})});
     const d=await r.json();
     if(d.ok){alert('Pago registrado.\nNuevo saldo: '+fmt(d.nuevo_saldo)+(d.estado=='pagado'?'\n\nPRESTAMO SALDADO!':''));showRuta();}
     else{alert('Error: '+d.msg);}
   }catch(e){alert('Error de conexión');}
 }
+
+// Restaurar empresa_id si estaba guardado
+const savedEid = localStorage.getItem('empresa_id');
+if(savedEid) document.getElementById('empresaId').value = savedEid;
 document.getElementById('password').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
 </script>
 </body>
