@@ -58,7 +58,7 @@ label{color:#8E8E93;font-size:12px;font-weight:600;display:block;margin-bottom:6
   </div>
   <div class="content">
     <div id="loginError" class="error"></div>
-    <label>Código de Empresa</label>
+    <label id="empresaLabel">Código de Empresa</label>
     <input id="empresaId" class="field" type="text" placeholder="CP-XXXXXX">
     <label>Usuario</label>
     <input id="usuario" class="field" type="text" placeholder="admin">
@@ -229,9 +229,18 @@ async function guardarPago(){
   }catch(e){alert('Error de conexión');}
 }
 
-// Restaurar empresa_id si estaba guardado
-const savedEid = localStorage.getItem('empresa_id');
-if(savedEid) document.getElementById('empresaId').value = savedEid;
+// Leer empresa_id de la URL automaticamente
+const urlParts = window.location.pathname.split('/').filter(p=>p);
+const urlEmpresa = urlParts.find(p=>p.startsWith('CP-'));
+if(urlEmpresa){
+  empresaId = urlEmpresa;
+  document.getElementById('empresaId').value = urlEmpresa;
+  document.getElementById('empresaId').style.display = 'none';
+  document.getElementById('empresaLabel').style.display = 'none';
+} else {
+  const savedEid = localStorage.getItem('empresa_id');
+  if(savedEid) document.getElementById('empresaId').value = savedEid;
+}
 document.getElementById('password').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
 </script>
 </body>
