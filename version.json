@@ -1,5 +1,5 @@
 {
-    "version": "5.5.1",
-    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.1/Instalar_CapitalPro_v5.5.1.exe",
-    "notas": "- Telemetria de uso via Gmail\n- Notificacion cuotas de hoy\n- Imprimir listado clientes PDF\n- Importar clientes desde Excel\n- Reporte financiero por ruta"
+    "version": "5.5.9",
+    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.9/Instalar_CapitalPro_v5.5.9.exe",
+    "notas": "- Login via servidor\n- Sistema de licencias activo\n- Verificacion de licencia al abrir\n- Usuario admin local bloqueado\n- Sincronizacion automatica mejorada"
 }
