@@ -408,17 +408,6 @@ function renderDatos(){
     </tr>`).join('');
 }
 
-function toggleLicencia(id, activo){
-  const empresa = empresas.find(e=>e.id===id);
-  if(!empresa) return;
-  const accion = activo ? 'desactivar' : 'activar';
-  if(!confirm(`¿Seguro que deseas ${accion} la licencia de ${empresa.nombre}?`)) return;
-  empresa.activo = !activo;
-  empresa.plan = !activo ? 'completo' : 'demo';
-  renderDatos();
-  alert(`✅ Licencia ${!activo?'activada':'desactivada'} para ${empresa.nombre}`);
-}
-
 function copiarURL(id){
   const empresa = empresas.find(e=>e.id===id);
   const url = `https://app.capitalprosystem.com/${id}`;
