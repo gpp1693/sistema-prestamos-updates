@@ -224,24 +224,75 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <input class="field" id="newNombre" placeholder="Ej: Préstamos García">
     </div>
     <div class="field-wrap">
-      <label class="field-label">Subdominio</label>
-      <input class="field" id="newSubdominio" placeholder="garcia" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'')">
-      <div style="font-size:11px;color:var(--muted);margin-top:6px">→ garcia.capitalprosystem.com</div>
-    </div>
-    <div class="field-wrap">
       <label class="field-label">Teléfono</label>
       <input class="field" id="newTelefono" placeholder="809-XXX-XXXX">
     </div>
     <div class="field-wrap">
       <label class="field-label">Plan</label>
-      <select class="field" id="newPlan">
+      <select class="field" id="newPlan" onchange="toggleLicDays()">
         <option value="demo">Demo (Gratis)</option>
-        <option value="completo">Completo (RD$45,000)</option>
+        <option value="completo">Completo</option>
       </select>
+    </div>
+    <div class="field-wrap" id="licDaysWrap" style="display:none">
+      <label class="field-label">Duración de Licencia</label>
+      <select class="field" id="newDias">
+        <option value="30">30 días</option>
+        <option value="60">60 días</option>
+        <option value="90">90 días</option>
+        <option value="180">180 días</option>
+        <option value="365">1 año</option>
+        <option value="730">2 años</option>
+        <option value="9999">De por vida</option>
+        <option value="custom">Personalizado...</option>
+      </select>
+    </div>
+    <div class="field-wrap" id="customDaysWrap" style="display:none">
+      <label class="field-label">Días personalizados</label>
+      <input class="field" id="newDiasCustom" type="number" placeholder="Ej: 45" min="1">
+    </div>
+    <hr style="border-color:var(--border);margin:16px 0">
+    <div style="font-family:Syne,sans-serif;font-size:14px;font-weight:700;margin-bottom:12px">👤 Usuario Administrador</div>
+    <div class="field-wrap">
+      <label class="field-label">Usuario</label>
+      <input class="field" id="newUsuario" placeholder="admin">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Contraseña</label>
+      <input class="field" id="newPassword" type="password" placeholder="••••••••">
     </div>
     <div class="modal-btns">
       <button class="btn btn-gray" onclick="closeModal()">Cancelar</button>
       <button class="btn btn-blue" onclick="crearEmpresa()">Crear Empresa</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ACTIVAR LICENCIA -->
+<div class="modal-overlay" id="modalLicencia">
+  <div class="modal">
+    <div class="modal-title">Activar Licencia</div>
+    <div class="modal-sub" id="modalLicSub">Configurar licencia para la empresa</div>
+    <div class="field-wrap">
+      <label class="field-label">Duración</label>
+      <select class="field" id="licDias" onchange="toggleCustomLic()">
+        <option value="30">30 días</option>
+        <option value="60">60 días</option>
+        <option value="90">90 días</option>
+        <option value="180">180 días</option>
+        <option value="365">1 año</option>
+        <option value="730">2 años</option>
+        <option value="9999">De por vida</option>
+        <option value="custom">Personalizado...</option>
+      </select>
+    </div>
+    <div class="field-wrap" id="customLicWrap" style="display:none">
+      <label class="field-label">Días personalizados</label>
+      <input class="field" id="licDiasCustom" type="number" placeholder="Ej: 45" min="1">
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-gray" onclick="closeModalLic()">Cancelar</button>
+      <button class="btn btn-green" onclick="confirmarLicencia()">✅ Activar Licencia</button>
     </div>
   </div>
 </div>
@@ -340,7 +391,7 @@ function renderDatos(){
       <td><span class="mono">${e.id}</span></td>
       <td>${e.plan==='completo'?'<span class="badge badge-blue">💎 Completo</span>':'<span class="badge badge-gray">🆓 Demo</span>'}</td>
       <td>${e.activo?'<span class="badge badge-green">● Activa</span>':'<span class="badge badge-red">● Inactiva</span>'}</td>
-      <td style="color:var(--muted);font-size:13px">${e.plan==='completo'?'De por vida':'N/A'}</td>
+      <td style="color:var(--muted);font-size:13px">${e.vence||'N/A'}</td>
       <td><button class="btn btn-sm ${e.activo?'btn-red':'btn-green'}" onclick="toggleLicencia('${e.id}',${e.activo})">${e.activo?'Desactivar':'Activar'}</button></td>
     </tr>`).join('');
 
@@ -395,6 +446,130 @@ function crearEmpresa(){
   document.getElementById('newSubdominio').value='';
   document.getElementById('newTelefono').value='';
   alert(`✅ Empresa creada!\n\nCódigo: ${id}\nURL: https://${subdominio}.capitalprosystem.com\n\nComparte esta URL con el cliente.`);
+}
+
+// License modal
+let currentLicEmpresa = null;
+
+function toggleLicDays(){
+  const plan = document.getElementById('newPlan').value;
+  document.getElementById('licDaysWrap').style.display = plan==='completo' ? 'block' : 'none';
+}
+
+function toggleCustomLic(){
+  const v = document.getElementById('licDias').value;
+  document.getElementById('customLicWrap').style.display = v==='custom' ? 'block' : 'none';
+}
+
+function toggleCustomDays(){
+  const v = document.getElementById('newDias').value;
+  document.getElementById('customDaysWrap').style.display = v==='custom' ? 'block' : 'none';
+}
+
+function openActivarLicencia(id){
+  const empresa = empresas.find(e=>e.id===id);
+  if(!empresa) return;
+  currentLicEmpresa = id;
+  document.getElementById('modalLicSub').textContent = 'Empresa: ' + empresa.nombre;
+  document.getElementById('modalLicencia').classList.add('active');
+}
+
+function closeModalLic(){
+  document.getElementById('modalLicencia').classList.remove('active');
+  currentLicEmpresa = null;
+}
+
+async function confirmarLicencia(){
+  const dias = document.getElementById('licDias').value === 'custom' 
+    ? parseInt(document.getElementById('licDiasCustom').value) 
+    : parseInt(document.getElementById('licDias').value);
+  
+  if(!dias || dias < 1){ alert('Ingrese una duración válida'); return; }
+  
+  const empresa = empresas.find(e=>e.id===currentLicEmpresa);
+  if(!empresa) return;
+
+  try {
+    const r = await fetch(API + '/api/admin/licencia', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'X-Master-Key':'CPMaster2026!'},
+      body: JSON.stringify({empresa_id: currentLicEmpresa, dias: dias, activo: true})
+    });
+  } catch(e){}
+
+  empresa.activo = true;
+  empresa.plan = 'completo';
+  empresa.dias_licencia = dias;
+  
+  const vence = dias === 9999 ? 'De por vida' : new Date(Date.now() + dias*86400000).toLocaleDateString('es-DO');
+  empresa.vence = vence;
+  
+  renderDatos();
+  closeModalLic();
+  alert(`✅ Licencia activada por ${dias === 9999 ? 'vida' : dias + ' días'} para ${empresa.nombre}
+Vence: ${vence}`);
+}
+
+function toggleLicencia(id, activo){
+  if(!activo){
+    // Activar — abrir modal con duración
+    openActivarLicencia(id);
+  } else {
+    // Desactivar
+    const empresa = empresas.find(e=>e.id===id);
+    if(!confirm(`¿Desactivar licencia de ${empresa.nombre}?`)) return;
+    empresa.activo = false;
+    empresa.plan = 'demo';
+    fetch(API + '/api/admin/licencia', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','X-Master-Key':'CPMaster2026!'},
+      body: JSON.stringify({empresa_id: id, dias: 0, activo: false})
+    }).catch(()=>{});
+    renderDatos();
+  }
+}
+
+async function crearEmpresa(){
+  const nombre = document.getElementById('newNombre').value;
+  const telefono = document.getElementById('newTelefono').value;
+  const plan = document.getElementById('newPlan').value;
+  const usuario = document.getElementById('newUsuario').value;
+  const password = document.getElementById('newPassword').value;
+  let dias = plan === 'completo' ? (document.getElementById('newDias').value === 'custom' 
+    ? parseInt(document.getElementById('newDiasCustom').value) 
+    : parseInt(document.getElementById('newDias').value)) : 0;
+
+  if(!nombre || !usuario || !password){ alert('Complete todos los campos requeridos'); return; }
+
+  const id = 'CP-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  
+  // Crear empresa en servidor
+  try {
+    await fetch(API + '/api/admin/crear-empresa', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','X-Master-Key':'CPMaster2026!'},
+      body: JSON.stringify({empresa_id: id, nombre, telefono, usuario, password, plan, dias})
+    });
+  } catch(e){}
+
+  const vence = plan === 'completo' ? (dias === 9999 ? 'De por vida' : new Date(Date.now()+dias*86400000).toLocaleDateString('es-DO')) : 'N/A';
+  
+  empresas.unshift({id, nombre, telefono, plan, activo: plan==='completo', clientes:0, prestamos:0, pagos:0, ultima_sync:'Nunca', vence, subdominio:'app'});
+  renderDatos();
+  closeModal();
+  
+  document.getElementById('newNombre').value='';
+  document.getElementById('newTelefono').value='';
+  document.getElementById('newUsuario').value='';
+  document.getElementById('newPassword').value='';
+
+  alert(`✅ Empresa creada!
+
+Código: ${id}
+Usuario: ${usuario}
+URL: https://app.capitalprosystem.com/${id}
+
+Comparte estos datos con el cliente.`);
 }
 
 document.getElementById('adminPass').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
