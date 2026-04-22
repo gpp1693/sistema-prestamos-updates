@@ -381,6 +381,7 @@ function renderDatos(){
       <td class="actions">
         <button class="btn btn-sm ${e.activo?'btn-red':'btn-green'}" onclick="toggleLicencia('${e.id}',${e.activo})">${e.activo?'Desactivar':'Activar'}</button>
         <button class="btn btn-sm btn-gray" onclick="copiarURL('${e.id}')">📋 URL</button>
+        <button class="btn btn-sm btn-red" onclick="eliminarEmpresa('${e.id}','${e.nombre}')">🗑</button>
       </td>
     </tr>`).join('') || '<tr><td colspan="6" class="empty"><div class="empty-icon">🏢</div>No hay empresas</td></tr>';
 
@@ -570,6 +571,21 @@ Usuario: ${usuario}
 URL: https://app.capitalprosystem.com/${id}
 
 Comparte estos datos con el cliente.`);
+}
+
+async function eliminarEmpresa(id, nombre){
+  if(!confirm('⚠ ¿Seguro que deseas ELIMINAR la empresa:\n\n' + nombre + '\n\nEsta acción es irreversible y borrará todos sus datos.')) return;
+  if(!confirm('¿Confirma DEFINITIVAMENTE la eliminación de ' + nombre + '?')) return;
+  try{
+    await fetch(API+'/api/admin/eliminar-empresa', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Master-Key':'CPMaster2026!'},
+      body:JSON.stringify({empresa_id:id})
+    });
+  }catch(e){}
+  empresas = empresas.filter(e=>e.id!==id);
+  renderDatos();
+  alert('✅ Empresa eliminada correctamente.');
 }
 
 document.getElementById('adminPass').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
