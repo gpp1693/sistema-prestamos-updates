@@ -92,7 +92,7 @@
 <body>
 <nav>
   <a href="#" class="nav-logo"><span>💳</span> CapitalPro</a>
-  <a href="#demo" class="nav-btn">Descargar Demo</a>
+  <a href="#demo" class="nav-btn">📱 Probar Demo</a>
 </nav>
 
 <section class="hero">
@@ -100,7 +100,7 @@
   <h1>Controla tus<br><span>préstamos</span> con<br>precisión total</h1>
   <p>Gestiona clientes, cuotas, intereses y ganancias desde tu PC. Recibe recordatorios automáticos y reportes en tiempo real.</p>
   <div class="hero-btns">
-    <a href="#demo" class="btn-primary">📥 Descargar Demo Gratis</a>
+    <a href="#demo" class="btn-primary">📱 Probar Demo Gratis</a>
     <a href="#funciones" class="btn-secondary">Ver funciones</a>
   </div>
 </section>
@@ -155,42 +155,58 @@
 </section>
 
 <section class="section" id="demo">
-  <h2 class="section-title">Empieza hoy mismo</h2>
-  <p class="section-sub">Prueba el Demo gratis, sin límite de tiempo</p>
-  <div class="pricing-grid">
-    <div class="pricing-card">
-      <div class="pricing-name">Demo Gratis</div>
-      <div class="pricing-price">RD$0 <span>/ siempre</span></div>
-      <ul class="pricing-features">
-        <li>Hasta 10 clientes</li>
-        <li>Hasta 20 préstamos</li>
-        <li>Todas las funciones incluidas</li>
-        <li>Sin límite de tiempo</li>
+  <h2 class="section-title">Prueba CapitalPro gratis</h2>
+  <p class="section-sub">Sin límite de tiempo — desde tu celular o PC</p>
+
+  <!-- DEMO CARDS -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:900px;margin:0 auto 40px">
+
+    <!-- CELULAR -->
+    <div style="background:#1C1C1E;border:2px solid #0A84FF;border-radius:20px;padding:32px 28px;text-align:center;position:relative">
+      <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#0A84FF;color:white;font-size:11px;font-weight:700;padding:4px 14px;border-radius:100px;white-space:nowrap">⭐ RECOMENDADO</div>
+      <div style="font-size:48px;margin-bottom:12px">📱</div>
+      <div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;margin-bottom:8px">Probar desde el Celular</div>
+      <div style="color:#8E8E93;font-size:14px;margin-bottom:20px;line-height:1.6">Accede al demo al instante desde tu teléfono. Sin descargar nada. Ideal para ver cómo trabajan los cobradores en la calle.</div>
+      <ul style="list-style:none;text-align:left;margin-bottom:24px">
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Sin descarga — entra directo</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Ver ruta del día</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Simular cobros en tiempo real</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Datos ficticios de ejemplo</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#FF9F0A;font-weight:700">⚠</span> Solo vista del cobrador</li>
       </ul>
-      <div id="demoBtnWrap"></div>
-      <script>
-        var isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
-        var wrap = document.getElementById('demoBtnWrap');
-        if(isMobile){
-          wrap.innerHTML = '<a href="https://app.capitalprosystem.com/demo" class="btn-primary" style="justify-content:center;margin-bottom:10px">📱 Probar Demo en el Celular</a><div style="text-align:center;color:#8E8E93;font-size:12px;margin-top:6px">Vista del cobrador con datos de ejemplo</div>';
-        } else {
-          wrap.innerHTML = '<a href="https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.1-demo/Instalar_SistemaPrestamos_DEMO.exe" class="btn-primary" style="justify-content:center;margin-bottom:10px">📥 Descargar Demo para PC</a><a href="https://app.capitalprosystem.com/demo" style="display:block;text-align:center;color:#0A84FF;font-size:13px;margin-top:8px;text-decoration:none">📱 Ver demo en el celular →</a>';
-        }
-      </script>
+      <a href="https://app.capitalprosystem.com/demo" class="btn-primary" style="justify-content:center;display:flex">📱 Probar Ahora — Gratis</a>
     </div>
-    <div class="pricing-card featured">
-      <div class="featured-badge">⭐ MÁS POPULAR</div>
-      <div class="pricing-name">Versión Completa</div>
-      <div class="pricing-price" style="font-size:24px;margin:16px 0">Consulta el precio<br><span>por WhatsApp</span></div>
-      <ul class="pricing-features">
-        <li>Clientes ilimitados</li>
-        <li>Préstamos ilimitados</li>
-        <li>App para cobradores incluida</li>
-        <li>Actualizaciones de por vida</li>
-        <li>Soporte técnico incluido</li>
+
+    <!-- PC -->
+    <div style="background:#1C1C1E;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:32px 28px;text-align:center">
+      <div style="font-size:48px;margin-bottom:12px">🖥️</div>
+      <div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;margin-bottom:8px">Demo Completo para PC</div>
+      <div style="color:#8E8E93;font-size:14px;margin-bottom:20px;line-height:1.6">Descarga el sistema completo en tu PC con Windows y explora todas las funciones del administrador.</div>
+      <ul style="list-style:none;text-align:left;margin-bottom:24px">
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Panel de administrador completo</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Hasta 10 clientes y 20 préstamos</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Capital, ganancias e intereses</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Reportes y recibos PDF</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Solo para Windows</li>
       </ul>
-      <a href="https://wa.me/18093412682" target="_blank" class="btn-primary" style="justify-content:center;background:#25D366">💬 Contactar por WhatsApp</a>
+      <a href="https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.1-demo/Instalar_SistemaPrestamos_DEMO.exe" class="btn-primary" style="justify-content:center;display:flex;background:#2C2C2E;border:1px solid rgba(255,255,255,0.1)">📥 Descargar Demo para PC</a>
     </div>
+
+    <!-- COMPLETO -->
+    <div style="background:#1C1C1E;border:1px solid rgba(48,209,88,0.3);border-radius:20px;padding:32px 28px;text-align:center">
+      <div style="font-size:48px;margin-bottom:12px">💎</div>
+      <div style="font-family:Syne,sans-serif;font-size:20px;font-weight:800;margin-bottom:8px">Sistema Completo</div>
+      <div style="color:#8E8E93;font-size:14px;margin-bottom:20px;line-height:1.6">Sistema de escritorio + App para cobradores. Clientes y préstamos ilimitados.</div>
+      <ul style="list-style:none;text-align:left;margin-bottom:24px">
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Clientes y préstamos ilimitados</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> App para cobradores incluida</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Actualizaciones de por vida</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Soporte técnico incluido</li>
+        <li style="padding:6px 0;font-size:14px;color:#8E8E93;display:flex;align-items:center;gap:8px"><span style="color:#30D158;font-weight:700">✓</span> Funciona en cualquier país</li>
+      </ul>
+      <a href="https://wa.me/18093412682" target="_blank" class="btn-primary" style="justify-content:center;display:flex;background:#25D366">💬 Consultar por WhatsApp</a>
+    </div>
+
   </div>
 </section>
 
