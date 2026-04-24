@@ -1,5 +1,5 @@
 {
-    "version": "5.5.9",
-    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.9/Instalar_CapitalPro_v5.5.9.exe",
-    "notas": "- Login via servidor\n- Sistema de licencias activo\n- Verificacion de licencia al abrir\n- Usuario admin local bloqueado\n- Sincronizacion automatica mejorada"
+    "version": "5.5.12",
+    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.12/Instalar_CapitalPro_v5.5.12.exe",
+    "notas": "- Fix: Error 403 Cloudflare resuelto\n- Fix: Login y sync funcionando correctamente\n- Fix: Panel maestro muestra licencias correctamente"
 }
