@@ -129,7 +129,13 @@ label{color:var(--muted);font-size:11px;font-weight:600;display:block;margin-bot
 <!-- ═══════════════ ADMIN — PANTALLA BUSCAR ═══════════════ -->
 <div id="adminBuscarScreen" class="screen">
   <div class="topbar"><h1>🔍 Buscar Cliente</h1></div>
-  <div class="content" id="adminBuscarContent"></div>
+  <div class="content">
+    <div class="search-wrap">
+      <span style="font-size:18px;color:var(--muted)">🔍</span>
+      <input class="search-input" id="buscarInput" type="text" placeholder="Nombre, cédula o teléfono..." oninput="filtrarClientes(this.value)">
+    </div>
+    <div id="adminBuscarContent"></div>
+  </div>
   <div class="bottomnav">
     <div class="navitem" onclick="adminShowHoy()"><span>📋</span><p>Hoy</p></div>
     <div class="navitem active" onclick="adminShowBuscar()"><span>🔍</span><p>Buscar</p></div>
@@ -312,8 +318,9 @@ function filtrarHoy(q){
 // ══════════════════════════════════════════════════════════════════════════════
 // ADMIN — PANTALLA BUSCAR
 // ══════════════════════════════════════════════════════════════════════════════
-async function adminShowBuscar(filtroEstado){
+async function adminShowBuscar(){
   showScreen('adminBuscarScreen');setActiveNav('adminBuscarScreen',1);
+  document.getElementById('buscarInput').value='';
   if(_clientes.length===0){
     document.getElementById('adminBuscarContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
     try{
@@ -324,22 +331,18 @@ async function adminShowBuscar(filtroEstado){
       _clientes=rc;_rutaMap={};rr.forEach(r=>_rutaMap[r.id]=r.nombre);
     }catch(e){document.getElementById('adminBuscarContent').innerHTML='<div class="loading">❌ Error</div>';return;}
   }
-  renderBuscar('', filtroEstado||'');
+  filtrarClientes('');
+  setTimeout(()=>document.getElementById('buscarInput').focus(),300);
 }
 
-function renderBuscar(q, filtroEstado){
-  // Combinar datos de clientes con estado de mora/atraso de rutaData
-  const rutaMap2={};
-  _rutaData.forEach(p=>{rutaMap2[p.cliente_id||p.id]={estado:p.estado_pago,dias:p.dias_atraso,cuota:p.cuota_monto};});
-
+function filtrarClientes(q){
   let lista=_clientes;
-  if(q) lista=lista.filter(c=>c.nombre.toLowerCase().includes(q.toLowerCase())||(c.cedula&&c.cedula.includes(q))||(c.telefono&&c.telefono.includes(q)));
-
+  if(q) lista=lista.filter(c=>
+    c.nombre.toLowerCase().includes(q.toLowerCase())||
+    (c.cedula&&c.cedula.includes(q))||
+    (c.telefono&&c.telefono.includes(q))
+  );
   document.getElementById('adminBuscarContent').innerHTML=`
-    <div class="search-wrap">
-      <span style="font-size:18px;color:var(--muted)">🔍</span>
-      <input class="search-input" type="text" placeholder="Nombre, cédula o teléfono..." oninput="renderBuscar(this.value,'${filtroEstado}')" value="${q}" autofocus>
-    </div>
     <div class="section-title">${lista.length} cliente${lista.length!==1?'s':''}</div>
     ${lista.map(c=>`
       <div class="item">
@@ -576,25 +579,23 @@ const urlEmpresa=urlParts.find(p=>p.startsWith('CP-'));
 if(urlEmpresa){localStorage.setItem('cp_empresa_id',urlEmpresa);document.getElementById('empresaId').value=urlEmpresa;}
 document.getElementById('password').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
 </script>
-<button class="fab-top" id="fabTop" onclick="scrollTop()">↑</button>
+<button class="fab-top" id="fabTop" onclick="irArriba()">↑</button>
 <script>
-function scrollTop(){
-  document.querySelectorAll('.content').forEach(c=>{c.scrollTop=0;});
-  window.scrollTo(0,0);
+function irArriba(){
+  const activo=document.querySelector('.screen.active .content');
+  if(activo) activo.scrollTo({top:0,behavior:'smooth'});
 }
-// Mostrar botón cuando se scrollea
-document.addEventListener('scroll', function(){
+document.addEventListener('scroll',chkScroll,{passive:true});
+function chkScroll(){
   const fab=document.getElementById('fabTop');
-  if(window.scrollY>200) fab.classList.add('visible');
-  else fab.classList.remove('visible');
-}, {passive:true});
-// También detectar scroll dentro de .content
-document.querySelectorAll('.content').forEach(c=>{
-  c.addEventListener('scroll', function(){
-    const fab=document.getElementById('fabTop');
-    if(c.scrollTop>200) fab.classList.add('visible');
-    else fab.classList.remove('visible');
-  },{passive:true});
+  const activo=document.querySelector('.screen.active .content');
+  const scrolled=activo?activo.scrollTop>150:window.scrollY>150;
+  fab.style.display=scrolled?'flex':'none';
+}
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.content').forEach(function(c){
+    c.addEventListener('scroll',chkScroll,{passive:true});
+  });
 });
 </script>
 </body>
