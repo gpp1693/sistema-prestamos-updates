@@ -5,60 +5,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>CapitalPro</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#1C1C1E;color:#F2F2F7;font-family:-apple-system,sans-serif;max-width:480px;margin:0 auto;min-height:100vh}
+/* ── iOS Dark — igual al sistema Windows ── */
+:root{
+  --bg:      #1C1C1E;
+  --panel:   #2C2C2E;
+  --card:    #3A3A3C;
+  --border:  #48484A;
+  --accent:  #0A84FF;
+  --accent2: #0066CC;
+  --success: #30D158;
+  --warning: #FF9F0A;
+  --danger:  #FF453A;
+  --purple:  #BF5AF2;
+  --teal:    #5AC8FA;
+  --text:    #F2F2F7;
+  --muted:   #8E8E93;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;max-width:480px;margin:0 auto;min-height:100vh}
 .screen{display:none;flex-direction:column;min-height:100vh}
 .screen.active{display:flex}
-.topbar{background:#2C2C2E;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #3A3A3C;flex-shrink:0}
-.topbar h1{font-size:17px;font-weight:700}
+
+/* Topbar */
+.topbar{background:var(--panel);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0}
+.topbar h1{font-size:17px;font-weight:700;color:var(--text)}
+.topbar-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* Content */
 .content{flex:1;padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.card{background:#2C2C2E;border-radius:12px;padding:14px;margin-bottom:10px}
-.card-label{color:#8E8E93;font-size:11px;margin-bottom:4px}
-.card-val{font-size:22px;font-weight:700}
+
+/* Cards */
+.card{background:var(--panel);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--border)}
+.card-label{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.card-val{font-size:22px;font-weight:700;color:var(--text)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
-.green{color:#30D158}.blue{color:#0A84FF}.orange{color:#FF9F0A}.red{color:#FF453A}.white{color:#F2F2F7}.purple{color:#BF5AF2}
-.item{background:#2C2C2E;border-radius:12px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.item:active{background:#3A3A3C}
-.item-name{font-size:14px;font-weight:600;margin-bottom:2px}
-.item-sub{color:#8E8E93;font-size:11px;margin-top:2px}
-.badge{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700}
-.badge-green{background:rgba(48,209,88,.15);color:#30D158}
-.badge-yellow{background:rgba(255,159,10,.15);color:#FF9F0A}
-.badge-red{background:rgba(255,69,58,.15);color:#FF453A}
-.badge-blue{background:rgba(10,132,255,.15);color:#0A84FF}
-.badge-purple{background:rgba(191,90,242,.15);color:#BF5AF2}
-.btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;font-family:-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
-.btn-blue{background:#0A84FF;color:white}
-.btn-green{background:#30D158;color:white}
-.btn-gray{background:#3A3A3C;color:#F2F2F7}
-.btn-red{background:#FF453A;color:white}
-.btn-orange{background:#FF9F0A;color:white}
-.field{width:100%;background:#2C2C2E;border:1px solid #3A3A3C;border-radius:10px;padding:12px;color:#F2F2F7;font-size:16px;margin-bottom:10px;font-family:-apple-system,sans-serif}
-.field:focus{border-color:#0A84FF;outline:none}
-label{color:#8E8E93;font-size:11px;font-weight:600;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
-.section-title{color:#8E8E93;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
-.bottomnav{background:#2C2C2E;border-top:1px solid #3A3A3C;display:flex;justify-content:space-around;padding:8px 0 20px;flex-shrink:0}
-.navitem{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px 10px;-webkit-tap-highlight-color:transparent}
-.navitem span{font-size:20px}
-.navitem p{font-size:9px;color:#8E8E93}
-.navitem.active p{color:#0A84FF}
-.info-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #3A3A3C}
+
+/* Colors */
+.green{color:var(--success)}
+.blue{color:var(--accent)}
+.orange{color:var(--warning)}
+.red{color:var(--danger)}
+.purple{color:var(--purple)}
+.teal{color:var(--teal)}
+.muted{color:var(--muted)}
+
+/* Items lista */
+.item{background:var(--panel);border-radius:12px;padding:13px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border:1px solid var(--border);transition:background .1s}
+.item:active{background:var(--card)}
+.item-name{font-size:14px;font-weight:600;margin-bottom:2px;color:var(--text)}
+.item-sub{color:var(--muted);font-size:11px;margin-top:2px}
+
+/* Badges */
+.badge{padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;display:inline-block}
+.badge-green{background:rgba(48,209,88,.15);color:var(--success)}
+.badge-yellow{background:rgba(255,159,10,.15);color:var(--warning)}
+.badge-red{background:rgba(255,69,58,.15);color:var(--danger)}
+.badge-blue{background:rgba(10,132,255,.15);color:var(--accent)}
+.badge-purple{background:rgba(191,90,242,.15);color:var(--purple)}
+
+/* Botones */
+.btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;font-family:inherit;letter-spacing:.2px}
+.btn-blue{background:var(--accent);color:#fff}
+.btn-blue:active{background:var(--accent2)}
+.btn-green{background:var(--success);color:#fff}
+.btn-green:active{opacity:.85}
+.btn-gray{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.btn-red{background:var(--danger);color:#fff}
+.btn-orange{background:var(--warning);color:#fff}
+
+/* Campos */
+.field{width:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-size:16px;margin-bottom:10px;font-family:inherit;-webkit-appearance:none}
+.field:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(10,132,255,.2)}
+select.field{background-image:none}
+label{color:var(--muted);font-size:11px;font-weight:600;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+
+/* Section title */
+.section-title{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;margin-top:4px}
+
+/* Bottom nav */
+.bottomnav{background:var(--panel);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:8px 0 20px;flex-shrink:0}
+.navitem{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 12px;border-radius:10px}
+.navitem span{font-size:22px}
+.navitem p{font-size:9px;color:var(--muted);font-weight:600;letter-spacing:.3px}
+.navitem.active p{color:var(--accent)}
+.navitem.active span{filter:drop-shadow(0 0 4px var(--accent))}
+
+/* Info rows */
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
 .info-row:last-child{border-bottom:none}
-.info-label{color:#8E8E93;font-size:13px}
-.info-val{font-size:13px;font-weight:600}
-.logo{text-align:center;padding:32px 20px 16px}
-.logo-icon{width:70px;height:70px;background:#0A84FF;border-radius:18px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:30px}
-.logo h2{font-size:24px;font-weight:800}
-.logo p{color:#8E8E93;font-size:13px;margin-top:4px}
-.error{background:rgba(255,69,58,.15);color:#FF453A;padding:10px;border-radius:8px;font-size:13px;margin-bottom:12px;display:none}
-.total-card{background:#2C2C2E;border-radius:12px;padding:14px;margin-bottom:14px;text-align:center}
-.total-label{color:#8E8E93;font-size:11px;margin-bottom:4px}
-.total-val{color:#30D158;font-size:24px;font-weight:800}
-.role-badge{font-size:11px;padding:3px 10px;border-radius:100px;font-weight:600}
-.loading{text-align:center;padding:32px;color:#8E8E93;font-size:14px}
-.mora-banner{background:rgba(255,69,58,.15);border:1px solid rgba(255,69,58,.3);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12px;color:#FF453A;font-weight:600}
-.ruta-banner{background:rgba(10,132,255,.1);border:1px solid rgba(10,132,255,.2);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:#0A84FF}
+.info-label{color:var(--muted);font-size:13px}
+.info-val{font-size:13px;font-weight:600;color:var(--text)}
+
+/* Login */
+.logo{text-align:center;padding:40px 20px 20px}
+.logo-icon{width:76px;height:76px;background:var(--accent);border-radius:20px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 8px 24px rgba(10,132,255,.35)}
+.logo h2{font-size:26px;font-weight:800;color:var(--text)}
+.logo p{color:var(--muted);font-size:13px;margin-top:4px}
+
+/* Error */
+.error{background:rgba(255,69,58,.12);color:var(--danger);padding:11px 14px;border-radius:10px;font-size:13px;margin-bottom:12px;display:none;border:1px solid rgba(255,69,58,.25)}
+
+/* Total card */
+.total-card{background:var(--panel);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center;border:1px solid var(--border)}
+.total-label{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.total-val{color:var(--success);font-size:26px;font-weight:800}
+
+/* Role badge */
+.role-badge{font-size:11px;padding:4px 10px;border-radius:100px;font-weight:700}
+
+/* Loading */
+.loading{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+
+/* Mora banner */
+.mora-banner{background:rgba(255,69,58,.1);border:1px solid rgba(255,69,58,.25);border-radius:10px;padding:10px 14px;margin-bottom:10px;font-size:12px;color:var(--danger);font-weight:600}
+
+/* Highlight card (azul) */
+.card-highlight{background:var(--accent);border-radius:14px;padding:16px;margin-bottom:14px;border:none}
+.card-highlight *{color:#fff !important}
 </style>
 </head>
 <body>
@@ -73,25 +137,25 @@ label{color:#8E8E93;font-size:11px;font-weight:600;display:block;margin-bottom:5
   <div class="content">
     <div id="loginError" class="error"></div>
     <label>Usuario</label>
-    <input id="usuario" class="field" type="text" autocomplete="username">
+    <input id="usuario" class="field" type="text" autocomplete="username" placeholder="Tu usuario">
     <label>Contraseña</label>
-    <input id="password" class="field" type="password" autocomplete="current-password">
+    <input id="password" class="field" type="password" autocomplete="current-password" placeholder="••••••••">
     <button class="btn btn-blue" onclick="doLogin()">Iniciar Sesión →</button>
-    <div id="empresaWrap" style="display:none;margin-top:12px">
+    <div id="empresaWrap" style="display:none;margin-top:14px">
       <label>Código de Empresa</label>
       <input id="empresaId" class="field" type="text" placeholder="CP-XXXXXX">
-      <div style="font-size:11px;color:#8E8E93;text-align:center">Solicitado solo la primera vez</div>
+      <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px">Solicitado solo la primera vez</div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ VISTA ADMIN ═══════════════ -->
+<!-- ═══════════════ ADMIN ═══════════════ -->
 <div id="adminDashScreen" class="screen">
   <div class="topbar">
-    <div><h1>CapitalPro</h1><div style="font-size:11px;color:#8E8E93" id="adminWelcome"></div></div>
+    <div><h1>CapitalPro</h1><div class="topbar-sub" id="adminWelcome"></div></div>
     <div style="display:flex;gap:8px;align-items:center">
-      <span class="role-badge" style="background:rgba(10,132,255,.15);color:#0A84FF">👑 Admin</span>
-      <span onclick="logout()" style="color:#FF453A;font-size:13px;cursor:pointer">Salir</span>
+      <span class="role-badge" style="background:rgba(10,132,255,.15);color:var(--accent)">👑 Admin</span>
+      <span onclick="logout()" style="color:var(--danger);font-size:13px;cursor:pointer;font-weight:600">Salir</span>
     </div>
   </div>
   <div class="content" id="adminDashContent"></div>
@@ -152,13 +216,13 @@ label{color:#8E8E93;font-size:11px;font-weight:600;display:block;margin-bottom:5
   </div>
 </div>
 
-<!-- ═══════════════ VISTA COBRADOR ═══════════════ -->
+<!-- ═══════════════ COBRADOR ═══════════════ -->
 <div id="cobradorRutaScreen" class="screen">
   <div class="topbar">
-    <div><h1>🗺️ Mi Ruta</h1><div style="font-size:11px;color:#8E8E93" id="cobradorWelcome"></div></div>
+    <div><h1>🗺️ Mi Ruta</h1><div class="topbar-sub" id="cobradorWelcome"></div></div>
     <div style="display:flex;gap:8px;align-items:center">
-      <span class="role-badge" style="background:rgba(48,209,88,.15);color:#30D158">💰 Cobrador</span>
-      <span onclick="logout()" style="color:#FF453A;font-size:13px;cursor:pointer">Salir</span>
+      <span class="role-badge" style="background:rgba(48,209,88,.15);color:var(--success)">💰 Cobrador</span>
+      <span onclick="logout()" style="color:var(--danger);font-size:13px;cursor:pointer;font-weight:600">Salir</span>
     </div>
   </div>
   <div class="content" id="cobradorRutaContent"></div>
@@ -181,7 +245,7 @@ label{color:#8E8E93;font-size:11px;font-weight:600;display:block;margin-bottom:5
 <div id="pagoScreen" class="screen">
   <div class="topbar">
     <h1>💰 Registrar Pago</h1>
-    <span onclick="volverRuta()" style="cursor:pointer;color:#0A84FF;font-size:14px">← Volver</span>
+    <span onclick="volverRuta()" style="cursor:pointer;color:var(--accent);font-size:14px;font-weight:600">← Volver</span>
   </div>
   <div class="content" id="pagoContent"></div>
 </div>
@@ -192,14 +256,13 @@ let SESSION={usuario:null,nombre:null,rol:null,empresaId:null};
 let currentPrestamo=null;
 let pagosCobrados=[];
 let moraConfig={dias_atraso:7,porcentaje:5.0,activo:1};
-let rutaNombre='';
 
 function fmt(n){return 'RD$'+parseFloat(n||0).toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function hoy(){return new Date().toISOString().split('T')[0];}
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function hdrs(){return {'Content-Type':'application/json','X-Empresa-ID':SESSION.empresaId||'','X-Usuario':SESSION.usuario||''};}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function hdrs(){return{'Content-Type':'application/json','X-Empresa-ID':SESSION.empresaId||'','X-Usuario':SESSION.usuario||''};}
 
-// ── LOGIN ─────────────────────────────────────────────────────────────────────
+// ── LOGIN ──────────────────────────────────────────────────────────────────
 async function doLogin(){
   const u=document.getElementById('usuario').value.trim();
   const p=document.getElementById('password').value;
@@ -218,11 +281,7 @@ async function doLogin(){
       localStorage.setItem('cp_empresa_id',eid);
       localStorage.setItem('cp_usuario',u);
       document.getElementById('empresaWrap').style.display='none';
-      // Cargar config de mora
-      try{
-        const mc=await fetch(API+'/api/mora-config',{headers:hdrs()});
-        moraConfig=await mc.json();
-      }catch(e){}
+      try{const mc=await fetch(API+'/api/mora-config',{headers:hdrs()});moraConfig=await mc.json();}catch(e){}
       iniciarSesion();
     }else{err.textContent=d.msg||'Credenciales incorrectas';err.style.display='block';}
   }catch(e){err.textContent='Error de conexión con el servidor';err.style.display='block';}
@@ -241,10 +300,10 @@ function iniciarSesion(){
 function logout(){SESSION={};pagosCobrados=[];showScreen('loginScreen');}
 function volverRuta(){if(SESSION.rol==='admin')adminShowRuta();else cobradorShowRuta();}
 
-function setActiveNav(screenId,navIndex){
-  const screen=document.getElementById(screenId);
-  if(!screen)return;
-  screen.querySelectorAll('.navitem').forEach((n,i)=>n.classList.toggle('active',i===navIndex));
+function setActiveNav(screenId,idx){
+  const s=document.getElementById(screenId);
+  if(!s)return;
+  s.querySelectorAll('.navitem').forEach((n,i)=>n.classList.toggle('active',i===idx));
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -252,7 +311,7 @@ function setActiveNav(screenId,navIndex){
 // ══════════════════════════════════════════════════════════════════════════════
 async function adminShowDash(){
   showScreen('adminDashScreen');setActiveNav('adminDashScreen',0);
-  document.getElementById('adminDashContent').innerHTML='<div class="loading">Cargando...</div>';
+  document.getElementById('adminDashContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
   try{
     const[rd,rr]=await Promise.all([
       fetch(API+'/api/dashboard',{headers:hdrs()}).then(r=>r.json()),
@@ -266,27 +325,27 @@ async function adminShowDash(){
         <div class="card"><div class="card-label">Capital en Calle</div><div class="card-val orange">${fmt(rd.capital_calle)}</div></div>
         <div class="card"><div class="card-label">Intereses del Mes</div><div class="card-val green">${fmt(rd.intereses_mes)}</div></div>
         <div class="card"><div class="card-label">Préstamos Activos</div><div class="card-val blue">${rd.activos}</div></div>
-        <div class="card"><div class="card-label">Total Clientes</div><div class="card-val white">${rd.clientes}</div></div>
+        <div class="card"><div class="card-label">Total Clientes</div><div class="card-val">${rd.clientes}</div></div>
       </div>
-      <div class="section-title">Estado de Cobranza Hoy</div>
+      <div class="section-title">Cobranza de Hoy</div>
       <div class="grid2">
-        <div class="card"><div class="card-label">En Mora (+${moraConfig.dias_atraso} días)</div><div class="card-val red">${mora}</div></div>
+        <div class="card"><div class="card-label">En Mora (+${moraConfig.dias_atraso}d)</div><div class="card-val red">${mora}</div></div>
         <div class="card"><div class="card-label">Con Atraso</div><div class="card-val orange">${atraso}</div></div>
       </div>
-      <div class="card" style="background:#1C1C1E;border:1px solid #3A3A3C">
-        <div class="card-label">Config de Mora</div>
-        <div style="font-size:13px;color:#F2F2F7;margin-top:4px">
-          ${moraConfig.activo?'✅':'❌'} Mora automática: <b>${moraConfig.porcentaje}%</b> a partir de <b>${moraConfig.dias_atraso} días</b> de atraso
+      <div class="card" style="background:rgba(10,132,255,.08);border-color:rgba(10,132,255,.2)">
+        <div class="card-label">Config Mora Automática</div>
+        <div style="font-size:13px;color:var(--text);margin-top:4px">
+          ${moraConfig.activo?'✅':'❌'} <b>${moraConfig.porcentaje}%</b> a partir de <b>${moraConfig.dias_atraso} días</b> de atraso
         </div>
       </div>
       <button class="btn btn-blue" onclick="adminShowRuta()">🗺️ Ver Rutas de Hoy</button>
       <button class="btn btn-gray" onclick="adminShowPrestamos()">💳 Ver Préstamos</button>`;
-  }catch(e){document.getElementById('adminDashContent').innerHTML='<div class="loading">Error cargando datos</div>';}
+  }catch(e){document.getElementById('adminDashContent').innerHTML='<div class="loading">❌ Error cargando datos</div>';}
 }
 
 async function adminShowClientes(){
   showScreen('adminClientesScreen');setActiveNav('adminClientesScreen',1);
-  document.getElementById('adminClientesContent').innerHTML='<div class="loading">Cargando...</div>';
+  document.getElementById('adminClientesContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
   try{
     const[rc,rr]=await Promise.all([
       fetch(API+'/api/clientes',{headers:hdrs()}).then(r=>r.json()),
@@ -299,16 +358,17 @@ async function adminShowClientes(){
         <div class="item">
           <div>
             <div class="item-name">${c.nombre}</div>
-            <div class="item-sub">📋 ${c.cedula||'—'} ${c.telefono?'• 📞 '+c.telefono:''}</div>
-            ${c.ruta_id?`<div class="item-sub" style="color:#0A84FF">🗺️ ${rutaMap[c.ruta_id]||'Ruta #'+c.ruta_id}</div>`:'<div class="item-sub">🗺️ Sin ruta asignada</div>'}
+            <div class="item-sub">📋 ${c.cedula||'—'}${c.telefono?' &nbsp;📞 '+c.telefono:''}</div>
+            ${c.ruta_id?`<div class="item-sub" style="color:var(--accent)">🗺️ ${rutaMap[c.ruta_id]||'Ruta #'+c.ruta_id}</div>`:'<div class="item-sub">🗺️ Sin ruta</div>'}
           </div>
+          <span style="color:var(--muted);font-size:18px">›</span>
         </div>`).join('')||'<div class="loading">No hay clientes</div>'}`;
-  }catch(e){document.getElementById('adminClientesContent').innerHTML='<div class="loading">Error cargando</div>';}
+  }catch(e){document.getElementById('adminClientesContent').innerHTML='<div class="loading">❌ Error</div>';}
 }
 
 async function adminShowPrestamos(){
   showScreen('adminPrestamosScreen');setActiveNav('adminPrestamosScreen',2);
-  document.getElementById('adminPrestamosContent').innerHTML='<div class="loading">Cargando...</div>';
+  document.getElementById('adminPrestamosContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
   try{
     const r=await fetch(API+'/api/prestamos',{headers:hdrs()});
     const rows=await r.json();
@@ -318,7 +378,7 @@ async function adminShowPrestamos(){
         <div class="item" onclick='cobrar(${JSON.stringify(p)})'>
           <div>
             <div class="item-name">${p.cliente_nombre}</div>
-            <div class="item-sub">${p.frecuencia} • Cuota ${p.cuotas_pagadas}/${p.plazo_cuotas}</div>
+            <div class="item-sub">${p.frecuencia} • Cuota ${p.cuotas_pagadas}/${p.plazo_cuotas||'∞'}</div>
             <div class="item-sub">📞 ${p.telefono||'—'}</div>
           </div>
           <div style="text-align:right">
@@ -326,12 +386,12 @@ async function adminShowPrestamos(){
             <div class="item-sub">${fmt(p.saldo_pendiente)}</div>
           </div>
         </div>`).join('')||'<div class="loading">No hay préstamos</div>'}`;
-  }catch(e){document.getElementById('adminPrestamosContent').innerHTML='<div class="loading">Error cargando</div>';}
+  }catch(e){document.getElementById('adminPrestamosContent').innerHTML='<div class="loading">❌ Error</div>';}
 }
 
 async function adminShowPagos(){
   showScreen('adminPagosScreen');setActiveNav('adminPagosScreen',3);
-  document.getElementById('adminPagosContent').innerHTML='<div class="loading">Cargando...</div>';
+  document.getElementById('adminPagosContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
   try{
     const r=await fetch(API+'/api/pagos-recientes',{headers:hdrs()});
     const d=await r.json();
@@ -350,12 +410,12 @@ async function adminShowPagos(){
             <div class="item-sub">Saldo: ${fmt(p.saldo_tras)}</div>
           </div>
         </div>`).join('')||'<div class="loading">No hay pagos registrados</div>'}`;
-  }catch(e){document.getElementById('adminPagosContent').innerHTML='<div class="loading">Error cargando</div>';}
+  }catch(e){document.getElementById('adminPagosContent').innerHTML='<div class="loading">❌ Error</div>';}
 }
 
 async function adminShowRuta(){
   showScreen('adminRutaScreen');setActiveNav('adminRutaScreen',4);
-  document.getElementById('adminRutaContent').innerHTML='<div class="loading">Cargando...</div>';
+  document.getElementById('adminRutaContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
   try{
     const r=await fetch(API+'/api/ruta-hoy',{headers:hdrs()});
     const rows=await r.json();
@@ -365,7 +425,7 @@ async function adminShowRuta(){
       <div class="total-card">
         <div class="total-label">Total a cobrar hoy</div>
         <div class="total-val">${fmt(total)}</div>
-        <div class="total-label" style="margin-top:4px">${rows.length} clientes • Mora estimada: ${fmt(totalMora)}</div>
+        <div style="color:var(--muted);font-size:11px;margin-top:6px">${rows.length} clientes${totalMora>0?' • Mora est: '+fmt(totalMora):''}</div>
       </div>
       ${rows.map(p=>{
         const badge=p.estado_pago==='mora'?'badge-red':p.estado_pago==='atraso'?'badge-yellow':'badge-green';
@@ -376,23 +436,23 @@ async function adminShowRuta(){
             <div class="item-name ${nc}">${p.nombre||p.cliente_nombre}</div>
             <div class="item-sub">📞 ${p.telefono||'—'}</div>
             <div class="item-sub">📍 ${p.direccion||'—'}</div>
-            ${p.mora_auto>0?`<div class="item-sub" style="color:#FF453A">⚠ Mora: ${fmt(p.mora_auto)}</div>`:''}
+            ${p.mora_auto>0?`<div class="item-sub" style="color:var(--danger)">⚠ Mora: ${fmt(p.mora_auto)}</div>`:''}
           </div>
           <div style="text-align:right">
             <div class="item-name">${fmt(p.cuota_monto)}</div>
-            <div class="badge ${badge}" style="margin-top:4px">${label}</div>
+            <div class="badge ${badge}" style="margin-top:6px">${label}</div>
           </div>
         </div>`;
-      }).join('')||'<div class="loading">No hay cobros pendientes hoy</div>'}`;
-  }catch(e){document.getElementById('adminRutaContent').innerHTML='<div class="loading">Error cargando</div>';}
+      }).join('')||'<div class="loading">✅ No hay cobros pendientes hoy</div>'}`;
+  }catch(e){document.getElementById('adminRutaContent').innerHTML='<div class="loading">❌ Error</div>';}
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// COBRADOR — solo ve su ruta asignada
+// COBRADOR
 // ══════════════════════════════════════════════════════════════════════════════
 async function cobradorShowRuta(){
   showScreen('cobradorRutaScreen');
-  document.getElementById('cobradorRutaContent').innerHTML='<div class="loading">Cargando tu ruta...</div>';
+  document.getElementById('cobradorRutaContent').innerHTML='<div class="loading">⏳ Cargando tu ruta...</div>';
   try{
     const r=await fetch(API+'/api/ruta-cobrador',{headers:hdrs()});
     const rows=await r.json();
@@ -400,19 +460,18 @@ async function cobradorShowRuta(){
     const pendientes=rows.filter(p=>!cobradosIds.includes(p.id));
     const total=pendientes.reduce((a,p)=>a+p.cuota_monto,0);
     const totalMora=pendientes.reduce((a,p)=>a+(p.mora_auto||0),0);
-    const nombreRuta=rows.length>0&&rows[0].ruta_nombre?rows[0].ruta_nombre:'';
-    document.getElementById('cobradorWelcome').textContent='Hola, '+SESSION.nombre+(nombreRuta?' — '+nombreRuta:'');
+    document.getElementById('cobradorWelcome').textContent='Hola, '+SESSION.nombre;
     document.getElementById('cobradorRutaContent').innerHTML=`
       <div class="total-card">
         <div class="total-label">Por cobrar hoy</div>
         <div class="total-val">${fmt(total)}</div>
-        <div class="total-label" style="margin-top:4px">${pendientes.length} pendientes • ${pagosCobrados.length} cobrados</div>
-        ${totalMora>0?`<div class="total-label" style="color:#FF453A;margin-top:4px">⚠ Mora pendiente: ${fmt(totalMora)}</div>`:''}
+        <div style="color:var(--muted);font-size:11px;margin-top:6px">${pendientes.length} pendientes • ${pagosCobrados.length} cobrados</div>
+        ${totalMora>0?`<div style="color:var(--danger);font-size:11px;margin-top:4px;font-weight:600">⚠ Mora pendiente: ${fmt(totalMora)}</div>`:''}
       </div>
-      ${pendientes.length===0?`<div class="card" style="text-align:center">
-        <div style="font-size:32px;margin-bottom:8px">🎉</div>
-        <div style="font-weight:700;margin-bottom:4px">¡Ruta completada!</div>
-        <div style="color:#8E8E93;font-size:13px">Has cobrado todos los pendientes de hoy</div>
+      ${pendientes.length===0?`<div class="card" style="text-align:center;padding:24px">
+        <div style="font-size:40px;margin-bottom:10px">🎉</div>
+        <div style="font-weight:700;margin-bottom:6px;font-size:16px">¡Ruta completada!</div>
+        <div style="color:var(--muted);font-size:13px">Has cobrado todos los pendientes de hoy</div>
       </div>`:''}
       ${pendientes.map(p=>{
         const badge=p.estado_pago==='mora'?'badge-red':p.estado_pago==='atraso'?'badge-yellow':'badge-green';
@@ -423,15 +482,15 @@ async function cobradorShowRuta(){
             <div class="item-name ${nc}">${p.nombre||p.cliente_nombre}</div>
             <div class="item-sub">📞 ${p.telefono||'—'}</div>
             <div class="item-sub">📍 ${p.direccion||'—'}</div>
-            ${p.mora_auto>0?`<div class="item-sub" style="color:#FF453A">⚠ Mora automática: ${fmt(p.mora_auto)}</div>`:''}
+            ${p.mora_auto>0?`<div class="item-sub" style="color:var(--danger)">⚠ Mora: ${fmt(p.mora_auto)}</div>`:''}
           </div>
           <div style="text-align:right">
             <div class="item-name">${fmt(p.cuota_monto)}</div>
-            <div class="badge ${badge}" style="margin-top:4px">${label}</div>
+            <div class="badge ${badge}" style="margin-top:6px">${label}</div>
           </div>
         </div>`;
       }).join('')}`;
-  }catch(e){document.getElementById('cobradorRutaContent').innerHTML='<div class="loading">Error cargando ruta</div>';}
+  }catch(e){document.getElementById('cobradorRutaContent').innerHTML='<div class="loading">❌ Error cargando ruta</div>';}
 }
 
 function cobradorShowCobrados(){
@@ -441,19 +500,19 @@ function cobradorShowCobrados(){
     <div class="total-card">
       <div class="total-label">Total cobrado hoy</div>
       <div class="total-val">${fmt(totalCobrado)}</div>
-      <div class="total-label" style="margin-top:4px">${pagosCobrados.length} cobro(s) realizados</div>
+      <div style="color:var(--muted);font-size:11px;margin-top:6px">${pagosCobrados.length} cobro(s) realizados</div>
     </div>
     ${pagosCobrados.length===0?'<div class="loading">Aún no has registrado cobros hoy</div>':''}
     ${pagosCobrados.map(p=>`
       <div class="item">
         <div>
           <div class="item-name">${p.nombre}</div>
+          ${p.mora>0?`<div class="item-sub" style="color:var(--danger)">Mora cobrada: ${fmt(p.mora)}</div>`:''}
           <div class="item-sub">✅ Registrado hoy</div>
-          ${p.mora>0?`<div class="item-sub" style="color:#FF453A">Mora cobrada: ${fmt(p.mora)}</div>`:''}
         </div>
         <div style="text-align:right">
           <div class="item-name green">${fmt(p.monto)}</div>
-          <div class="badge badge-green">COBRADO</div>
+          <div class="badge badge-green" style="margin-top:6px">COBRADO</div>
         </div>
       </div>`).join('')}`;
 }
@@ -469,18 +528,19 @@ function cobrar(p){
   const int_q=(p.monto*(p.tasa_interes/100)).toFixed(2);
   const totalConMora=(parseFloat(p.cuota_monto)+moraAuto).toFixed(2);
   document.getElementById('pagoContent').innerHTML=`
-    <div class="card" style="background:#0A84FF;margin-bottom:14px">
-      <div style="font-size:15px;font-weight:700">${p.nombre||p.cliente_nombre}</div>
-      <div style="color:rgba(255,255,255,.7);font-size:12px">Préstamo #${p.id} • Cuota ${(p.cuotas_pagadas||0)+1}/${p.plazo_cuotas||'∞'}</div>
+    <div class="card-highlight" style="margin-bottom:14px">
+      <div style="font-size:16px;font-weight:700">${p.nombre||p.cliente_nombre}</div>
+      <div style="color:rgba(255,255,255,.75);font-size:12px;margin-top:4px">Préstamo #${p.id} • Cuota ${(p.cuotas_pagadas||0)+1}/${p.plazo_cuotas||'∞'}</div>
     </div>
-    ${esMora?`<div class="mora-banner">⚠ Cliente en mora hace ${p.dias_atraso} días — Mora automática aplicada: ${fmt(moraAuto)}</div>`:''}
-    <div class="info-row"><span class="info-label">Saldo pendiente</span><span class="info-val orange">${fmt(p.saldo_pendiente)}</span></div>
-    <div class="info-row"><span class="info-label">Cuota a cobrar</span><span class="info-val green">${fmt(p.cuota_monto)}</span></div>
-    <div class="info-row"><span class="info-label">Interés</span><span class="info-val">${fmt(int_q)}</span></div>
-    ${moraAuto>0?`<div class="info-row"><span class="info-label" style="color:#FF453A">Mora automática</span><span class="info-val red">${fmt(moraAuto)}</span></div>`:''}
-    ${moraAuto>0?`<div class="info-row"><span class="info-label">Total con mora</span><span class="info-val" style="color:#FF9F0A">${fmt(totalConMora)}</span></div>`:''}
-    <div class="info-row"><span class="info-label">Próxima cuota</span><span class="info-val">${p.proxima_cuota||'—'}</span></div>
-    <br>
+    ${esMora?`<div class="mora-banner">⚠ Cliente en mora hace ${p.dias_atraso} días — Mora automática: ${fmt(moraAuto)}</div>`:''}
+    <div class="card">
+      <div class="info-row"><span class="info-label">Saldo pendiente</span><span class="info-val orange">${fmt(p.saldo_pendiente)}</span></div>
+      <div class="info-row"><span class="info-label">Cuota a cobrar</span><span class="info-val green">${fmt(p.cuota_monto)}</span></div>
+      <div class="info-row"><span class="info-label">Interés</span><span class="info-val">${fmt(int_q)}</span></div>
+      ${moraAuto>0?`<div class="info-row"><span class="info-label" style="color:var(--danger)">Mora automática</span><span class="info-val red">${fmt(moraAuto)}</span></div>`:''}
+      ${moraAuto>0?`<div class="info-row"><span class="info-label">Total con mora</span><span class="info-val orange">${fmt(totalConMora)}</span></div>`:''}
+      <div class="info-row" style="border:none"><span class="info-label">Próxima cuota</span><span class="info-val">${p.proxima_cuota||'—'}</span></div>
+    </div>
     <label>Monto cobrado (RD$)</label>
     <input id="montoPago" class="field" type="number" value="${moraAuto>0?totalConMora:p.cuota_monto}" step="0.01">
     <label>Mora (RD$)</label>
@@ -508,19 +568,15 @@ async function guardarPago(){
     });
     const d=await r.json();
     if(d.ok){
-      pagosCobrados.push({
-        prestamo_id:currentPrestamo.id,
-        nombre:currentPrestamo.nombre||currentPrestamo.cliente_nombre,
-        monto,mora
-      });
+      pagosCobrados.push({prestamo_id:currentPrestamo.id,nombre:currentPrestamo.nombre||currentPrestamo.cliente_nombre,monto,mora});
       document.getElementById('pagoContent').innerHTML=`
-        <div style="text-align:center;padding:40px 20px">
-          <div style="font-size:56px;margin-bottom:16px">✅</div>
-          <div style="font-size:20px;font-weight:800;margin-bottom:8px">¡Pago registrado!</div>
-          <div style="color:#8E8E93;font-size:14px;margin-bottom:8px">${currentPrestamo.nombre||currentPrestamo.cliente_nombre}</div>
-          <div style="font-size:24px;font-weight:700;color:#30D158;margin-bottom:4px">${fmt(monto)}</div>
-          ${mora>0?`<div style="color:#FF453A;font-size:13px;margin-bottom:4px">Mora cobrada: ${fmt(mora)}</div>`:''}
-          <div style="color:#8E8E93;font-size:13px;margin-bottom:32px">Nuevo saldo: ${fmt(d.nuevo_saldo)}${d.estado==='pagado'?'<br><span style="color:#30D158;font-weight:700">🎉 ¡PRÉSTAMO SALDADO!</span>':''}</div>
+        <div style="text-align:center;padding:48px 20px">
+          <div style="font-size:64px;margin-bottom:16px">✅</div>
+          <div style="font-size:22px;font-weight:800;margin-bottom:8px">¡Pago registrado!</div>
+          <div style="color:var(--muted);font-size:14px;margin-bottom:10px">${currentPrestamo.nombre||currentPrestamo.cliente_nombre}</div>
+          <div style="font-size:28px;font-weight:800;color:var(--success);margin-bottom:6px">${fmt(monto)}</div>
+          ${mora>0?`<div style="color:var(--danger);font-size:13px;margin-bottom:6px">Mora cobrada: ${fmt(mora)}</div>`:''}
+          <div style="color:var(--muted);font-size:13px;margin-bottom:32px">Nuevo saldo: ${fmt(d.nuevo_saldo)}${d.estado==='pagado'?'<br><span style="color:var(--success);font-weight:700;font-size:15px">🎉 ¡PRÉSTAMO SALDADO!</span>':''}</div>
           <button class="btn btn-blue" onclick="volverRuta()">← Volver a la ruta</button>
         </div>`;
     }else{
@@ -530,7 +586,7 @@ async function guardarPago(){
   }catch(e){btn.textContent='💾 Confirmar Pago';btn.disabled=false;alert('Error de conexión');}
 }
 
-// ── INICIO ───────────────────────────────────────────────────────────────────
+// ── INICIO ────────────────────────────────────────────────────────────────────
 const savedEid=localStorage.getItem('cp_empresa_id');
 const savedUser=localStorage.getItem('cp_usuario');
 if(savedEid)document.getElementById('empresaId').value=savedEid;
