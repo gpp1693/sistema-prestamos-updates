@@ -81,8 +81,7 @@ label{color:var(--muted);font-size:11px;font-weight:600;display:block;margin-bot
 .total-label{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
 .total-val{color:var(--success);font-size:26px;font-weight:800}
 /* Botón flotante scroll arriba */
-.fab-top{position:fixed;bottom:90px;right:16px;width:44px;height:44px;background:var(--accent);border-radius:50%;border:none;color:#fff;font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(10,132,255,.4);z-index:999;font-family:inherit}
-.fab-top.visible{display:flex}
+.fab-top{position:fixed;bottom:90px;right:16px;width:48px;height:48px;background:var(--accent);border-radius:50%;border:none;color:#fff;font-size:22px;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(10,132,255,.5);z-index:9999;font-family:inherit;line-height:1}
 </style>
 </head>
 <body>
@@ -581,22 +580,25 @@ document.getElementById('password').addEventListener('keypress',e=>{if(e.key==='
 </script>
 <button class="fab-top" id="fabTop" onclick="irArriba()">↑</button>
 <script>
+var fabVisible=false;
 function irArriba(){
-  const activo=document.querySelector('.screen.active .content');
-  if(activo) activo.scrollTo({top:0,behavior:'smooth'});
+  var activo=document.querySelector('.screen.active .content');
+  if(activo){activo.scrollTop=0;}
+  window.scrollTo(0,0);
 }
-document.addEventListener('scroll',chkScroll,{passive:true});
-function chkScroll(){
-  const fab=document.getElementById('fabTop');
-  const activo=document.querySelector('.screen.active .content');
-  const scrolled=activo?activo.scrollTop>150:window.scrollY>150;
+function chkFab(){
+  var fab=document.getElementById('fabTop');
+  var activo=document.querySelector('.screen.active .content');
+  var scrolled=(activo&&activo.scrollTop>150)||(window.scrollY>150);
   fab.style.display=scrolled?'flex':'none';
 }
-document.addEventListener('DOMContentLoaded',function(){
+window.addEventListener('scroll',chkFab,{passive:true});
+setInterval(chkFab,300);
+setTimeout(function(){
   document.querySelectorAll('.content').forEach(function(c){
-    c.addEventListener('scroll',chkScroll,{passive:true});
+    c.addEventListener('scroll',chkFab,{passive:true});
   });
-});
+},1000);
 </script>
 </body>
 </html>
