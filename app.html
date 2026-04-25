@@ -12,12 +12,12 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;max-width:480px;margin:0 auto;min-height:100vh}
-.screen{display:none;flex-direction:column;min-height:100vh}
+.screen{display:none;flex-direction:column;height:100vh;max-height:100vh}
 .screen.active{display:flex}
 .topbar{background:var(--panel);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0}
 .topbar h1{font-size:17px;font-weight:700}
 .topbar-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.content{flex:1;padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.content{flex:1;padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch;height:0}
 .card{background:var(--panel);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--border)}
 .item{background:var(--panel);border-radius:12px;padding:13px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border:1px solid var(--border)}
 .item:active{background:var(--card)}
@@ -80,8 +80,10 @@ label{color:var(--muted);font-size:11px;font-weight:600;display:block;margin-bot
 .total-card{background:var(--panel);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center;border:1px solid var(--border)}
 .total-label{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
 .total-val{color:var(--success);font-size:26px;font-weight:800}
-/* Botón flotante scroll arriba */
-.fab-top{position:fixed;bottom:90px;right:16px;width:48px;height:48px;background:var(--accent);border-radius:50%;border:none;color:#fff;font-size:22px;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(10,132,255,.5);z-index:9999;font-family:inherit;line-height:1}
+/* Botón arriba en topbar */
+.btn-arriba{background:rgba(10,132,255,.15);color:var(--accent);border:none;border-radius:8px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+/* Botón flotante */
+.fab{position:fixed;bottom:85px;right:16px;width:46px;height:46px;background:var(--accent);border-radius:50%;border:none;color:#fff;font-size:20px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(10,132,255,.45);z-index:9999;display:none;align-items:center;justify-content:center;font-family:inherit}
 </style>
 </head>
 <body>
@@ -127,7 +129,7 @@ label{color:var(--muted);font-size:11px;font-weight:600;display:block;margin-bot
 
 <!-- ═══════════════ ADMIN — PANTALLA BUSCAR ═══════════════ -->
 <div id="adminBuscarScreen" class="screen">
-  <div class="topbar"><h1>🔍 Buscar Cliente</h1></div>
+  <div class="topbar"><h1>🔍 Buscar Cliente</h1><button class="btn-arriba" onclick="irArriba()">↑ Arriba</button></div>
   <div class="content">
     <div class="search-wrap">
       <span style="font-size:18px;color:var(--muted)">🔍</span>
@@ -578,27 +580,27 @@ const urlEmpresa=urlParts.find(p=>p.startsWith('CP-'));
 if(urlEmpresa){localStorage.setItem('cp_empresa_id',urlEmpresa);document.getElementById('empresaId').value=urlEmpresa;}
 document.getElementById('password').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
 </script>
-<button class="fab-top" id="fabTop" onclick="irArriba()">↑</button>
+<button class="fab" id="fabBtn" onclick="irArriba()">↑</button>
 <script>
-var fabVisible=false;
 function irArriba(){
-  var activo=document.querySelector('.screen.active .content');
-  if(activo){activo.scrollTop=0;}
-  window.scrollTo(0,0);
+  var c=document.querySelector('.screen.active .content');
+  if(c) c.scrollTop=0;
 }
-function chkFab(){
-  var fab=document.getElementById('fabTop');
-  var activo=document.querySelector('.screen.active .content');
-  var scrolled=(activo&&activo.scrollTop>80)||(window.scrollY>80);
-  fab.style.display=scrolled?'flex':'none';
-}
-window.addEventListener('scroll',chkFab,{passive:true});
-setInterval(chkFab,300);
-setTimeout(function(){
+// Detectar scroll en content activo y mostrar/ocultar fab
+function setupScroll(){
   document.querySelectorAll('.content').forEach(function(c){
-    c.addEventListener('scroll',chkFab,{passive:true});
+    c.addEventListener('scroll',function(){
+      var fab=document.getElementById('fabBtn');
+      fab.style.display=c.scrollTop>80?'flex':'none';
+    },{passive:true});
   });
-},1000);
+}
+// Esperar a que el DOM esté listo
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',setupScroll);
+}else{
+  setupScroll();
+}
 </script>
 </body>
 </html>
