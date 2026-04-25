@@ -19,10 +19,6 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 .topbar-sub{font-size:11px;color:var(--muted);margin-top:2px}
 .content{flex:1;padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .card{background:var(--panel);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--border)}
-.card-label{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.card-val{font-size:22px;font-weight:700}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.green{color:var(--success)}.blue{color:var(--accent)}.orange{color:var(--warning)}.red{color:var(--danger)}.muted{color:var(--muted)}
 .item{background:var(--panel);border-radius:12px;padding:13px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border:1px solid var(--border)}
 .item:active{background:var(--card)}
 .item-name{font-size:14px;font-weight:600;margin-bottom:2px}
@@ -34,16 +30,15 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
 .badge-blue{background:rgba(10,132,255,.15);color:var(--accent)}
 .btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;font-family:inherit}
 .btn-blue{background:var(--accent);color:#fff}.btn-blue:active{background:var(--accent2)}
-.btn-green{background:var(--success);color:#fff}.btn-green:active{opacity:.85}
+.btn-green{background:var(--success);color:#fff}
 .btn-gray{background:var(--card);color:var(--text);border:1px solid var(--border)}
-.btn-red{background:var(--danger);color:#fff}
 .field{width:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-size:16px;margin-bottom:10px;font-family:inherit;-webkit-appearance:none}
 .field:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(10,132,255,.2)}
 label{color:var(--muted);font-size:11px;font-weight:600;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
 .section-title{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;margin-top:4px}
 .bottomnav{background:var(--panel);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:8px 0 20px;flex-shrink:0}
-.navitem{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 12px;border-radius:10px}
-.navitem span{font-size:22px}.navitem p{font-size:9px;color:var(--muted);font-weight:600;letter-spacing:.3px}
+.navitem{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 16px;border-radius:10px}
+.navitem span{font-size:24px}.navitem p{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.3px}
 .navitem.active p{color:var(--accent)}
 .info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
 .info-row:last-child{border-bottom:none}
@@ -52,42 +47,39 @@ label{color:var(--muted);font-size:11px;font-weight:600;display:block;margin-bot
 .logo-icon{width:76px;height:76px;background:var(--accent);border-radius:20px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 8px 24px rgba(10,132,255,.35)}
 .logo h2{font-size:26px;font-weight:800}.logo p{color:var(--muted);font-size:13px;margin-top:4px}
 .error{background:rgba(255,69,58,.12);color:var(--danger);padding:11px 14px;border-radius:10px;font-size:13px;margin-bottom:12px;display:none;border:1px solid rgba(255,69,58,.25)}
-.total-card{background:var(--panel);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center;border:1px solid var(--border)}
-.total-label{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.total-val{color:var(--success);font-size:26px;font-weight:800}
 .role-badge{font-size:11px;padding:4px 10px;border-radius:100px;font-weight:700}
 .loading{text-align:center;padding:40px;color:var(--muted);font-size:14px}
 .mora-banner{background:rgba(255,69,58,.1);border:1px solid rgba(255,69,58,.25);border-radius:10px;padding:10px 14px;margin-bottom:10px;font-size:12px;color:var(--danger);font-weight:600}
 .card-highlight{background:var(--accent);border-radius:14px;padding:16px;margin-bottom:14px}
-/* Alert cards */
-.alert-card{border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.alert-card:active{opacity:.8}
-.alert-red{background:rgba(255,69,58,.1);border:1px solid rgba(255,69,58,.2)}
-.alert-yellow{background:rgba(255,159,10,.1);border:1px solid rgba(255,159,10,.2)}
-.alert-green{background:rgba(48,209,88,.1);border:1px solid rgba(48,209,88,.2)}
-.alert-icon{font-size:22px;flex-shrink:0}
-.alert-arrow{color:var(--muted);font-size:18px;margin-left:auto}
-/* Stat rows */
-.stat-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
-.stat-row:last-child{border:none}
-.stat-label{font-size:13px;color:var(--muted)}
-.stat-val{font-size:14px;font-weight:700}
-/* Quick actions */
-.quick-action{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px;cursor:pointer}
-.quick-action:active{background:var(--card)}
-.qa-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.qa-title{font-size:14px;font-weight:600}
-.qa-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.qa-arrow{color:var(--muted);font-size:20px;margin-left:auto}
-/* Filtros chips */
-.chips{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px}
-.chip{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;border:none;font-family:inherit}
+/* Hero */
+.hero{background:var(--panel);border-radius:14px;padding:16px;margin-bottom:12px;text-align:center;border:1px solid var(--border)}
+.hero-label{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.hero-val{color:var(--success);font-size:28px;font-weight:800}
+.hero-sub{color:var(--muted);font-size:12px;margin-top:6px}
+/* Chips filtro */
+.chips{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
+.chip{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;border:none;font-family:inherit;flex-shrink:0}
 .chip-active{background:var(--accent);color:#fff}
-.chip-inactive{background:var(--panel);color:var(--muted);border:1px solid var(--border)}
+.chip-mora{background:rgba(255,69,58,.12);color:var(--danger);border:1px solid rgba(255,69,58,.3)}
+.chip-atraso{background:rgba(255,159,10,.12);color:var(--warning);border:1px solid rgba(255,159,10,.3)}
+.chip-dia{background:rgba(48,209,88,.12);color:var(--success);border:1px solid rgba(48,209,88,.3)}
+.chip-gray{background:var(--panel);color:var(--muted);border:1px solid var(--border)}
 /* Search */
-.search-box{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--muted);font-size:14px;margin-bottom:12px;display:flex;align-items:center;gap:8px;cursor:text}
-.search-input{background:transparent;border:none;color:var(--text);font-size:14px;font-family:inherit;width:100%;outline:none}
+.search-wrap{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:11px 14px;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.search-wrap:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(10,132,255,.15)}
+.search-input{background:transparent;border:none;color:var(--text);font-size:15px;font-family:inherit;width:100%;outline:none}
 .search-input::placeholder{color:var(--muted)}
+/* Stat cards táctiles */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.stat-card{background:var(--panel);border-radius:12px;padding:14px;border:1px solid var(--border);text-align:center;cursor:pointer;transition:background .1s}
+.stat-card:active{background:var(--card)}
+.stat-label{color:var(--muted);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.stat-val{font-size:22px;font-weight:800}
+.stat-arrow{font-size:10px;color:var(--muted);margin-top:4px}
+/* Cobrador */
+.total-card{background:var(--panel);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center;border:1px solid var(--border)}
+.total-label{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.total-val{color:var(--success);font-size:26px;font-weight:800}
 </style>
 </head>
 <body>
@@ -114,76 +106,45 @@ label{color:var(--muted);font-size:11px;font-weight:600;display:block;margin-bot
   </div>
 </div>
 
-<!-- ═══════════════ ADMIN ═══════════════ -->
-<div id="adminDashScreen" class="screen">
+<!-- ═══════════════ ADMIN — PANTALLA HOY ═══════════════ -->
+<div id="adminHoyScreen" class="screen">
   <div class="topbar">
-    <div><h1 id="adminGreeting">Buenos días 👋</h1><div class="topbar-sub" id="adminWelcome"></div></div>
+    <div><h1>📋 Hoy</h1><div class="topbar-sub" id="adminWelcome"></div></div>
     <div style="display:flex;gap:8px;align-items:center">
       <span class="role-badge" style="background:rgba(10,132,255,.15);color:var(--accent)">👑 Admin</span>
       <span onclick="logout()" style="color:var(--danger);font-size:13px;cursor:pointer;font-weight:600">Salir</span>
     </div>
   </div>
-  <div class="content" id="adminDashContent"></div>
+  <div class="content" id="adminHoyContent"></div>
   <div class="bottomnav">
-    <div class="navitem active" onclick="adminShowDash()"><span>🏠</span><p>Inicio</p></div>
-    <div class="navitem" onclick="adminShowClientes()"><span>👥</span><p>Clientes</p></div>
-    <div class="navitem" onclick="adminShowPrestamos()"><span>💳</span><p>Préstamos</p></div>
-    <div class="navitem" onclick="adminShowPagos()"><span>💰</span><p>Pagos</p></div>
-    <div class="navitem" onclick="adminShowRuta()"><span>🗺️</span><p>Rutas</p></div>
+    <div class="navitem active" onclick="adminShowHoy()"><span>📋</span><p>Hoy</p></div>
+    <div class="navitem" onclick="adminShowBuscar()"><span>🔍</span><p>Buscar</p></div>
+    <div class="navitem" onclick="adminShowResumen()"><span>📊</span><p>Resumen</p></div>
   </div>
 </div>
 
-<div id="adminClientesScreen" class="screen">
+<!-- ═══════════════ ADMIN — PANTALLA BUSCAR ═══════════════ -->
+<div id="adminBuscarScreen" class="screen">
+  <div class="topbar"><h1>🔍 Buscar Cliente</h1></div>
+  <div class="content" id="adminBuscarContent"></div>
+  <div class="bottomnav">
+    <div class="navitem" onclick="adminShowHoy()"><span>📋</span><p>Hoy</p></div>
+    <div class="navitem active" onclick="adminShowBuscar()"><span>🔍</span><p>Buscar</p></div>
+    <div class="navitem" onclick="adminShowResumen()"><span>📊</span><p>Resumen</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════ ADMIN — PANTALLA RESUMEN ═══════════════ -->
+<div id="adminResumenScreen" class="screen">
   <div class="topbar">
-    <h1>👥 Clientes</h1>
-    <span style="color:var(--accent);font-size:13px;font-weight:600">Buscar</span>
+    <h1>📊 Resumen</h1>
+    <span style="font-size:11px;color:var(--muted)" id="resumenFecha"></span>
   </div>
-  <div class="content" id="adminClientesContent"></div>
+  <div class="content" id="adminResumenContent"></div>
   <div class="bottomnav">
-    <div class="navitem" onclick="adminShowDash()"><span>🏠</span><p>Inicio</p></div>
-    <div class="navitem active" onclick="adminShowClientes()"><span>👥</span><p>Clientes</p></div>
-    <div class="navitem" onclick="adminShowPrestamos()"><span>💳</span><p>Préstamos</p></div>
-    <div class="navitem" onclick="adminShowPagos()"><span>💰</span><p>Pagos</p></div>
-    <div class="navitem" onclick="adminShowRuta()"><span>🗺️</span><p>Rutas</p></div>
-  </div>
-</div>
-
-<div id="adminPrestamosScreen" class="screen">
-  <div class="topbar"><h1>💳 Préstamos</h1></div>
-  <div class="content" id="adminPrestamosContent"></div>
-  <div class="bottomnav">
-    <div class="navitem" onclick="adminShowDash()"><span>🏠</span><p>Inicio</p></div>
-    <div class="navitem" onclick="adminShowClientes()"><span>👥</span><p>Clientes</p></div>
-    <div class="navitem active" onclick="adminShowPrestamos()"><span>💳</span><p>Préstamos</p></div>
-    <div class="navitem" onclick="adminShowPagos()"><span>💰</span><p>Pagos</p></div>
-    <div class="navitem" onclick="adminShowRuta()"><span>🗺️</span><p>Rutas</p></div>
-  </div>
-</div>
-
-<div id="adminPagosScreen" class="screen">
-  <div class="topbar"><h1>💰 Historial de Pagos</h1></div>
-  <div class="content" id="adminPagosContent"></div>
-  <div class="bottomnav">
-    <div class="navitem" onclick="adminShowDash()"><span>🏠</span><p>Inicio</p></div>
-    <div class="navitem" onclick="adminShowClientes()"><span>👥</span><p>Clientes</p></div>
-    <div class="navitem" onclick="adminShowPrestamos()"><span>💳</span><p>Préstamos</p></div>
-    <div class="navitem active" onclick="adminShowPagos()"><span>💰</span><p>Pagos</p></div>
-    <div class="navitem" onclick="adminShowRuta()"><span>🗺️</span><p>Rutas</p></div>
-  </div>
-</div>
-
-<div id="adminRutaScreen" class="screen">
-  <div class="topbar">
-    <h1>🗺️ Rutas de Hoy</h1>
-    <span id="rutaFiltroBtn" style="color:var(--accent);font-size:13px;font-weight:600;cursor:pointer">Todos</span>
-  </div>
-  <div class="content" id="adminRutaContent"></div>
-  <div class="bottomnav">
-    <div class="navitem" onclick="adminShowDash()"><span>🏠</span><p>Inicio</p></div>
-    <div class="navitem" onclick="adminShowClientes()"><span>👥</span><p>Clientes</p></div>
-    <div class="navitem" onclick="adminShowPrestamos()"><span>💳</span><p>Préstamos</p></div>
-    <div class="navitem" onclick="adminShowPagos()"><span>💰</span><p>Pagos</p></div>
-    <div class="navitem active" onclick="adminShowRuta()"><span>🗺️</span><p>Rutas</p></div>
+    <div class="navitem" onclick="adminShowHoy()"><span>📋</span><p>Hoy</p></div>
+    <div class="navitem" onclick="adminShowBuscar()"><span>🔍</span><p>Buscar</p></div>
+    <div class="navitem active" onclick="adminShowResumen()"><span>📊</span><p>Resumen</p></div>
   </div>
 </div>
 
@@ -228,25 +189,16 @@ let currentPrestamo=null;
 let pagosCobrados=[];
 let moraConfig={dias_atraso:7,porcentaje:5.0,activo:1};
 let _rutaData=[];
-let _rutaFiltro='todos';
+let _hoyFiltro='todos';
+let _clientes=[];
+let _rutaMap={};
+let _dashData=null;
 
 function fmt(n){return 'RD$'+parseFloat(n||0).toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function hoy(){return new Date().toISOString().split('T')[0];}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function hdrs(){return{'Content-Type':'application/json','X-Empresa-ID':SESSION.empresaId||'','X-Usuario':SESSION.usuario||''};}
-
-function getGreeting(){
-  const h=new Date().getHours();
-  if(h<12)return'Buenos días 👋';
-  if(h<18)return'Buenas tardes 👋';
-  return'Buenas noches 👋';
-}
-
-function setActiveNav(sid,idx){
-  const s=document.getElementById(sid);
-  if(!s)return;
-  s.querySelectorAll('.navitem').forEach((n,i)=>n.classList.toggle('active',i===idx));
-}
+function setActiveNav(sid,idx){const s=document.getElementById(sid);if(!s)return;s.querySelectorAll('.navitem').forEach((n,i)=>n.classList.toggle('active',i===idx));}
 
 // ── LOGIN ──────────────────────────────────────────────────────────────────
 async function doLogin(){
@@ -271,231 +223,197 @@ async function doLogin(){
 
 function iniciarSesion(){
   if(SESSION.rol==='admin'){
-    const g=document.getElementById('adminGreeting');
-    if(g)g.textContent=getGreeting();
-    document.getElementById('adminWelcome').textContent=new Date().toLocaleDateString('es-DO',{weekday:'long',day:'numeric',month:'long'})+' • '+SESSION.nombre;
-    adminShowDash();
+    const fecha=new Date().toLocaleDateString('es-DO',{weekday:'long',day:'numeric',month:'long'});
+    document.getElementById('adminWelcome').textContent=fecha+' • '+SESSION.nombre;
+    adminShowHoy();
   }else{
     document.getElementById('cobradorWelcome').textContent='Hola, '+SESSION.nombre;
     cobradorShowRuta();
   }
 }
 
-function logout(){SESSION={};pagosCobrados=[];_rutaData=[];showScreen('loginScreen');}
-function volverRuta(){if(SESSION.rol==='admin')adminShowRuta();else cobradorShowRuta();}
+function logout(){SESSION={};pagosCobrados=[];_rutaData=[];_clientes=[];_dashData=null;showScreen('loginScreen');}
+function volverRuta(){if(SESSION.rol==='admin')adminShowHoy();else cobradorShowRuta();}
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ADMIN DASHBOARD — alertas primero, luego resumen, luego acciones
+// ADMIN — PANTALLA HOY
 // ══════════════════════════════════════════════════════════════════════════════
-async function adminShowDash(){
-  showScreen('adminDashScreen');setActiveNav('adminDashScreen',0);
-  document.getElementById('adminDashContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
-  try{
-    const[rd,rr]=await Promise.all([
-      fetch(API+'/api/dashboard',{headers:hdrs()}).then(r=>r.json()),
-      fetch(API+'/api/ruta-hoy',{headers:hdrs()}).then(r=>r.json())
-    ]);
-    const mora=rr.filter(p=>p.estado_pago==='mora');
-    const atraso=rr.filter(p=>p.estado_pago==='atraso');
-    const alDia=rr.filter(p=>p.estado_pago==='al_dia');
-    const cobradoHoy=rr.reduce((a,p)=>a+(p.mora_auto||0),0);
-
-    document.getElementById('adminDashContent').innerHTML=`
-      ${mora.length>0?`<div class="alert-card alert-red" onclick="adminShowRutaFiltro('mora')">
-        <span class="alert-icon">🔴</span>
-        <div style="flex:1">
-          <div style="font-size:14px;font-weight:700;color:var(--danger)">${mora.length} cliente${mora.length>1?'s':''} en mora</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">Más de ${moraConfig.dias_atraso} días sin pagar</div>
-        </div>
-        <span class="alert-arrow">›</span>
-      </div>`:''}
-      ${atraso.length>0?`<div class="alert-card alert-yellow" onclick="adminShowRutaFiltro('atraso')">
-        <span class="alert-icon">🟡</span>
-        <div style="flex:1">
-          <div style="font-size:14px;font-weight:700;color:var(--warning)">${atraso.length} con atraso</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">1-${moraConfig.dias_atraso-1} días de retraso</div>
-        </div>
-        <span class="alert-arrow">›</span>
-      </div>`:''}
-      ${mora.length===0&&atraso.length===0?`<div class="alert-card alert-green">
-        <span class="alert-icon">✅</span>
-        <div><div style="font-size:14px;font-weight:700;color:var(--success)">Todo al día</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:2px">Sin mora ni atraso hoy</div></div>
-      </div>`:''}
-      <div class="card">
-        <div class="stat-row"><span class="stat-label">Capital en calle</span><span class="stat-val orange">${fmt(rd.capital_calle)}</span></div>
-        <div class="stat-row"><span class="stat-label">Intereses del mes</span><span class="stat-val green">${fmt(rd.intereses_mes)}</span></div>
-        <div class="stat-row"><span class="stat-label">Préstamos activos</span><span class="stat-val blue">${rd.activos}</span></div>
-        <div class="stat-row"><span class="stat-label">Total clientes</span><span class="stat-val">${rd.clientes}</span></div>
-        <div class="stat-row"><span class="stat-label">Por cobrar hoy</span><span class="stat-val orange">${fmt(rr.reduce((a,p)=>a+p.cuota_monto,0))}</span></div>
-      </div>
-      <div class="section-title">Acciones rápidas</div>
-      <div class="quick-action" onclick="adminShowRuta()">
-        <div class="qa-icon" style="background:rgba(10,132,255,.15)">🗺️</div>
-        <div style="flex:1"><div class="qa-title">Ver rutas de hoy</div><div class="qa-sub">${rr.length} clientes • ${mora.length} en mora</div></div>
-        <span class="qa-arrow">›</span>
-      </div>
-      <div class="quick-action" onclick="adminShowPrestamos()">
-        <div class="qa-icon" style="background:rgba(48,209,88,.15)">💳</div>
-        <div style="flex:1"><div class="qa-title">Préstamos activos</div><div class="qa-sub">${rd.activos} préstamos en curso</div></div>
-        <span class="qa-arrow">›</span>
-      </div>
-      <div class="quick-action" onclick="adminShowPagos()">
-        <div class="qa-icon" style="background:rgba(255,159,10,.15)">💰</div>
-        <div style="flex:1"><div class="qa-title">Historial de pagos</div><div class="qa-sub">Ver últimos cobros</div></div>
-        <span class="qa-arrow">›</span>
-      </div>`;
-  }catch(e){document.getElementById('adminDashContent').innerHTML='<div class="loading">❌ Error cargando datos</div>';}
+async function adminShowHoy(filtro){
+  showScreen('adminHoyScreen');setActiveNav('adminHoyScreen',0);
+  if(filtro) _hoyFiltro=filtro;
+  if(_rutaData.length===0){
+    document.getElementById('adminHoyContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
+    try{
+      const r=await fetch(API+'/api/ruta-hoy',{headers:hdrs()});
+      _rutaData=await r.json();
+    }catch(e){document.getElementById('adminHoyContent').innerHTML='<div class="loading">❌ Error cargando</div>';return;}
+  }
+  renderHoy();
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// ADMIN CLIENTES — con búsqueda
-// ══════════════════════════════════════════════════════════════════════════════
-let _clientes=[];let _rutaMap={};
-async function adminShowClientes(){
-  showScreen('adminClientesScreen');setActiveNav('adminClientesScreen',1);
-  document.getElementById('adminClientesContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
-  try{
-    const[rc,rr]=await Promise.all([
-      fetch(API+'/api/clientes',{headers:hdrs()}).then(r=>r.json()),
-      fetch(API+'/api/rutas',{headers:hdrs()}).then(r=>r.json())
-    ]);
-    _clientes=rc;_rutaMap={};rr.forEach(r=>_rutaMap[r.id]=r.nombre);
-    renderClientes('');
-  }catch(e){document.getElementById('adminClientesContent').innerHTML='<div class="loading">❌ Error</div>';}
-}
+function renderHoy(){
+  const mora=_rutaData.filter(p=>p.estado_pago==='mora');
+  const atraso=_rutaData.filter(p=>p.estado_pago==='atraso');
+  const alDia=_rutaData.filter(p=>p.estado_pago==='al_dia');
+  const filtrados=_hoyFiltro==='mora'?mora:_hoyFiltro==='atraso'?atraso:_hoyFiltro==='al_dia'?alDia:_rutaData;
+  const total=filtrados.reduce((a,p)=>a+p.cuota_monto,0);
 
-function renderClientes(q){
-  const filtrados=q?_clientes.filter(c=>c.nombre.toLowerCase().includes(q.toLowerCase())||( c.cedula&&c.cedula.includes(q))):_clientes;
-  document.getElementById('adminClientesContent').innerHTML=`
-    <div class="search-box">
-      <span style="font-size:16px">🔍</span>
-      <input class="search-input" type="text" placeholder="Buscar por nombre o cédula..." oninput="renderClientes(this.value)" value="${q}">
+  document.getElementById('adminHoyContent').innerHTML=`
+    <div class="hero">
+      <div class="hero-label">Por cobrar hoy</div>
+      <div class="hero-val">${fmt(total)}</div>
+      <div class="hero-sub">${filtrados.length} clientes &nbsp;•&nbsp; 🔴 ${mora.length} mora &nbsp; 🟡 ${atraso.length} atraso</div>
     </div>
-    <div class="section-title">${filtrados.length} cliente${filtrados.length!==1?'s':''}</div>
-    ${filtrados.map(c=>`
+    <div class="search-wrap">
+      <span style="font-size:18px;color:var(--muted)">🔍</span>
+      <input class="search-input" type="text" placeholder="Buscar en la lista de hoy..." oninput="filtrarHoy(this.value)">
+    </div>
+    <div class="chips">
+      <button class="chip ${_hoyFiltro==='todos'?'chip-active':'chip-gray'}" onclick="_hoyFiltro='todos';renderHoy()">Todos (${_rutaData.length})</button>
+      <button class="chip ${_hoyFiltro==='mora'?'chip-active':'chip-mora'}" onclick="_hoyFiltro='mora';renderHoy()">🔴 Mora (${mora.length})</button>
+      <button class="chip ${_hoyFiltro==='atraso'?'chip-active':'chip-atraso'}" onclick="_hoyFiltro='atraso';renderHoy()">🟡 Atraso (${atraso.length})</button>
+      <button class="chip ${_hoyFiltro==='al_dia'?'chip-active':'chip-dia'}" onclick="_hoyFiltro='al_dia';renderHoy()">✅ Al día (${alDia.length})</button>
+    </div>
+    <div id="listaHoy">${renderListaHoy(filtrados)}</div>`;
+}
+
+function renderListaHoy(lista){
+  if(!lista.length) return '<div class="loading">No hay clientes en esta categoría</div>';
+  return lista.map(p=>{
+    const badge=p.estado_pago==='mora'?'badge-red':p.estado_pago==='atraso'?'badge-yellow':'badge-green';
+    const label=p.estado_pago==='mora'?'MORA '+p.dias_atraso+'d':p.estado_pago==='atraso'?p.dias_atraso+' DÍAS':'AL DÍA';
+    const nc=p.estado_pago==='mora'?'red':p.estado_pago==='atraso'?'orange':'';
+    return`<div class="item" onclick='cobrar(${JSON.stringify(p)})'>
+      <div>
+        <div class="item-name ${nc}">${p.nombre||p.cliente_nombre}</div>
+        <div class="item-sub">📞 ${p.telefono||'—'} &nbsp;📍 ${p.direccion||'—'}</div>
+        ${p.mora_auto>0?`<div class="item-sub" style="color:var(--danger)">⚠ Mora: ${fmt(p.mora_auto)}</div>`:''}
+      </div>
+      <div style="text-align:right;flex-shrink:0;margin-left:10px">
+        <div style="font-size:14px;font-weight:700">${fmt(p.cuota_monto)}</div>
+        <div class="badge ${badge}" style="margin-top:6px">${label}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filtrarHoy(q){
+  const filtrados=_rutaData.filter(p=>{
+    const base=_hoyFiltro==='mora'?p.estado_pago==='mora':_hoyFiltro==='atraso'?p.estado_pago==='atraso':_hoyFiltro==='al_dia'?p.estado_pago==='al_dia':true;
+    const nombre=(p.nombre||p.cliente_nombre||'').toLowerCase().includes(q.toLowerCase());
+    return base&&(q?nombre:true);
+  });
+  document.getElementById('listaHoy').innerHTML=renderListaHoy(filtrados);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ADMIN — PANTALLA BUSCAR
+// ══════════════════════════════════════════════════════════════════════════════
+async function adminShowBuscar(filtroEstado){
+  showScreen('adminBuscarScreen');setActiveNav('adminBuscarScreen',1);
+  if(_clientes.length===0){
+    document.getElementById('adminBuscarContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
+    try{
+      const[rc,rr]=await Promise.all([
+        fetch(API+'/api/clientes',{headers:hdrs()}).then(r=>r.json()),
+        fetch(API+'/api/rutas',{headers:hdrs()}).then(r=>r.json())
+      ]);
+      _clientes=rc;_rutaMap={};rr.forEach(r=>_rutaMap[r.id]=r.nombre);
+    }catch(e){document.getElementById('adminBuscarContent').innerHTML='<div class="loading">❌ Error</div>';return;}
+  }
+  renderBuscar('', filtroEstado||'');
+}
+
+function renderBuscar(q, filtroEstado){
+  // Combinar datos de clientes con estado de mora/atraso de rutaData
+  const rutaMap2={};
+  _rutaData.forEach(p=>{rutaMap2[p.cliente_id||p.id]={estado:p.estado_pago,dias:p.dias_atraso,cuota:p.cuota_monto};});
+
+  let lista=_clientes;
+  if(q) lista=lista.filter(c=>c.nombre.toLowerCase().includes(q.toLowerCase())||(c.cedula&&c.cedula.includes(q))||(c.telefono&&c.telefono.includes(q)));
+
+  document.getElementById('adminBuscarContent').innerHTML=`
+    <div class="search-wrap">
+      <span style="font-size:18px;color:var(--muted)">🔍</span>
+      <input class="search-input" type="text" placeholder="Nombre, cédula o teléfono..." oninput="renderBuscar(this.value,'${filtroEstado}')" value="${q}" autofocus>
+    </div>
+    <div class="section-title">${lista.length} cliente${lista.length!==1?'s':''}</div>
+    ${lista.map(c=>`
       <div class="item">
         <div>
           <div class="item-name">${c.nombre}</div>
           <div class="item-sub">📋 ${c.cedula||'—'}${c.telefono?' &nbsp;📞 '+c.telefono:''}</div>
-          ${c.ruta_id?`<div class="item-sub" style="color:var(--accent)">🗺️ ${_rutaMap[c.ruta_id]||'Ruta #'+c.ruta_id}</div>`:'<div class="item-sub">🗺️ Sin ruta asignada</div>'}
+          ${c.ruta_id?`<div class="item-sub" style="color:var(--accent)">🗺️ ${_rutaMap[c.ruta_id]||'Ruta #'+c.ruta_id}</div>`:''}
         </div>
         <span style="color:var(--muted);font-size:20px">›</span>
       </div>`).join('')||'<div class="loading">No se encontraron clientes</div>'}`;
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ADMIN PRESTAMOS
+// ADMIN — PANTALLA RESUMEN (con stat cards táctiles)
 // ══════════════════════════════════════════════════════════════════════════════
-async function adminShowPrestamos(){
-  showScreen('adminPrestamosScreen');setActiveNav('adminPrestamosScreen',2);
-  document.getElementById('adminPrestamosContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
+async function adminShowResumen(){
+  showScreen('adminResumenScreen');setActiveNav('adminResumenScreen',2);
+  const fecha=new Date().toLocaleDateString('es-DO',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('resumenFecha').textContent=fecha;
+  document.getElementById('adminResumenContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
   try{
-    const r=await fetch(API+'/api/prestamos',{headers:hdrs()});
-    const rows=await r.json();
-    document.getElementById('adminPrestamosContent').innerHTML=`
-      <div class="section-title">${rows.length} préstamos activos</div>
-      ${rows.map(p=>`
-        <div class="item" onclick='cobrar(${JSON.stringify(p)})'>
-          <div>
-            <div class="item-name">${p.cliente_nombre}</div>
-            <div class="item-sub">${p.frecuencia} • Cuota ${p.cuotas_pagadas}/${p.plazo_cuotas||'∞'}</div>
-            <div class="item-sub">📞 ${p.telefono||'—'}</div>
-          </div>
-          <div style="text-align:right">
-            <div class="item-name green">${fmt(p.cuota_monto)}</div>
-            <div class="item-sub">${fmt(p.saldo_pendiente)}</div>
-          </div>
-        </div>`).join('')||'<div class="loading">No hay préstamos</div>'}`;
-  }catch(e){document.getElementById('adminPrestamosContent').innerHTML='<div class="loading">❌ Error</div>';}
-}
+    const[rd,rr,rp]=await Promise.all([
+      fetch(API+'/api/dashboard',{headers:hdrs()}).then(r=>r.json()),
+      fetch(API+'/api/ruta-hoy',{headers:hdrs()}).then(r=>r.json()),
+      fetch(API+'/api/pagos-recientes',{headers:hdrs()}).then(r=>r.json())
+    ]);
+    if(_rutaData.length===0) _rutaData=rr;
+    const mora=rr.filter(p=>p.estado_pago==='mora');
+    const atraso=rr.filter(p=>p.estado_pago==='atraso');
+    const alDia=rr.filter(p=>p.estado_pago==='al_dia');
+    const pagos=rp.pagos||[];
+    const cobradoHoy=pagos.filter(p=>p.fecha_pago===hoy()).reduce((a,p)=>a+p.monto_pago,0);
 
-// ══════════════════════════════════════════════════════════════════════════════
-// ADMIN PAGOS
-// ══════════════════════════════════════════════════════════════════════════════
-async function adminShowPagos(){
-  showScreen('adminPagosScreen');setActiveNav('adminPagosScreen',3);
-  document.getElementById('adminPagosContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
-  try{
-    const r=await fetch(API+'/api/pagos-recientes',{headers:hdrs()});
-    const d=await r.json();const pagos=d.pagos||[];
-    document.getElementById('adminPagosContent').innerHTML=`
-      <div class="section-title">Últimos ${pagos.length} pagos</div>
-      ${pagos.map(p=>`
+    document.getElementById('adminResumenContent').innerHTML=`
+      <div class="section-title">Cartera — toca para ver detalle</div>
+      <div class="stat-grid">
+        <div class="stat-card" onclick="adminShowBuscar()">
+          <div class="stat-label">Total Clientes</div>
+          <div class="stat-val blue">${rd.clientes}</div>
+          <div class="stat-arrow">Ver todos →</div>
+        </div>
+        <div class="stat-card" onclick="adminShowBuscar()">
+          <div class="stat-label">Préstamos Activos</div>
+          <div class="stat-val blue">${rd.activos}</div>
+          <div class="stat-arrow">Ver lista →</div>
+        </div>
+        <div class="stat-card" onclick="adminShowHoy('mora')">
+          <div class="stat-label">En Mora</div>
+          <div class="stat-val red">${mora.length}</div>
+          <div class="stat-arrow" style="color:var(--danger)">Ver mora →</div>
+        </div>
+        <div class="stat-card" onclick="adminShowHoy('atraso')">
+          <div class="stat-label">Con Atraso</div>
+          <div class="stat-val orange">${atraso.length}</div>
+          <div class="stat-arrow" style="color:var(--warning)">Ver atraso →</div>
+        </div>
+      </div>
+      <div class="section-title">Financiero</div>
+      <div class="card">
+        <div class="info-row"><span class="info-label">Capital en calle</span><span class="info-val orange">${fmt(rd.capital_calle)}</span></div>
+        <div class="info-row"><span class="info-label">Intereses del mes</span><span class="info-val green">${fmt(rd.intereses_mes)}</span></div>
+        <div class="info-row"><span class="info-label">Cobrado hoy</span><span class="info-val green">${fmt(cobradoHoy)}</span></div>
+        <div class="info-row"><span class="info-label">Por cobrar hoy</span><span class="info-val orange">${fmt(rr.reduce((a,p)=>a+p.cuota_monto,0))}</span></div>
+      </div>
+      <div class="section-title">Últimos pagos</div>
+      ${pagos.slice(0,5).map(p=>`
         <div class="item">
           <div>
             <div class="item-name">${p.cliente_nombre||'Cliente #'+p.prestamo_id}</div>
             <div class="item-sub">📅 ${p.fecha_pago} • Cuota #${p.num_cuota}</div>
-            <div class="item-sub">Capital: ${fmt(p.capital)} • Interés: ${fmt(p.interes)}</div>
           </div>
           <div style="text-align:right">
             <div class="item-name green">${fmt(p.monto_pago)}</div>
             <div class="item-sub">Saldo: ${fmt(p.saldo_tras)}</div>
           </div>
-        </div>`).join('')||'<div class="loading">No hay pagos registrados</div>'}`;
-  }catch(e){document.getElementById('adminPagosContent').innerHTML='<div class="loading">❌ Error</div>';}
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// ADMIN RUTAS — con filtros chips
-// ══════════════════════════════════════════════════════════════════════════════
-async function adminShowRuta(){
-  showScreen('adminRutaScreen');setActiveNav('adminRutaScreen',4);
-  _rutaFiltro='todos';
-  document.getElementById('adminRutaContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
-  try{
-    const r=await fetch(API+'/api/ruta-hoy',{headers:hdrs()});
-    _rutaData=await r.json();
-    renderRuta();
-  }catch(e){document.getElementById('adminRutaContent').innerHTML='<div class="loading">❌ Error</div>';}
-}
-
-function adminShowRutaFiltro(filtro){
-  _rutaFiltro=filtro;
-  adminShowRuta();
-}
-
-function renderRuta(){
-  const mora=_rutaData.filter(p=>p.estado_pago==='mora');
-  const atraso=_rutaData.filter(p=>p.estado_pago==='atraso');
-  const alDia=_rutaData.filter(p=>p.estado_pago==='al_dia');
-  const filtrados=_rutaFiltro==='mora'?mora:_rutaFiltro==='atraso'?atraso:_rutaFiltro==='al_dia'?alDia:_rutaData;
-  const total=filtrados.reduce((a,p)=>a+p.cuota_monto,0);
-  const totalMora=filtrados.reduce((a,p)=>a+(p.mora_auto||0),0);
-
-  document.getElementById('adminRutaContent').innerHTML=`
-    <div class="grid2">
-      <div class="card" style="text-align:center">
-        <div class="card-label">Por cobrar</div>
-        <div style="font-size:16px;font-weight:700;color:var(--warning)">${fmt(total)}</div>
-      </div>
-      <div class="card" style="text-align:center">
-        <div class="card-label">Mora est.</div>
-        <div style="font-size:16px;font-weight:700;color:var(--danger)">${fmt(totalMora)}</div>
-      </div>
-    </div>
-    <div class="chips">
-      <button class="chip ${_rutaFiltro==='todos'?'chip-active':'chip-inactive'}" onclick="_rutaFiltro='todos';renderRuta()">Todos (${_rutaData.length})</button>
-      <button class="chip ${_rutaFiltro==='mora'?'chip-active':'chip-inactive'}" style="${_rutaFiltro==='mora'?'':'color:var(--danger);border-color:rgba(255,69,58,.3)'}" onclick="_rutaFiltro='mora';renderRuta()">🔴 Mora (${mora.length})</button>
-      <button class="chip ${_rutaFiltro==='atraso'?'chip-active':'chip-inactive'}" style="${_rutaFiltro==='atraso'?'':'color:var(--warning);border-color:rgba(255,159,10,.3)'}" onclick="_rutaFiltro='atraso';renderRuta()">🟡 Atraso (${atraso.length})</button>
-      <button class="chip ${_rutaFiltro==='al_dia'?'chip-active':'chip-inactive'}" style="${_rutaFiltro==='al_dia'?'':'color:var(--success);border-color:rgba(48,209,88,.3)'}" onclick="_rutaFiltro='al_dia';renderRuta()">✅ Al día (${alDia.length})</button>
-    </div>
-    ${filtrados.map(p=>{
-      const badge=p.estado_pago==='mora'?'badge-red':p.estado_pago==='atraso'?'badge-yellow':'badge-green';
-      const label=p.estado_pago==='mora'?'MORA '+p.dias_atraso+'d':p.estado_pago==='atraso'?p.dias_atraso+' DÍAS':'AL DÍA';
-      const nc=p.estado_pago==='mora'?'red':p.estado_pago==='atraso'?'orange':'';
-      return`<div class="item" onclick='cobrar(${JSON.stringify(p)})'>
-        <div>
-          <div class="item-name ${nc}">${p.nombre||p.cliente_nombre}</div>
-          <div class="item-sub">📞 ${p.telefono||'—'} &nbsp;📍 ${p.direccion||'—'}</div>
-          ${p.mora_auto>0?`<div class="item-sub" style="color:var(--danger)">⚠ Mora: ${fmt(p.mora_auto)}</div>`:''}
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:14px;font-weight:700">${fmt(p.cuota_monto)}</div>
-          <div class="badge ${badge}" style="margin-top:6px">${label}</div>
-        </div>
-      </div>`;
-    }).join('')||'<div class="loading">No hay clientes en esta categoría</div>'}`;
+        </div>`).join('')||'<div class="loading">Sin pagos recientes</div>'}`;
+  }catch(e){document.getElementById('adminResumenContent').innerHTML='<div class="loading">❌ Error</div>';}
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -519,29 +437,42 @@ async function cobradorShowRuta(){
         <div style="color:var(--muted);font-size:11px;margin-top:6px">${pendientes.length} pendientes • ${pagosCobrados.length} cobrados</div>
         ${totalMora>0?`<div style="color:var(--danger);font-size:11px;margin-top:4px;font-weight:600">⚠ Mora pendiente: ${fmt(totalMora)}</div>`:''}
       </div>
+      <div class="search-wrap">
+        <span style="font-size:18px;color:var(--muted)">🔍</span>
+        <input class="search-input" type="text" placeholder="Buscar cliente..." oninput="filtrarCobrador(this.value, ${JSON.stringify(pendientes)})">
+      </div>
       ${pendientes.length===0?`<div class="card" style="text-align:center;padding:24px">
         <div style="font-size:40px;margin-bottom:10px">🎉</div>
         <div style="font-weight:700;margin-bottom:6px;font-size:16px">¡Ruta completada!</div>
         <div style="color:var(--muted);font-size:13px">Has cobrado todos los pendientes de hoy</div>
       </div>`:''}
-      ${pendientes.map(p=>{
-        const badge=p.estado_pago==='mora'?'badge-red':p.estado_pago==='atraso'?'badge-yellow':'badge-green';
-        const label=p.estado_pago==='mora'?'MORA':p.estado_pago==='atraso'?p.dias_atraso+' DÍAS':'HOY';
-        const nc=p.estado_pago==='mora'?'red':p.estado_pago==='atraso'?'orange':'';
-        return`<div class="item" onclick='cobrar(${JSON.stringify(p)})'>
-          <div>
-            <div class="item-name ${nc}">${p.nombre||p.cliente_nombre}</div>
-            <div class="item-sub">📞 ${p.telefono||'—'}</div>
-            <div class="item-sub">📍 ${p.direccion||'—'}</div>
-            ${p.mora_auto>0?`<div class="item-sub" style="color:var(--danger)">⚠ Mora: ${fmt(p.mora_auto)}</div>`:''}
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:14px;font-weight:700">${fmt(p.cuota_monto)}</div>
-            <div class="badge ${badge}" style="margin-top:6px">${label}</div>
-          </div>
-        </div>`;
-      }).join('')}`;
+      <div id="listaCobrador">${renderListaCobrador(pendientes)}</div>`;
   }catch(e){document.getElementById('cobradorRutaContent').innerHTML='<div class="loading">❌ Error cargando ruta</div>';}
+}
+
+function renderListaCobrador(lista){
+  return lista.map(p=>{
+    const badge=p.estado_pago==='mora'?'badge-red':p.estado_pago==='atraso'?'badge-yellow':'badge-green';
+    const label=p.estado_pago==='mora'?'MORA':p.estado_pago==='atraso'?p.dias_atraso+' DÍAS':'HOY';
+    const nc=p.estado_pago==='mora'?'red':p.estado_pago==='atraso'?'orange':'';
+    return`<div class="item" onclick='cobrar(${JSON.stringify(p)})'>
+      <div>
+        <div class="item-name ${nc}">${p.nombre||p.cliente_nombre}</div>
+        <div class="item-sub">📞 ${p.telefono||'—'}</div>
+        <div class="item-sub">📍 ${p.direccion||'—'}</div>
+        ${p.mora_auto>0?`<div class="item-sub" style="color:var(--danger)">⚠ Mora: ${fmt(p.mora_auto)}</div>`:''}
+      </div>
+      <div style="text-align:right;flex-shrink:0;margin-left:10px">
+        <div style="font-size:14px;font-weight:700">${fmt(p.cuota_monto)}</div>
+        <div class="badge ${badge}" style="margin-top:6px">${label}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filtrarCobrador(q, lista){
+  const filtrados=lista.filter(p=>(p.nombre||p.cliente_nombre||'').toLowerCase().includes(q.toLowerCase()));
+  document.getElementById('listaCobrador').innerHTML=renderListaCobrador(filtrados);
 }
 
 function cobradorShowCobrados(){
@@ -616,6 +547,8 @@ async function guardarPago(){
     const d=await r.json();
     if(d.ok){
       pagosCobrados.push({prestamo_id:currentPrestamo.id,nombre:currentPrestamo.nombre||currentPrestamo.cliente_nombre,monto,mora});
+      // Limpiar caché para refrescar datos
+      _rutaData=[];
       document.getElementById('pagoContent').innerHTML=`
         <div style="text-align:center;padding:48px 20px">
           <div style="font-size:64px;margin-bottom:16px">✅</div>
@@ -624,7 +557,7 @@ async function guardarPago(){
           <div style="font-size:28px;font-weight:800;color:var(--success);margin-bottom:6px">${fmt(monto)}</div>
           ${mora>0?`<div style="color:var(--danger);font-size:13px;margin-bottom:6px">Mora cobrada: ${fmt(mora)}</div>`:''}
           <div style="color:var(--muted);font-size:13px;margin-bottom:32px">Nuevo saldo: ${fmt(d.nuevo_saldo)}${d.estado==='pagado'?'<br><span style="color:var(--success);font-weight:700;font-size:15px">🎉 ¡PRÉSTAMO SALDADO!</span>':''}</div>
-          <button class="btn btn-blue" onclick="volverRuta()">← Volver a la ruta</button>
+          <button class="btn btn-blue" onclick="volverRuta()">← Volver</button>
         </div>`;
     }else{btn.textContent='💾 Confirmar Pago';btn.disabled=false;alert('Error: '+(d.msg||'No se pudo registrar'));}
   }catch(e){btn.textContent='💾 Confirmar Pago';btn.disabled=false;alert('Error de conexión');}
