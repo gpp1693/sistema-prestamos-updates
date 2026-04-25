@@ -589,7 +589,7 @@ function irArriba(){
 function chkFab(){
   var fab=document.getElementById('fabTop');
   var activo=document.querySelector('.screen.active .content');
-  var scrolled=(activo&&activo.scrollTop>150)||(window.scrollY>150);
+  var scrolled=(activo&&activo.scrollTop>200)||(window.scrollY>200);
   fab.style.display=scrolled?'flex':'none';
 }
 window.addEventListener('scroll',chkFab,{passive:true});
