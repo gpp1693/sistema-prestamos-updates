@@ -80,6 +80,9 @@ label{color:var(--muted);font-size:11px;font-weight:600;display:block;margin-bot
 .total-card{background:var(--panel);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center;border:1px solid var(--border)}
 .total-label{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
 .total-val{color:var(--success);font-size:26px;font-weight:800}
+/* Botón flotante scroll arriba */
+.fab-top{position:fixed;bottom:90px;right:16px;width:44px;height:44px;background:var(--accent);border-radius:50%;border:none;color:#fff;font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(10,132,255,.4);z-index:999;font-family:inherit}
+.fab-top.visible{display:flex}
 </style>
 </head>
 <body>
@@ -572,6 +575,27 @@ const urlParts=window.location.pathname.split('/').filter(p=>p);
 const urlEmpresa=urlParts.find(p=>p.startsWith('CP-'));
 if(urlEmpresa){localStorage.setItem('cp_empresa_id',urlEmpresa);document.getElementById('empresaId').value=urlEmpresa;}
 document.getElementById('password').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
+</script>
+<button class="fab-top" id="fabTop" onclick="scrollTop()">↑</button>
+<script>
+function scrollTop(){
+  document.querySelectorAll('.content').forEach(c=>{c.scrollTop=0;});
+  window.scrollTo(0,0);
+}
+// Mostrar botón cuando se scrollea
+document.addEventListener('scroll', function(){
+  const fab=document.getElementById('fabTop');
+  if(window.scrollY>200) fab.classList.add('visible');
+  else fab.classList.remove('visible');
+}, {passive:true});
+// También detectar scroll dentro de .content
+document.querySelectorAll('.content').forEach(c=>{
+  c.addEventListener('scroll', function(){
+    const fab=document.getElementById('fabTop');
+    if(c.scrollTop>200) fab.classList.add('visible');
+    else fab.classList.remove('visible');
+  },{passive:true});
+});
 </script>
 </body>
 </html>
