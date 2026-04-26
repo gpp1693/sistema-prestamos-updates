@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CapitalPro — Panel Maestro</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#070A0F;
+  --bg2:#0D1117;
+  --card:#111820;
+  --border:rgba(255,255,255,0.06);
+  --blue:#0A84FF;
+  --green:#30D158;
+  --orange:#FF9F0A;
+  --red:#FF453A;
+  --text:#E8EDF2;
+  --muted:#5A6478;
+}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
+
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:48px 40px;width:100%;max-width:400px}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+.login-logo-icon{width:44px;height:44px;background:var(--blue);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.login-logo-text{font-family:'Syne',sans-serif;font-size:20px;font-weight:800}
+.login-logo-sub{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.login-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:6px}
+.login-sub{color:var(--muted);font-size:14px;margin-bottom:28px}
+.field-wrap{margin-bottom:16px}
+.field-label{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block}
+.field{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-size:15px;font-family:'DM Sans',sans-serif;transition:border-color .2s}
+.field:focus{outline:none;border-color:var(--blue)}
+.btn-login{width:100%;background:var(--blue);color:white;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;font-family:'DM Sans',sans-serif;transition:opacity .2s}
+.btn-login:hover{opacity:.85}
+.error-msg{background:rgba(255,69,58,.1);border:1px solid rgba(255,69,58,.2);color:var(--red);padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:16px;display:none}
+
+/* DASHBOARD */
+.dashboard{display:none}
+.sidebar{width:240px;background:var(--bg2);border-right:1px solid var(--border);min-height:100vh;position:fixed;left:0;top:0;padding:24px 0}
+.sidebar-logo{padding:0 20px 24px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.sidebar-logo-text{font-family:'Syne',sans-serif;font-size:18px;font-weight:800}
+.sidebar-logo-sub{font-size:10px;color:var(--blue);text-transform:uppercase;letter-spacing:2px;margin-top:2px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:14px;color:var(--muted);cursor:pointer;transition:all .2s;border-left:2px solid transparent;margin:2px 0}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.nav-item.active{color:var(--blue);border-left-color:var(--blue);background:rgba(10,132,255,.05)}
+.nav-item span{font-size:16px}
+.main{margin-left:240px;padding:32px}
+.page{display:none}
+.page.active{display:block}
+.page-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;margin-bottom:4px}
+.page-sub{color:var(--muted);font-size:14px;margin-bottom:28px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.stat-val{font-family:'Syne',sans-serif;font-size:32px;font-weight:800}
+.stat-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.table-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.table-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700}
+.btn{padding:8px 16px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s}
+.btn:hover{opacity:.85}
+.btn-blue{background:var(--blue);color:white}
+.btn-green{background:var(--green);color:white}
+.btn-red{background:var(--red);color:white}
+.btn-gray{background:rgba(255,255,255,.08);color:var(--text)}
+.btn-sm{padding:5px 12px;font-size:12px}
+table{width:100%;border-collapse:collapse}
+th{padding:12px 20px;text-align:left;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;border-bottom:1px solid var(--border)}
+td{padding:14px 20px;font-size:14px;border-bottom:1px solid var(--border)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.badge-green{background:rgba(48,209,88,.12);color:var(--green)}
+.badge-orange{background:rgba(255,159,10,.12);color:var(--orange)}
+.badge-red{background:rgba(255,69,58,.12);color:var(--red)}
+.badge-blue{background:rgba(10,132,255,.12);color:var(--blue)}
+.badge-gray{background:rgba(255,255,255,.06);color:var(--muted)}
+.mono{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)}
+.actions{display:flex;gap:6px}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:100}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;width:100%;max-width:480px}
+.modal-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:6px}
+.modal-sub{color:var(--muted);font-size:13px;margin-bottom:24px}
+.modal-btns{display:flex;gap:10px;margin-top:24px;justify-content:flex-end}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.welcome{font-size:13px;color:var(--muted)}
+.logout-btn{background:rgba(255,69,58,.1);color:var(--red);border:1px solid rgba(255,69,58,.2);padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+.empty{text-align:center;padding:48px;color:var(--muted)}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">💳</div>
+      <div>
+        <div class="login-logo-text">CapitalPro</div>
+        <div class="login-logo-sub">Panel Maestro</div>
+      </div>
+    </div>
+    <div class="login-title">Acceso Administrativo</div>
+    <div class="login-sub">Solo para administradores del sistema</div>
+    <div class="error-msg" id="loginErr"></div>
+    <div class="field-wrap">
+      <label class="field-label">Usuario</label>
+      <input class="field" id="adminUser" type="text" placeholder="master">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Contraseña</label>
+      <input class="field" id="adminPass" type="password" placeholder="••••••••">
+    </div>
+    <button class="btn-login" onclick="doLogin()">Ingresar al Panel →</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-text">CapitalPro</div>
+      <div class="sidebar-logo-sub">Panel Maestro</div>
+    </div>
+    <div class="nav-item active" onclick="showPage('overview')"><span>📊</span> Resumen</div>
+    <div class="nav-item" onclick="showPage('empresas')"><span>🏢</span> Empresas</div>
+    <div class="nav-item" onclick="showPage('licencias')"><span>🔑</span> Licencias</div>
+    <div class="nav-item" onclick="showPage('telemetria')"><span>📡</span> Telemetría</div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="welcome">Bienvenido, <strong>Gendherson</strong> — CapitalPro Admin</div>
+      <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="page active" id="page-overview">
+      <div class="page-title">Resumen General</div>
+      <div class="page-sub">Estado actual de todas las empresas en el sistema</div>
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-label">Total Empresas</div><div class="stat-val blue" id="statTotal">—</div><div class="stat-sub">Registradas en el sistema</div></div>
+        <div class="stat-card"><div class="stat-label">Licencias Activas</div><div class="stat-val green" id="statActivas">—</div><div class="stat-sub">Pagaron y están activos</div></div>
+        <div class="stat-card"><div class="stat-label">En Demo</div><div class="stat-val orange" id="statDemo">—</div><div class="stat-sub">Usando versión gratuita</div></div>
+        <div class="stat-card"><div class="stat-label">Ingresos Est.</div><div class="stat-val" id="statIngresos">—</div><div class="stat-sub">Basado en licencias activas</div></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-header">
+          <div class="table-title">Últimas Empresas Registradas</div>
+          <button class="btn btn-blue" onclick="showPage('empresas')">Ver todas</button>
+        </div>
+        <table>
+          <thead><tr><th>Empresa</th><th>Código</th><th>Estado</th><th>Último acceso</th><th>Acción</th></tr></thead>
+          <tbody id="overviewTable"><tr><td colspan="5" class="empty">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EMPRESAS -->
+    <div class="page" id="page-empresas">
+      <div class="page-title">Empresas</div>
+      <div class="page-sub">Gestiona todas las empresas registradas en el sistema</div>
+      <div class="table-wrap">
+        <div class="table-header">
+          <div class="table-title">Todas las Empresas</div>
+          <button class="btn btn-blue" onclick="openModalNueva()">+ Nueva Empresa</button>
+        </div>
+        <table>
+          <thead><tr><th>Empresa</th><th>Código</th><th>Estado</th><th>Clientes</th><th>Cobradores</th><th>Acciones</th></tr></thead>
+          <tbody id="empresasTable"><tr><td colspan="6" class="empty"><div class="spinner"></div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- LICENCIAS -->
+    <div class="page" id="page-licencias">
+      <div class="page-title">Licencias</div>
+      <div class="page-sub">Activa o desactiva licencias de empresas</div>
+      <div class="table-wrap">
+        <div class="table-header"><div class="table-title">Control de Licencias</div></div>
+        <table>
+          <thead><tr><th>Empresa</th><th>Código</th><th>Plan</th><th>Estado</th><th>Vence</th><th>Acción</th></tr></thead>
+          <tbody id="licenciasTable"><tr><td colspan="7" class="empty"><div class="spinner"></div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TELEMETRIA -->
+    <div class="page" id="page-telemetria">
+      <div class="page-title">Telemetría</div>
+      <div class="page-sub">Actividad y uso del sistema por empresa</div>
+      <div class="table-wrap">
+        <div class="table-header"><div class="table-title">Registro de Actividad</div></div>
+        <table>
+          <thead><tr><th>Empresa</th><th>Código</th><th>Clientes</th><th>Préstamos</th><th>Pagos</th><th>Cobradores</th><th>Última Sync</th></tr></thead>
+          <tbody id="telemetriaTable"><tr><td colspan="6" class="empty"><div class="spinner"></div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL NUEVA EMPRESA -->
+<div class="modal-overlay" id="modalNueva">
+  <div class="modal">
+    <div class="modal-title">Nueva Empresa</div>
+    <div class="modal-sub">Crear acceso para un nuevo cliente</div>
+    <div class="field-wrap">
+      <label class="field-label">Nombre de la Empresa / Cliente</label>
+      <input class="field" id="newNombre" placeholder="Ej: Préstamos García">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Teléfono</label>
+      <input class="field" id="newTelefono" placeholder="809-XXX-XXXX">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Código de Empresa (generado automáticamente)</label>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input class="field" id="newEmpresaId" readonly style="background:var(--bg);color:var(--accent);font-weight:700;cursor:default;flex:1">
+        <button onclick="generarCodigoEmpresa()" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 14px;cursor:pointer;font-weight:700;white-space:nowrap">🔄 Generar</button>
+      </div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:4px">Este código es único para este cliente. Lo necesita para instalar el sistema.</div>
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Plan</label>
+      <select class="field" id="newPlan" onchange="toggleLicDays()">
+        <option value="demo">Demo (Gratis)</option>
+        <option value="completo">Completo</option>
+      </select>
+    </div>
+    <div class="field-wrap" id="licDaysWrap" style="display:none">
+      <label class="field-label">Duración de Licencia</label>
+      <select class="field" id="newDias">
+        <option value="30">30 días</option>
+        <option value="60">60 días</option>
+        <option value="90">90 días</option>
+        <option value="180">180 días</option>
+        <option value="365">1 año</option>
+        <option value="730">2 años</option>
+        <option value="9999">De por vida</option>
+        <option value="custom">Personalizado...</option>
+      </select>
+    </div>
+    <div class="field-wrap" id="customDaysWrap" style="display:none">
+      <label class="field-label">Días personalizados</label>
+      <input class="field" id="newDiasCustom" type="number" placeholder="Ej: 45" min="1">
+    </div>
+    <hr style="border-color:var(--border);margin:16px 0">
+    <div style="font-family:Syne,sans-serif;font-size:14px;font-weight:700;margin-bottom:12px">👤 Usuario Administrador</div>
+    <div class="field-wrap">
+      <label class="field-label">Usuario</label>
+      <input class="field" id="newUsuario" placeholder="admin">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Contraseña</label>
+      <input class="field" id="newPassword" type="password" placeholder="••••••••">
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-gray" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-blue" onclick="crearEmpresa()">Crear Empresa</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ACTIVAR LICENCIA -->
+<div class="modal-overlay" id="modalLicencia">
+  <div class="modal">
+    <div class="modal-title">Activar Licencia</div>
+    <div class="modal-sub" id="modalLicSub">Configurar licencia para la empresa</div>
+    <div class="field-wrap">
+      <label class="field-label">Duración</label>
+      <select class="field" id="licDias" onchange="toggleCustomLic()">
+        <option value="30">30 días</option>
+        <option value="60">60 días</option>
+        <option value="90">90 días</option>
+        <option value="180">180 días</option>
+        <option value="365">1 año</option>
+        <option value="730">2 años</option>
+        <option value="9999">De por vida</option>
+        <option value="custom">Personalizado...</option>
+      </select>
+    </div>
+    <div class="field-wrap" id="customLicWrap" style="display:none">
+      <label class="field-label">Días personalizados</label>
+      <input class="field" id="licDiasCustom" type="number" placeholder="Ej: 45" min="1">
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-gray" onclick="closeModalLic()">Cancelar</button>
+      <button class="btn btn-green" onclick="confirmarLicencia()">✅ Activar Licencia</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'https://app.capitalprosystem.com';
+const MASTER_USER = 'master';
+const MASTER_PASS = 'CapitalPro2026!';
+let empresas = [];
+
+function doLogin(){
+  const u = document.getElementById('adminUser').value;
+  const p = document.getElementById('adminPass').value;
+  const err = document.getElementById('loginErr');
+  if(u === MASTER_USER && p === MASTER_PASS){
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    cargarDatos();
+  } else {
+    err.textContent = 'Usuario o contraseña incorrectos';
+    err.style.display = 'block';
+  }
+}
+
+function logout(){
+  document.getElementById('loginWrap').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+async function cargarDatos(){
+  // Cargar todas las empresas desde el servidor
+  try {
+    const r = await fetch(API + '/api/admin/empresas', {
+      headers: {'X-Master-Key': 'CPMaster2026!'}
+    });
+    if(r.ok){
+      empresas = await r.json();
+      renderDatos();
+    }
+  } catch(e) {
+    // Si no hay endpoint aún, usar datos de demostración
+    empresas = getDemoData();
+    renderDatos();
+  }
+}
+
+function getDemoData(){
+  return [
+    {id:'CP-C4EA195AB2F3', nombre:'GENDHERSON PERDOMO', subdominio:'gendherson', plan:'completo', activo:true, clientes:23, prestamos:45, pagos:120, ultima_sync:'2026-04-22 01:30', telefono:'8093412682'},
+  ];
+}
+
+function renderDatos(){
+  const activas = empresas.filter(e=>e.activo && e.plan==='completo').length;
+  const demo = empresas.filter(e=>e.plan==='demo').length;
+  document.getElementById('statTotal').textContent = empresas.length;
+  document.getElementById('statActivas').textContent = activas;
+  document.getElementById('statDemo').textContent = demo;
+  document.getElementById('statIngresos').textContent = 'RD$'+(activas*45000).toLocaleString();
+
+  // Overview table
+  document.getElementById('overviewTable').innerHTML = empresas.map(e=>`
+    <tr>
+      <td><strong>${e.nombre}</strong><br><span style="color:var(--muted);font-size:11px">${e.telefono||'—'}</span></td>
+      <td><span class="mono">${e.id}</span></td>
+      <td>${e.activo ? '<span class="badge badge-green">● Activo</span>' : '<span class="badge badge-red">● Inactivo</span>'}</td>
+      <td style="color:var(--muted);font-size:13px">${e.ultima_sync||'—'}</td>
+      <td><button class="btn btn-sm ${e.activo?'btn-red':'btn-green'}" onclick="toggleLicencia('${e.id}',${e.activo})">${e.activo?'Desactivar':'Activar'}</button></td>
+    </tr>`).join('') || '<tr><td colspan="5" class="empty"><div class="empty-icon">🏢</div>No hay empresas registradas</td></tr>';
+
+  // Empresas table
+  document.getElementById('empresasTable').innerHTML = empresas.map(e=>`
+    <tr>
+      <td><strong>${e.nombre}</strong></td>
+      <td><span class="mono">${e.id}</span></td>
+      <td>${e.activo ? '<span class="badge badge-green">Activo</span>' : '<span class="badge badge-red">Inactivo</span>'}</td>
+      <td>${e.clientes||0}</td>
+      <td><span style="font-weight:700;color:var(--blue)">${e.cobradores||0}</span> cobrador(es)</td>
+      <td class="actions">
+        <button class="btn btn-sm ${e.activo?'btn-red':'btn-green'}" onclick="toggleLicencia('${e.id}',${e.activo})">${e.activo?'Desactivar':'Activar'}</button>
+        <button class="btn btn-sm btn-gray" onclick="copiarURL('${e.id}')">📋 URL</button>
+        <button class="btn btn-sm btn-red" onclick="eliminarEmpresa('${e.id}','${e.nombre}')">🗑</button>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="6" class="empty"><div class="empty-icon">🏢</div>No hay empresas</td></tr>';
+
+  // Licencias table
+  document.getElementById('licenciasTable').innerHTML = empresas.map(e=>`
+    <tr>
+      <td>
+        <strong>${e.nombre}</strong><br>
+        <small style="color:var(--muted)">${e.telefono||''}</small>
+      </td>
+      <td>
+        <span class="mono" style="color:var(--blue)">${e.id}</span>
+        <button onclick="copiarCodigo('${e.id}')" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:2px 4px;font-size:12px" title="Copiar código">📋</button>
+      </td>
+      <td>${e.plan==='completo'?'<span class="badge badge-blue">💎 Completo</span>':'<span class="badge badge-gray">🆓 Demo</span>'}</td>
+      <td>${e.activo?'<span class="badge badge-green">● Activa</span>':'<span class="badge badge-red">● Inactiva</span>'}</td>
+      <td style="color:var(--muted);font-size:13px">${e.vence||'N/A'}</td>
+      <td><button class="btn btn-sm ${e.activo?'btn-red':'btn-green'}" onclick="toggleLicencia('${e.id}',${e.activo})">${e.activo?'Desactivar':'Activar'}</button></td>
+    </tr>`).join('');
+
+  // Telemetria table
+  document.getElementById('telemetriaTable').innerHTML = empresas.map(e=>`
+    <tr>
+      <td><strong>${e.nombre}</strong></td>
+      <td><span class="mono">${e.id}</span></td>
+      <td>${e.clientes||0}</td>
+      <td>${e.prestamos||0}</td>
+      <td>${e.pagos||0}</td>
+      <td><span style="color:var(--blue);font-weight:700">${e.cobradores||0}</span></td>
+      <td style="color:var(--muted);font-size:13px">${e.ultima_sync||'—'}</td>
+    </tr>`).join('');
+}
+
+function copiarURL(id){
+  const url = `https://app.capitalprosystem.com/${id}`;
+  navigator.clipboard.writeText(url).then(()=>alert('✅ URL copiada:\n'+url));
+}
+
+function copiarCodigo(id){
+  navigator.clipboard.writeText(id).then(()=>{
+    // Notificación discreta
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '✅';
+    setTimeout(()=>btn.textContent=orig, 1500);
+  }).catch(()=>alert('Código: ' + id));
+}
+
+function openModalNueva(){
+  generarCodigoEmpresa();
+  document.getElementById('modalNueva').classList.add('active');
+}
+
+function closeModal(){
+  document.getElementById('modalNueva').classList.remove('active');
+}
+
+function generarCodigoEmpresa(){
+  const id = 'CP-' + Math.random().toString(36).substr(2,8).toUpperCase();
+  document.getElementById('newEmpresaId').value = id;
+  return id;
+}
+
+function crearEmpresa(){
+  const nombre = document.getElementById('newNombre').value.trim();
+  const telefono = document.getElementById('newTelefono').value.trim();
+  const plan = document.getElementById('newPlan').value;
+  let id = document.getElementById('newEmpresaId').value.trim();
+  if(!nombre){alert('Ingresa el nombre de la empresa');return;}
+  if(!id){id = generarCodigoEmpresa();}
+
+  // Llamar al servidor para crear la empresa
+  const usuario = document.getElementById('newUsuario').value.trim();
+  const password = document.getElementById('newPassword').value.trim();
+  const dias = plan === 'completo' ? (
+    document.getElementById('newDias').value === 'custom'
+      ? parseInt(document.getElementById('newDiasCustom').value)
+      : parseInt(document.getElementById('newDias').value)
+  ) : 0;
+
+  fetch(API + '/api/admin/crear-empresa', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json','X-Master-Key': MASTER_KEY},
+    body: JSON.stringify({empresa_id: id, nombre, usuario, password, telefono, plan, dias})
+  }).then(r=>r.json()).then(d=>{
+    if(d.ok || d.empresa_id){
+      empresas.unshift({id, nombre, telefono, plan, activo: plan==='completo', clientes:0, prestamos:0, pagos:0, ultima_sync:'Nunca', vence: plan==='completo' ? '—' : ''});
+      renderDatos();
+      closeModal();
+      document.getElementById('newNombre').value='';
+      document.getElementById('newTelefono').value='';
+      document.getElementById('newEmpresaId').value='';
+      document.getElementById('newUsuario').value='';
+      document.getElementById('newPassword').value='';
+      // Mostrar código con botón copiar
+      const msg = `✅ Empresa creada exitosamente!
+
+📋 CÓDIGO DE EMPRESA:
+${id}
+
+👤 Usuario: ${usuario}
+🔑 Contraseña: ${password}
+
+⚠ Guarda este código — el cliente lo necesita para instalar el sistema.`;
+      alert(msg);
+    } else {
+      alert('Error: ' + (d.msg || 'No se pudo crear'));
+    }
+  }).catch(()=>{
+    // Si no hay conexión, crear localmente
+    empresas.unshift({id, nombre, telefono, plan, activo: plan==='completo', clientes:0, prestamos:0, pagos:0, ultima_sync:'Nunca'});
+    renderDatos();
+    closeModal();
+    alert(`✅ Empresa creada!
+
+📋 CÓDIGO: ${id}
+👤 Usuario: ${usuario}
+🔑 Contraseña: ${password}
+
+⚠ Guarda este código.`);
+  });
+}
+
+// License modal
+let currentLicEmpresa = null;
+
+function toggleLicDays(){
+  const plan = document.getElementById('newPlan').value;
+  document.getElementById('licDaysWrap').style.display = plan==='completo' ? 'block' : 'none';
+}
+
+function toggleCustomLic(){
+  const v = document.getElementById('licDias').value;
+  document.getElementById('customLicWrap').style.display = v==='custom' ? 'block' : 'none';
+}
+
+function toggleCustomDays(){
+  const v = document.getElementById('newDias').value;
+  document.getElementById('customDaysWrap').style.display = v==='custom' ? 'block' : 'none';
+}
+
+function openActivarLicencia(id){
+  const empresa = empresas.find(e=>e.id===id);
+  if(!empresa) return;
+  currentLicEmpresa = id;
+  document.getElementById('modalLicSub').textContent = 'Empresa: ' + empresa.nombre;
+  document.getElementById('modalLicencia').classList.add('active');
+}
+
+function closeModalLic(){
+  document.getElementById('modalLicencia').classList.remove('active');
+  currentLicEmpresa = null;
+}
+
+async function confirmarLicencia(){
+  const dias = document.getElementById('licDias').value === 'custom' 
+    ? parseInt(document.getElementById('licDiasCustom').value) 
+    : parseInt(document.getElementById('licDias').value);
+  
+  if(!dias || dias < 1){ alert('Ingrese una duración válida'); return; }
+  
+  const empresa = empresas.find(e=>e.id===currentLicEmpresa);
+  if(!empresa) return;
+
+  try {
+    const r = await fetch(API + '/api/admin/licencia', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'X-Master-Key':'CPMaster2026!'},
+      body: JSON.stringify({empresa_id: currentLicEmpresa, dias: dias, activo: true})
+    });
+  } catch(e){}
+
+  empresa.activo = true;
+  empresa.plan = 'completo';
+  empresa.dias_licencia = dias;
+  
+  const vence = dias === 9999 ? 'De por vida' : new Date(Date.now() + dias*86400000).toLocaleDateString('es-DO');
+  empresa.vence = vence;
+  
+  renderDatos();
+  closeModalLic();
+  alert(`✅ Licencia activada por ${dias === 9999 ? 'vida' : dias + ' días'} para ${empresa.nombre}
+Vence: ${vence}`);
+}
+
+function toggleLicencia(id, activo){
+  if(!activo){
+    // Activar — abrir modal con duración
+    openActivarLicencia(id);
+  } else {
+    // Desactivar
+    const empresa = empresas.find(e=>e.id===id);
+    if(!confirm(`¿Desactivar licencia de ${empresa.nombre}?`)) return;
+    empresa.activo = false;
+    empresa.plan = 'demo';
+    fetch(API + '/api/admin/licencia', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','X-Master-Key':'CPMaster2026!'},
+      body: JSON.stringify({empresa_id: id, dias: 0, activo: false})
+    }).catch(()=>{});
+    renderDatos();
+  }
+}
+
+async function crearEmpresa(){
+  const nombre = document.getElementById('newNombre').value;
+  const telefono = document.getElementById('newTelefono').value;
+  const plan = document.getElementById('newPlan').value;
+  const usuario = document.getElementById('newUsuario').value;
+  const password = document.getElementById('newPassword').value;
+  let dias = plan === 'completo' ? (document.getElementById('newDias').value === 'custom' 
+    ? parseInt(document.getElementById('newDiasCustom').value) 
+    : parseInt(document.getElementById('newDias').value)) : 0;
+
+  if(!nombre || !usuario || !password){ alert('Complete todos los campos requeridos'); return; }
+
+  const id = 'CP-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  
+  // Crear empresa en servidor
+  try {
+    await fetch(API + '/api/admin/crear-empresa', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','X-Master-Key':'CPMaster2026!'},
+      body: JSON.stringify({empresa_id: id, nombre, telefono, usuario, password, plan, dias})
+    });
+  } catch(e){}
+
+  const vence = plan === 'completo' ? (dias === 9999 ? 'De por vida' : new Date(Date.now()+dias*86400000).toLocaleDateString('es-DO')) : 'N/A';
+  
+  empresas.unshift({id, nombre, telefono, plan, activo: plan==='completo', clientes:0, prestamos:0, pagos:0, ultima_sync:'Nunca', vence, subdominio:'app'});
+  renderDatos();
+  closeModal();
+  
+  document.getElementById('newNombre').value='';
+  document.getElementById('newTelefono').value='';
+  document.getElementById('newUsuario').value='';
+  document.getElementById('newPassword').value='';
+
+  alert(`✅ Empresa creada!
+
+Código: ${id}
+Usuario: ${usuario}
+URL: https://app.capitalprosystem.com/${id}
+
+Comparte estos datos con el cliente.`);
+}
+
+async function eliminarEmpresa(id, nombre){
+  if(!confirm('⚠ ¿Seguro que deseas ELIMINAR la empresa:\n\n' + nombre + '\n\nEsta acción es irreversible y borrará todos sus datos.')) return;
+  if(!confirm('¿Confirma DEFINITIVAMENTE la eliminación de ' + nombre + '?')) return;
+  try{
+    await fetch(API+'/api/admin/eliminar-empresa', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Master-Key':'CPMaster2026!'},
+      body:JSON.stringify({empresa_id:id})
+    });
+  }catch(e){}
+  empresas = empresas.filter(e=>e.id!==id);
+  renderDatos();
+  alert('✅ Empresa eliminada correctamente.');
+}
+
+document.getElementById('adminPass').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
+</script>
+</body>
+</html>
