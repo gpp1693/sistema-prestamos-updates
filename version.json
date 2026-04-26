@@ -1,5 +1,5 @@
 {
-    "version": "5.5.13",
-    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.13/Instalar_CapitalPro_v5.5.13.exe",
-    "notas": "- Solo interés indefinido con abono al capital\n- Nombre del negocio en recibos y WhatsApp\n- Eliminar usuarios desde Windows\n- Asignar rutas a cobradores\n- Mora manual y automática mejorada\n- Préstamos incobrables\n- Seguridad: bcrypt + rate limiting\n- Fix notificaciones duplicadas"
+    "version": "5.5.14",
+    "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.14/Instalar_CapitalPro_v5.5.14.exe",
+    "notas": "- Fix código de empresa al instalar PC nueva\n- Fix sync_pago y sync_usuario con ruta_id\n- Fix incobrables sincronizan con servidor\n- Fix mora_config desde servidor\n- Fix SSL certificate Windows\n- Fix licencia después del login"
 }
