@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CapitalPro</title>
+<style>
+:root{
+  --bg:#0a0a0a;--panel:#111111;--card:#161616;--border:#1e1e1e;
+  --accent:#4444ff;--accent2:#6c3aff;--success:#44ff88;--warning:#ff9f0a;
+  --danger:#ff4444;--text:#ffffff;--muted:#555555;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;max-width:480px;margin:0 auto;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.screen{display:none;flex-direction:column;height:100vh}
+.screen.active{display:flex}
+.topbar{background:var(--bg);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar h1{font-size:17px;font-weight:700}
+.topbar-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px 16px}
+.hero{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:rgba(255,255,255,.05);border-radius:50%}
+.hero-success{background:linear-gradient(135deg,#00cc55,#44ff88)}
+.hero-label{font-size:11px;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.hero-val{font-size:28px;font-weight:800;color:#fff}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.stat-card{background:var(--panel);border-radius:14px;padding:14px;border:1px solid var(--border);cursor:pointer;text-align:center}
+.stat-card:active{background:var(--card)}
+.stat-label{color:var(--muted);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.stat-val{font-size:20px;font-weight:800}
+.section-title{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.item{background:var(--panel);border-radius:14px;padding:13px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border:1px solid var(--border)}
+.item:active{background:var(--card)}
+.item-mora{border-color:rgba(255,68,68,.2)}
+.item-atraso{border-color:rgba(255,159,10,.2)}
+.item-name{font-size:14px;font-weight:600;margin-bottom:3px}
+.item-sub{color:var(--muted);font-size:11px;margin-top:2px}
+.badge{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;display:inline-block}
+.badge-green{background:rgba(68,255,136,.12);color:var(--success);border:1px solid rgba(68,255,136,.2)}
+.badge-yellow{background:rgba(255,159,10,.12);color:var(--warning);border:1px solid rgba(255,159,10,.2)}
+.badge-red{background:rgba(255,68,68,.12);color:var(--danger);border:1px solid rgba(255,68,68,.2)}
+.btn{width:100%;padding:15px;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;font-family:inherit}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.btn-green{background:linear-gradient(135deg,#00cc55,#44ff88);color:#000;font-weight:800}
+.btn-gray{background:var(--panel);color:var(--text);border:1px solid var(--border)}
+.field{width:100%;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px 14px;color:var(--text);font-size:16px;margin-bottom:10px;font-family:inherit;-webkit-appearance:none}
+.field:focus{border-color:var(--accent);outline:none}
+label{color:var(--muted);font-size:11px;font-weight:600;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.bottomnav{background:var(--panel);margin:8px 16px 16px;border-radius:30px;display:flex;justify-content:space-around;padding:10px;border:1px solid var(--border);flex-shrink:0}
+.navitem{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px 16px;border-radius:20px}
+.navitem span{font-size:22px}
+.navitem p{font-size:9px;color:var(--muted);font-weight:600}
+.navitem.active{background:rgba(68,68,255,.15)}
+.navitem.active p{color:var(--accent)}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.info-row:last-child{border-bottom:none}
+.info-label{color:var(--muted);font-size:13px}
+.info-val{font-size:13px;font-weight:700}
+.card{background:var(--panel);border-radius:14px;padding:16px;margin-bottom:10px;border:1px solid var(--border)}
+.card-highlight{background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:16px;padding:16px;margin-bottom:12px}
+.mora-banner{background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.2);border-radius:12px;padding:10px 14px;margin-bottom:10px;font-size:12px;color:var(--danger);font-weight:600}
+.logo{text-align:center;padding:48px 20px 24px}
+.logo-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:22px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 12px 32px rgba(68,68,255,.35)}
+.logo h2{font-size:28px;font-weight:800}
+.logo p{color:var(--muted);font-size:13px;margin-top:4px}
+.error{background:rgba(255,68,68,.1);color:var(--danger);padding:12px 14px;border-radius:12px;font-size:13px;margin-bottom:12px;display:none;border:1px solid rgba(255,68,68,.2)}
+.role-badge{font-size:11px;padding:4px 12px;border-radius:20px;font-weight:700}
+.loading{text-align:center;padding:48px;color:var(--muted);font-size:14px}
+.chips{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{padding:7px 16px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;border:none;font-family:inherit;flex-shrink:0}
+.chip-active{background:var(--accent);color:#fff}
+.chip-mora{background:rgba(255,68,68,.12);color:var(--danger);border:1px solid rgba(255,68,68,.25)}
+.chip-atraso{background:rgba(255,159,10,.12);color:var(--warning);border:1px solid rgba(255,159,10,.25)}
+.chip-dia{background:rgba(68,255,136,.12);color:var(--success);border:1px solid rgba(68,255,136,.25)}
+.chip-gray{background:var(--panel);color:var(--muted);border:1px solid var(--border)}
+/* Botones recibo 2x2 */
+.recibo-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.recibo-btn{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center;cursor:pointer;font-family:inherit}
+.recibo-btn:active{background:var(--card)}
+.recibo-btn-icon{font-size:22px;margin-bottom:4px}
+.recibo-btn-label{font-size:11px;color:var(--muted);font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen" class="screen active" style="height:100vh;overflow-y:auto">
+  <div class="logo">
+    <div class="logo-icon">💳</div>
+    <h2>CapitalPro</h2>
+    <p>Financial System</p>
+  </div>
+  <div style="padding:0 24px 32px">
+    <div id="loginError" class="error"></div>
+    <label>Usuario</label>
+    <input id="usuario" class="field" type="text" autocomplete="username" placeholder="Tu usuario">
+    <label>Contraseña</label>
+    <input id="password" class="field" type="password" autocomplete="current-password" placeholder="••••••••">
+    <button class="btn btn-primary" onclick="doLogin()">Iniciar Sesión →</button>
+    <div id="empresaWrap" style="display:none;margin-top:16px">
+      <label>Código de Empresa</label>
+      <input id="empresaId" class="field" type="text" placeholder="CP-XXXXXX">
+      <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px">Solicitado solo la primera vez</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ADMIN — HOY ═══════════════ -->
+<div id="adminHoyScreen" class="screen">
+  <div class="topbar">
+    <div><div class="topbar-sub" id="adminFecha"></div><h1 id="adminGreeting">Hola 👋</h1></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="role-badge" style="background:rgba(68,68,255,.15);color:var(--accent)">👑 Admin</span>
+      <span onclick="logout()" style="color:var(--danger);font-size:13px;cursor:pointer;font-weight:600">Salir</span>
+    </div>
+  </div>
+  <div class="content" id="adminHoyContent"></div>
+  <div class="bottomnav">
+    <div class="navitem active" onclick="adminShowHoy()"><span>📋</span><p>Hoy</p></div>
+    <div class="navitem" onclick="adminShowResumen()"><span>📊</span><p>Resumen</p></div>
+    <div class="navitem" onclick="adminShowPagos()"><span>💰</span><p>Pagos</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════ ADMIN — RESUMEN ═══════════════ -->
+<div id="adminResumenScreen" class="screen">
+  <div class="topbar"><h1>📊 Resumen</h1></div>
+  <div class="content" id="adminResumenContent"></div>
+  <div class="bottomnav">
+    <div class="navitem" onclick="adminShowHoy()"><span>📋</span><p>Hoy</p></div>
+    <div class="navitem active" onclick="adminShowResumen()"><span>📊</span><p>Resumen</p></div>
+    <div class="navitem" onclick="adminShowPagos()"><span>💰</span><p>Pagos</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════ ADMIN — PAGOS ═══════════════ -->
+<div id="adminPagosScreen" class="screen">
+  <div class="topbar"><h1>💰 Pagos Recientes</h1></div>
+  <div class="content" id="adminPagosContent"></div>
+  <div class="bottomnav">
+    <div class="navitem" onclick="adminShowHoy()"><span>📋</span><p>Hoy</p></div>
+    <div class="navitem" onclick="adminShowResumen()"><span>📊</span><p>Resumen</p></div>
+    <div class="navitem active" onclick="adminShowPagos()"><span>💰</span><p>Pagos</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════ COBRADOR — MI RUTA ═══════════════ -->
+<div id="cobradorRutaScreen" class="screen">
+  <div class="topbar">
+    <div><div class="topbar-sub" id="cobradorFecha"></div><h1 id="cobradorGreeting">Mi Ruta</h1></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="role-badge" style="background:rgba(68,255,136,.12);color:var(--success)">💰 Cobrador</span>
+      <span onclick="logout()" style="color:var(--danger);font-size:13px;cursor:pointer;font-weight:600">Salir</span>
+    </div>
+  </div>
+  <div class="content" id="cobradorRutaContent"></div>
+  <div class="bottomnav">
+    <div class="navitem active" onclick="cobradorShowRuta()"><span>🗺️</span><p>Mi Ruta</p></div>
+    <div class="navitem" onclick="cobradorShowCobrados()"><span>✅</span><p>Cobrados</p></div>
+    <div class="navitem" onclick="cobradorShowResumen()"><span>📊</span><p>Resumen</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════ COBRADOR — COBRADOS ═══════════════ -->
+<div id="cobradorCobradosScreen" class="screen">
+  <div class="topbar"><h1>✅ Cobrado Hoy</h1></div>
+  <div class="content" id="cobradorCobradosContent"></div>
+  <div class="bottomnav">
+    <div class="navitem" onclick="cobradorShowRuta()"><span>🗺️</span><p>Mi Ruta</p></div>
+    <div class="navitem active" onclick="cobradorShowCobrados()"><span>✅</span><p>Cobrados</p></div>
+    <div class="navitem" onclick="cobradorShowResumen()"><span>📊</span><p>Resumen</p></div>
+  </div>
+</div>
+
+<!-- ═══════════════ COBRADOR — RESUMEN ═══════════════ -->
+<div id="cobradorResumenScreen" class="screen">
+  <div class="topbar"><h1>📊 Mi Resumen</h1></div>
+  <div class="content" id="cobradorResumenContent"></div>
+  <div class="bottomnav">
+    <div class="navitem" onclick="cobradorShowRuta()"><span>🗺️</span><p>Mi Ruta</p></div>
+    <div class="navitem" onclick="cobradorShowCobrados()"><span>✅</span><p>Cobrados</p></div>
+    <div class="navitem active" onclick="cobradorShowResumen()"><span>📊</span><p>Resumen</p></div>
+  </div>
+</div>
+
+<!-- PAGO -->
+<div id="pagoScreen" class="screen">
+  <div class="topbar">
+    <h1>💰 Registrar Pago</h1>
+    <span onclick="volverRuta()" style="cursor:pointer;color:var(--accent);font-size:14px;font-weight:600">← Volver</span>
+  </div>
+  <div class="content" id="pagoContent"></div>
+</div>
+
+<script>
+const API='https://app.capitalprosystem.com';
+let SESSION={};
+let currentPrestamo=null;
+let pagosCobrados=[];
+let moraConfig={dias_atraso:7,porcentaje:5.0,activo:1};
+let _rutaData=[];
+let _hoyFiltro='todos';
+
+// Acumuladores del día para cobrador
+let _diaCapital=0, _diaInteres=0, _diaMora=0, _diaTotal=0;
+
+function fmt(n){return 'RD$'+parseFloat(n||0).toLocaleString('es-DO',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function hoy(){return new Date().toISOString().split('T')[0];}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  var c=document.querySelector('#'+id+' .content');
+  if(c) c.scrollTop=0;
+}
+function hdrs(){return{'Content-Type':'application/json','X-Empresa-ID':SESSION.empresaId||'','X-Usuario':SESSION.usuario||''};}
+function setNav(sid,idx){var s=document.getElementById(sid);if(!s)return;s.querySelectorAll('.navitem').forEach((n,i)=>n.classList.toggle('active',i===idx));}
+function getFecha(){return new Date().toLocaleDateString('es-DO',{weekday:'long',day:'numeric',month:'long'});}
+function getGreeting(){var h=new Date().getHours();return h<12?'Buenos días':h<18?'Buenas tardes':'Buenas noches';}
+
+// ── LOGIN ──────────────────────────────────────────────────────────────────
+async function doLogin(){
+  const u=document.getElementById('usuario').value.trim();
+  const p=document.getElementById('password').value;
+  const err=document.getElementById('loginError');
+  err.style.display='none';
+  let eid=localStorage.getItem('cp_empresa_id')||document.getElementById('empresaId').value.trim().toUpperCase();
+  if(!eid){document.getElementById('empresaWrap').style.display='block';err.textContent='Ingresa tu código de empresa';err.style.display='block';return;}
+  try{
+    const r=await fetch(API+'/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({usuario:u,password:p,empresa_id:eid})});
+    const d=await r.json();
+    if(d.ok){
+      SESSION={usuario:u,nombre:d.nombre,rol:d.rol,empresaId:eid};
+      localStorage.setItem('cp_empresa_id',eid);localStorage.setItem('cp_usuario',u);
+      try{const mc=await fetch(API+'/api/mora-config',{headers:hdrs()});moraConfig=await mc.json();}catch(e){}
+      iniciarSesion();
+    }else{err.textContent=d.msg||'Credenciales incorrectas';err.style.display='block';}
+  }catch(e){err.textContent='Error de conexión';err.style.display='block';}
+}
+
+function iniciarSesion(){
+  if(SESSION.rol==='admin'){
+    document.getElementById('adminFecha').textContent=getFecha();
+    document.getElementById('adminGreeting').textContent=getGreeting()+', '+SESSION.nombre.split(' ')[0]+' 👋';
+    adminShowHoy();
+  }else{
+    document.getElementById('cobradorFecha').textContent=getFecha();
+    document.getElementById('cobradorGreeting').textContent='Hola, '+SESSION.nombre.split(' ')[0]+' 👋';
+    cobradorShowRuta();
+  }
+}
+
+function logout(){SESSION={};pagosCobrados=[];_rutaData=[];_diaCapital=0;_diaInteres=0;_diaMora=0;_diaTotal=0;showScreen('loginScreen');}
+function volverRuta(){if(SESSION.rol==='admin')adminShowHoy();else cobradorShowRuta();}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════════════════════════════════════════════
+async function adminShowHoy(filtro){
+  showScreen('adminHoyScreen');setNav('adminHoyScreen',0);
+  if(filtro!==undefined) _hoyFiltro=filtro;
+  if(_rutaData.length===0){
+    document.getElementById('adminHoyContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
+    try{_rutaData=await fetch(API+'/api/ruta-hoy',{headers:hdrs()}).then(r=>r.json());}
+    catch(e){document.getElementById('adminHoyContent').innerHTML='<div class="loading">❌ Error</div>';return;}
+  }
+  renderHoy();
+}
+
+function renderHoy(){
+  const mora=_rutaData.filter(p=>p.estado_pago==='mora');
+  const atraso=_rutaData.filter(p=>p.estado_pago==='atraso');
+  const alDia=_rutaData.filter(p=>p.estado_pago==='al_dia');
+  const filtrados=_hoyFiltro==='mora'?mora:_hoyFiltro==='atraso'?atraso:_hoyFiltro==='al_dia'?alDia:_rutaData;
+  const total=filtrados.reduce((a,p)=>a+p.cuota_monto,0);
+  document.getElementById('adminHoyContent').innerHTML=`
+    <div class="hero">
+      <div class="hero-label">Por cobrar hoy</div>
+      <div class="hero-val">${fmt(total)}</div>
+      <div class="hero-sub">${filtrados.length} clientes &nbsp;•&nbsp; 🔴 ${mora.length} mora &nbsp;•&nbsp; 🟡 ${atraso.length} atraso</div>
+    </div>
+    <div class="chips">
+      <button class="chip ${_hoyFiltro==='todos'?'chip-active':'chip-gray'}" onclick="_hoyFiltro='todos';renderHoy()">Todos (${_rutaData.length})</button>
+      <button class="chip ${_hoyFiltro==='mora'?'chip-active':'chip-mora'}" onclick="_hoyFiltro='mora';renderHoy()">🔴 Mora (${mora.length})</button>
+      <button class="chip ${_hoyFiltro==='atraso'?'chip-active':'chip-atraso'}" onclick="_hoyFiltro='atraso';renderHoy()">🟡 Atraso (${atraso.length})</button>
+      <button class="chip ${_hoyFiltro==='al_dia'?'chip-active':'chip-dia'}" onclick="_hoyFiltro='al_dia';renderHoy()">✅ Al día (${alDia.length})</button>
+    </div>
+    ${filtrados.length===0?'<div class="loading">No hay clientes en esta categoría ✅</div>':''}
+    ${filtrados.map(p=>{
+      const cls=p.estado_pago==='mora'?'item-mora':p.estado_pago==='atraso'?'item-atraso':'';
+      const badge=p.estado_pago==='mora'?'badge-red':p.estado_pago==='atraso'?'badge-yellow':'badge-green';
+      const label=p.estado_pago==='mora'?'MORA '+p.dias_atraso+'d':p.estado_pago==='atraso'?p.dias_atraso+' DÍAS':'AL DÍA';
+      const nc=p.estado_pago==='mora'?'var(--danger)':p.estado_pago==='atraso'?'var(--warning)':'var(--text)';
+      return`<div class="item ${cls}" onclick='cobrar(${JSON.stringify(p)})'>
+        <div style="flex:1">
+          <div class="item-name" style="color:${nc}">${p.nombre||p.cliente_nombre}</div>
+          <div class="item-sub">📞 ${p.telefono||'—'} &nbsp;•&nbsp; 📍 ${p.direccion||'—'}</div>
+          ${p.mora_auto>0?`<div class="item-sub" style="color:var(--danger)">⚠ Mora: ${fmt(p.mora_auto)}</div>`:''}
+        </div>
+        <div style="text-align:right;flex-shrink:0;margin-left:10px">
+          <div style="font-size:15px;font-weight:700">${fmt(p.cuota_monto)}</div>
+          <div class="badge ${badge}" style="margin-top:6px">${label}</div>
+        </div>
+      </div>`;
+    }).join('')}`;
+}
+
+async function adminShowResumen(){
+  showScreen('adminResumenScreen');setNav('adminResumenScreen',1);
+  document.getElementById('adminResumenContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
+  try{
+    const[rd,rr,rp]=await Promise.all([
+      fetch(API+'/api/dashboard',{headers:hdrs()}).then(r=>r.json()),
+      fetch(API+'/api/ruta-hoy',{headers:hdrs()}).then(r=>r.json()),
+      fetch(API+'/api/pagos-recientes',{headers:hdrs()}).then(r=>r.json())
+    ]);
+    if(_rutaData.length===0) _rutaData=rr;
+    const mora=rr.filter(p=>p.estado_pago==='mora');
+    const atraso=rr.filter(p=>p.estado_pago==='atraso');
+    const pagos=rp.pagos||[];
+    const cobradoHoy=pagos.filter(p=>p.fecha_pago===hoy()).reduce((a,p)=>a+p.monto_pago,0);
+    document.getElementById('adminResumenContent').innerHTML=`
+      ${mora.length>0?`<div style="background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.2);border-radius:14px;padding:13px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer" onclick="adminShowHoy('mora')">
+        <span style="font-size:24px">🔴</span>
+        <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--danger)">${mora.length} en mora</div>
+        <div style="font-size:11px;color:var(--muted)">Toca para ver → </div></div>
+        <span style="color:var(--muted);font-size:20px">›</span>
+      </div>`:''}
+      ${atraso.length>0?`<div style="background:rgba(255,159,10,.08);border:1px solid rgba(255,159,10,.2);border-radius:14px;padding:13px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer" onclick="adminShowHoy('atraso')">
+        <span style="font-size:24px">🟡</span>
+        <div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--warning)">${atraso.length} con atraso</div>
+        <div style="font-size:11px;color:var(--muted)">Toca para ver →</div></div>
+        <span style="color:var(--muted);font-size:20px">›</span>
+      </div>`:''}
+      <div class="section-title">Cartera — toca para ver detalle</div>
+      <div class="stat-grid">
+        <div class="stat-card" onclick="adminShowHoy('todos')">
+          <div class="stat-label">Activos</div>
+          <div class="stat-val" style="color:var(--accent)">${rd.activos}</div>
+        </div>
+        <div class="stat-card" onclick="adminShowHoy('mora')">
+          <div class="stat-label">En Mora</div>
+          <div class="stat-val" style="color:var(--danger)">${mora.length}</div>
+        </div>
+        <div class="stat-card" onclick="adminShowHoy('atraso')">
+          <div class="stat-label">Con Atraso</div>
+          <div class="stat-val" style="color:var(--warning)">${atraso.length}</div>
+        </div>
+        <div class="stat-card" onclick="adminShowHoy('al_dia')">
+          <div class="stat-label">Al Día</div>
+          <div class="stat-val" style="color:var(--success)">${rr.filter(p=>p.estado_pago==='al_dia').length}</div>
+        </div>
+      </div>
+      <div class="section-title">Financiero</div>
+      <div class="card">
+        <div class="info-row"><span class="info-label">Capital en calle</span><span class="info-val" style="color:var(--warning)">${fmt(rd.capital_calle)}</span></div>
+        <div class="info-row"><span class="info-label">Intereses del mes</span><span class="info-val" style="color:var(--success)">${fmt(rd.intereses_mes)}</span></div>
+        <div class="info-row"><span class="info-label">Cobrado hoy</span><span class="info-val" style="color:var(--success)">${fmt(cobradoHoy)}</span></div>
+        <div class="info-row"><span class="info-label">Por cobrar hoy</span><span class="info-val" style="color:var(--warning)">${fmt(rr.reduce((a,p)=>a+p.cuota_monto,0))}</span></div>
+      </div>
+      <div class="section-title">Últimos pagos</div>
+      ${pagos.slice(0,5).map(p=>`
+        <div class="item">
+          <div style="flex:1">
+            <div class="item-name">${p.cliente_nombre||'Cliente #'+p.prestamo_id}</div>
+            <div class="item-sub">📅 ${p.fecha_pago} • Cuota #${p.num_cuota}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:15px;font-weight:700;color:var(--success)">${fmt(p.monto_pago)}</div>
+            <div class="item-sub">Saldo: ${fmt(p.saldo_tras)}</div>
+          </div>
+        </div>`).join('')||'<div class="loading">Sin pagos recientes</div>'}`;
+  }catch(e){document.getElementById('adminResumenContent').innerHTML='<div class="loading">❌ Error</div>';}
+}
+
+async function adminShowPagos(){
+  showScreen('adminPagosScreen');setNav('adminPagosScreen',2);
+  document.getElementById('adminPagosContent').innerHTML='<div class="loading">⏳ Cargando...</div>';
+  try{
+    const r=await fetch(API+'/api/pagos-recientes',{headers:hdrs()});
+    const d=await r.json();const pagos=d.pagos||[];
+    document.getElementById('adminPagosContent').innerHTML=`
+      <div class="section-title">Últimos ${pagos.length} pagos</div>
+      ${pagos.map(p=>`
+        <div class="item">
+          <div style="flex:1">
+            <div class="item-name">${p.cliente_nombre||'Cliente #'+p.prestamo_id}</div>
+            <div class="item-sub">📅 ${p.fecha_pago} • Cuota #${p.num_cuota}</div>
+            <div class="item-sub">Capital: ${fmt(p.capital)} • Interés: ${fmt(p.interes)}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:15px;font-weight:700;color:var(--success)">${fmt(p.monto_pago)}</div>
+            <div class="item-sub">Saldo: ${fmt(p.saldo_tras)}</div>
+          </div>
+        </div>`).join('')||'<div class="loading">Sin pagos</div>'}`;
+  }catch(e){document.getElementById('adminPagosContent').innerHTML='<div class="loading">❌ Error</div>';}
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// COBRADOR
+// ══════════════════════════════════════════════════════════════════════════════
+async function cobradorShowRuta(){
+  showScreen('cobradorRutaScreen');setNav('cobradorRutaScreen',0);
+  document.getElementById('cobradorRutaContent').innerHTML='<div class="loading">⏳ Cargando tu ruta...</div>';
+  try{
+    const rows=await fetch(API+'/api/ruta-cobrador',{headers:hdrs()}).then(r=>r.json());
+    const cobradosIds=pagosCobrados.map(p=>p.prestamo_id);
+    const pendientes=rows.filter(p=>!cobradosIds.includes(p.id));
+    const total=pendientes.reduce((a,p)=>a+p.cuota_monto,0);
+    const totalMora=pendientes.reduce((a,p)=>a+(p.mora_auto||0),0);
+    document.getElementById('cobradorRutaContent').innerHTML=`
+      <div class="hero">
+        <div class="hero-label">Por cobrar hoy</div>
+        <div class="hero-val">${fmt(total)}</div>
+        <div class="hero-sub">${pendientes.length} pendientes &nbsp;•&nbsp; ${pagosCobrados.length} cobrados</div>
+        ${totalMora>0?`<div style="color:rgba(255,255,255,.8);font-size:12px;margin-top:4px;font-weight:600">⚠ Mora pendiente: ${fmt(totalMora)}</div>`:''}
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card" style="border-color:rgba(68,255,136,.2)" onclick="cobradorShowResumen()">
+          <div class="stat-label">Cobrado</div>
+          <div class="stat-val" style="color:var(--success)">${fmt(_diaTotal)}</div>
+        </div>
+        <div class="stat-card" style="border-color:rgba(255,68,68,.2)" onclick="cobradorShowResumen()">
+          <div class="stat-label">Mora cobrada</div>
+          <div class="stat-val" style="color:var(--danger)">${fmt(_diaMora)}</div>
+        </div>
+        <div class="stat-card" style="border-color:rgba(68,68,255,.2)" onclick="cobradorShowResumen()">
+          <div class="stat-label">Capital</div>
+          <div class="stat-val" style="color:var(--accent)">${fmt(_diaCapital)}</div>
+        </div>
+        <div class="stat-card" style="border-color:rgba(255,159,10,.2)" onclick="cobradorShowResumen()">
+          <div class="stat-label">Interés</div>
+          <div class="stat-val" style="color:var(--warning)">${fmt(_diaInteres)}</div>
+        </div>
+      </div>
+      ${pendientes.length===0?`<div class="card" style="text-align:center;padding:32px">
+        <div style="font-size:48px;margin-bottom:12px">🎉</div>
+        <div style="font-weight:700;font-size:18px;margin-bottom:8px">¡Ruta completada!</div>
+        <div style="color:var(--muted);font-size:13px">Has cobrado todos los pendientes</div>
+      </div>`:''}
+      <div class="section-title">Pendientes (${pendientes.length})</div>
+      ${pendientes.map(p=>{
+        const cls=p.estado_pago==='mora'?'item-mora':p.estado_pago==='atraso'?'item-atraso':'';
+        const badge=p.estado_pago==='mora'?'badge-red':p.estado_pago==='atraso'?'badge-yellow':'badge-green';
+        const label=p.estado_pago==='mora'?'MORA':p.estado_pago==='atraso'?p.dias_atraso+' DÍAS':'HOY';
+        const nc=p.estado_pago==='mora'?'var(--danger)':p.estado_pago==='atraso'?'var(--warning)':'var(--text)';
+        return`<div class="item ${cls}" onclick='cobrar(${JSON.stringify(p)})'>
+          <div style="flex:1">
+            <div class="item-name" style="color:${nc}">${p.nombre||p.cliente_nombre}</div>
+            <div class="item-sub">📞 ${p.telefono||'—'}</div>
+            <div class="item-sub">📍 ${p.direccion||'—'}</div>
+            ${p.mora_auto>0?`<div class="item-sub" style="color:var(--danger)">⚠ Mora: ${fmt(p.mora_auto)}</div>`:''}
+          </div>
+          <div style="text-align:right;flex-shrink:0;margin-left:10px">
+            <div style="font-size:15px;font-weight:700">${fmt(p.cuota_monto)}</div>
+            <div class="badge ${badge}" style="margin-top:6px">${label}</div>
+          </div>
+        </div>`;
+      }).join('')}`;
+  }catch(e){document.getElementById('cobradorRutaContent').innerHTML='<div class="loading">❌ Error</div>';}
+}
+
+function cobradorShowCobrados(){
+  showScreen('cobradorCobradosScreen');setNav('cobradorCobradosScreen',1);
+  document.getElementById('cobradorCobradosContent').innerHTML=`
+    <div class="hero hero-success">
+      <div class="hero-label">Total cobrado hoy</div>
+      <div class="hero-val" style="color:#000">${fmt(_diaTotal)}</div>
+      <div class="hero-sub" style="color:rgba(0,0,0,.6)">${pagosCobrados.length} cobro(s) realizados</div>
+    </div>
+    ${pagosCobrados.length===0?'<div class="loading">Aún no has registrado cobros hoy</div>':''}
+    <div class="section-title">Cobrados hoy</div>
+    ${pagosCobrados.map(p=>`
+      <div class="item">
+        <div style="flex:1">
+          <div class="item-name">${p.nombre}</div>
+          <div class="item-sub">${p.metodo||'✅ Registrado'}</div>
+          ${p.mora>0?`<div class="item-sub" style="color:var(--danger)">Mora: ${fmt(p.mora)}</div>`:''}
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:15px;font-weight:700;color:var(--success)">${fmt(p.monto)}</div>
+          <div class="badge badge-green" style="margin-top:6px">COBRADO</div>
+        </div>
+      </div>`).join('')}`;
+}
+
+function cobradorShowResumen(){
+  showScreen('cobradorResumenScreen');setNav('cobradorResumenScreen',2);
+  const faltan=_rutaData.filter(p=>!pagosCobrados.map(c=>c.prestamo_id).includes(p.id)).length;
+  document.getElementById('cobradorResumenContent').innerHTML=`
+    <div class="hero hero-success">
+      <div class="hero-label">Total cobrado hoy</div>
+      <div class="hero-val" style="color:#000">${fmt(_diaTotal)}</div>
+      <div class="hero-sub" style="color:rgba(0,0,0,.6)">${pagosCobrados.length} clientes cobrados</div>
+    </div>
+    <div class="section-title">Desglose del día</div>
+    <div class="stat-grid">
+      <div class="stat-card" style="border-color:rgba(68,68,255,.2)">
+        <div class="stat-label">Capital</div>
+        <div class="stat-val" style="color:var(--accent)">${fmt(_diaCapital)}</div>
+      </div>
+      <div class="stat-card" style="border-color:rgba(255,159,10,.2)">
+        <div class="stat-label">Interés</div>
+        <div class="stat-val" style="color:var(--warning)">${fmt(_diaInteres)}</div>
+      </div>
+      <div class="stat-card" style="border-color:rgba(255,68,68,.2)">
+        <div class="stat-label">Mora</div>
+        <div class="stat-val" style="color:var(--danger)">${fmt(_diaMora)}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Faltan</div>
+        <div class="stat-val" style="color:var(--muted)">${faltan}</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="info-row"><span class="info-label">Clientes cobrados</span><span class="info-val" style="color:var(--success)">${pagosCobrados.length}</span></div>
+      <div class="info-row"><span class="info-label">Clientes pendientes</span><span class="info-val" style="color:var(--warning)">${faltan}</span></div>
+      <div class="info-row" style="border:none"><span class="info-label">Total recaudado</span><span class="info-val" style="color:var(--success)">${fmt(_diaTotal)}</span></div>
+    </div>
+    <div class="section-title">Cobrados hoy</div>
+    ${pagosCobrados.map(p=>`
+      <div class="item">
+        <div style="flex:1">
+          <div class="item-name">${p.nombre}</div>
+          <div class="item-sub">${p.metodo||'✅ Registrado'}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:15px;font-weight:700;color:var(--success)">${fmt(p.monto)}</div>
+        </div>
+      </div>`).join('')||'<div class="loading">Sin cobros aún</div>'}`;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// PAGO
+// ══════════════════════════════════════════════════════════════════════════════
+function cobrar(p){
+  currentPrestamo=p;showScreen('pagoScreen');
+  const esMora=p.estado_pago==='mora';
+  const moraAuto=p.mora_auto||0;
+  const int_q=parseFloat((p.monto*(p.tasa_interes/100)).toFixed(2));
+  const totalConMora=parseFloat((p.cuota_monto+moraAuto).toFixed(2));
+  document.getElementById('pagoContent').innerHTML=`
+    <div class="card-highlight">
+      <div style="font-size:16px;font-weight:700;color:#fff">${p.nombre||p.cliente_nombre}</div>
+      <div style="color:rgba(255,255,255,.7);font-size:12px;margin-top:4px">Préstamo #${p.id} • Cuota ${(p.cuotas_pagadas||0)+1}/${p.plazo_cuotas||'∞'}</div>
+    </div>
+    ${esMora?`<div class="mora-banner">⚠ Cliente en mora hace ${p.dias_atraso} días — Mora: ${fmt(moraAuto)}</div>`:''}
+    <div class="card">
+      <div class="info-row"><span class="info-label">Saldo pendiente</span><span class="info-val" style="color:var(--warning)">${fmt(p.saldo_pendiente)}</span></div>
+      <div class="info-row"><span class="info-label">Cuota a cobrar</span><span class="info-val" style="color:var(--success)">${fmt(p.cuota_monto)}</span></div>
+      <div class="info-row"><span class="info-label">Interés</span><span class="info-val">${fmt(int_q)}</span></div>
+      ${moraAuto>0?`<div class="info-row"><span class="info-label" style="color:var(--danger)">Mora automática</span><span class="info-val" style="color:var(--danger)">${fmt(moraAuto)}</span></div>
+      <div class="info-row"><span class="info-label">Total con mora</span><span class="info-val" style="color:var(--warning)">${fmt(totalConMora)}</span></div>`:''}
+      <div class="info-row" style="border:none"><span class="info-label">Próxima cuota</span><span class="info-val">${p.proxima_cuota||'—'}</span></div>
+    </div>
+    <label>Monto cobrado (RD$)</label>
+    <input id="montoPago" class="field" type="number" value="${moraAuto>0?totalConMora:p.cuota_monto}" step="0.01">
+    <label>Mora (RD$)</label>
+    <input id="moraPago" class="field" type="number" value="${moraAuto.toFixed(2)}" step="0.01">
+    <label>Fecha</label>
+    <input id="fechaPago" class="field" type="date" value="${hoy()}">
+    <label>Notas (opcional)</label>
+    <input id="notasPago" class="field" type="text" placeholder="Observaciones...">
+    <button class="btn btn-green" id="btnConfirmar" onclick="guardarPago()">💾 Confirmar Pago</button>
+    <div id="reciboOpciones" style="display:none">
+      <div style="color:var(--muted);font-size:12px;text-align:center;margin-bottom:10px;font-weight:600">¿Cómo entregar el recibo?</div>
+      <div class="recibo-btns">
+        <div class="recibo-btn" onclick="reciboWhatsapp()">
+          <div class="recibo-btn-icon">📱</div>
+          <div class="recibo-btn-label">WhatsApp</div>
+        </div>
+        <div class="recibo-btn" onclick="reciboBluetooth()">
+          <div class="recibo-btn-icon">🖨️</div>
+          <div class="recibo-btn-label">Térmica BT</div>
+        </div>
+        <div class="recibo-btn" onclick="reciboPDF()">
+          <div class="recibo-btn-icon">📄</div>
+          <div class="recibo-btn-label">Guardar PDF</div>
+        </div>
+        <div class="recibo-btn" onclick="volverRuta()">
+          <div class="recibo-btn-icon">✅</div>
+          <div class="recibo-btn-label">Solo Guardar</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-gray" onclick="volverRuta()">✖ Cancelar</button>`;
+}
+
+async function guardarPago(){
+  const monto=parseFloat(document.getElementById('montoPago').value)||0;
+  const mora=parseFloat(document.getElementById('moraPago').value)||0;
+  const fecha=document.getElementById('fechaPago').value;
+  const notas=document.getElementById('notasPago').value;
+  if(monto<=0){alert('Ingrese un monto válido');return;}
+  const btn=document.getElementById('btnConfirmar');
+  btn.textContent='Guardando...';btn.disabled=true;
+  try{
+    const r=await fetch(API+'/api/pago',{method:'POST',headers:hdrs(),
+      body:JSON.stringify({prestamo_id:currentPrestamo.id,monto,fecha,mora,notas,empresa_id:SESSION.empresaId})});
+    const d=await r.json();
+    if(d.ok){
+      // Actualizar acumuladores del día
+      const cap=monto-mora-parseFloat((currentPrestamo.monto*(currentPrestamo.tasa_interes/100)).toFixed(2));
+      const int_q=parseFloat((currentPrestamo.monto*(currentPrestamo.tasa_interes/100)).toFixed(2));
+      _diaTotal+=monto;
+      _diaMora+=mora;
+      _diaInteres+=int_q>0?int_q:0;
+      _diaCapital+=cap>0?cap:0;
+
+      pagosCobrados.push({
+        prestamo_id:currentPrestamo.id,
+        nombre:currentPrestamo.nombre||currentPrestamo.cliente_nombre,
+        monto,mora,
+        metodo:'⏳ Recibo pendiente',
+        pagoData:{...currentPrestamo, monto_pago:monto, mora, nuevo_saldo:d.nuevo_saldo}
+      });
+      _rutaData=[];
+
+      // Mostrar resultado y opciones de recibo
+      btn.style.display='none';
+      document.getElementById('reciboOpciones').style.display='block';
+      document.querySelector('#pagoContent .btn-gray').style.display='none';
+
+      // Mostrar confirmación arriba
+      const card=document.querySelector('#pagoContent .card-highlight');
+      card.innerHTML=`
+        <div style="text-align:center">
+          <div style="font-size:48px;margin-bottom:8px">✅</div>
+          <div style="font-size:18px;font-weight:800;color:#fff">¡Pago registrado!</div>
+          <div style="font-size:24px;font-weight:800;color:#fff;margin-top:4px">${fmt(monto)}</div>
+          <div style="color:rgba(255,255,255,.7);font-size:12px;margin-top:4px">Nuevo saldo: ${fmt(d.nuevo_saldo)}${d.estado==='pagado'?' • 🎉 ¡SALDADO!':''}</div>
+        </div>`;
+    }else{btn.textContent='💾 Confirmar Pago';btn.disabled=false;alert('Error: '+(d.msg||'No se pudo registrar'));}
+  }catch(e){btn.textContent='💾 Confirmar Pago';btn.disabled=false;alert('Error de conexión');}
+}
+
+function reciboWhatsapp(){
+  const p=pagosCobrados[pagosCobrados.length-1];
+  if(p) p.metodo='📱 WhatsApp enviado';
+  const cp=currentPrestamo;
+  const tel=(cp.telefono||'').replace(/\D/g,'');
+  if(!tel){alert('Cliente sin teléfono registrado');return;}
+  const monto=parseFloat(document.getElementById('montoPago').value)||0;
+  const mora=parseFloat(document.getElementById('moraPago').value)||0;
+  const msg=`🧾 *RECIBO DE PAGO*\n━━━━━━━━━━━━━━━━━━━━━\n👤 Cliente: ${cp.nombre||cp.cliente_nombre}\n📋 Préstamo #: ${cp.id}\n📅 Fecha: ${hoy()}\n━━━━━━━━━━━━━━━━━━━━━\n💰 *MONTO PAGADO: ${fmt(monto)}*\n${mora>0?`⚠ Mora: ${fmt(mora)}\n`:''}\n✅ Gracias por su pago`;
+  window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`,'_blank');
+  volverRuta();
+}
+
+function reciboBluetooth(){
+  const p=pagosCobrados[pagosCobrados.length-1];
+  if(p) p.metodo='🖨️ Recibo impreso';
+  // En la APK esto activará la impresora Bluetooth
+  // En el navegador abre el diálogo de impresión
+  window.print();
+  volverRuta();
+}
+
+function reciboPDF(){
+  const p=pagosCobrados[pagosCobrados.length-1];
+  if(p) p.metodo='📄 PDF guardado';
+  alert('El recibo PDF se descargará próximamente.');
+  volverRuta();
+}
+
+// ── INICIO ────────────────────────────────────────────────────────────────────
+const savedEid=localStorage.getItem('cp_empresa_id');
+const savedUser=localStorage.getItem('cp_usuario');
+if(savedEid)document.getElementById('empresaId').value=savedEid;
+if(savedUser)document.getElementById('usuario').value=savedUser;
+const urlParts=window.location.pathname.split('/').filter(p=>p);
+const urlEmpresa=urlParts.find(p=>p.startsWith('CP-'));
+if(urlEmpresa){localStorage.setItem('cp_empresa_id',urlEmpresa);document.getElementById('empresaId').value=urlEmpresa;}
+document.getElementById('password').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
+</script>
+</body>
+</html>
