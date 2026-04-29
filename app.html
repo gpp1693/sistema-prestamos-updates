@@ -790,4 +790,28 @@ async function verHistorial(prestamoId){
             <div style="font-size:10px;color:var(--muted)">Total cobrado</div>
             <div style="font-size:16px;font-weight:700;color:var(--success)">${fmt(totalCob)}</div>
           </div>
-          <div style="background:var(--panel);border-radius:10px;padding:10px;text-align:cent
+          <div style="background:var(--panel);border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:10px;color:var(--muted)">Intereses</div>
+            <div style="font-size:16px;font-weight:700;color:var(--warning)">${fmt(totalInt)}</div>
+          </div>
+          <div style="background:var(--panel);border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:10px;color:var(--muted)">Capital</div>
+            <div style="font-size:16px;font-weight:700;color:var(--accent)">${fmt(totalCap)}</div>
+          </div>
+          <div style="background:var(--panel);border-radius:10px;padding:10px;text-align:center;">
+            <div style="font-size:10px;color:var(--muted)">Mora</div>
+            <div style="font-size:16px;font-weight:700;color:var(--danger)">${fmt(totalMora)}</div>
+          </div>
+        </div>
+        ${sec('✅ Cuotas pagadas',cuotas,'#44ff88')}
+        ${sec('💰 Abonos al capital',abonosCap,'#4488ff')}
+        ${sec('⏭ Abonos a próxima cuota',abonosProx,'#ff9f0a')}
+        ${pagos.length===0?'<div style="text-align:center;color:var(--muted);padding:40px 0;">Sin movimientos</div>':''}
+      </div>`;
+    document.body.appendChild(modal);
+  }catch(e){alert('Error al cargar historial');}
+}
+
+</script>
+</body>
+</html>
