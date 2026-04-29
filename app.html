@@ -669,14 +669,50 @@ async function guardarPago(){
 }
 
 function reciboWhatsapp(){
-  const p=pagosCobrados[pagosCobrados.length-1];
-  if(p) p.metodo='📱 WhatsApp enviado';
+  const pago=pagosCobrados[pagosCobrados.length-1];
+  if(pago) pago.metodo='📱 WhatsApp enviado';
   const cp=currentPrestamo;
   const tel=(cp.telefono||'').replace(/\D/g,'');
   if(!tel){alert('Cliente sin teléfono registrado');return;}
-  const monto=parseFloat(document.getElementById('montoPago').value)||0;
-  const mora=parseFloat(document.getElementById('moraPago').value)||0;
-  const msg=`🧾 *RECIBO DE PAGO*\n━━━━━━━━━━━━━━━━━━━━━\n👤 Cliente: ${cp.nombre||cp.cliente_nombre}\n📋 Préstamo #: ${cp.id}\n📅 Fecha: ${hoy()}\n━━━━━━━━━━━━━━━━━━━━━\n💰 *MONTO PAGADO: ${fmt(monto)}*\n${mora>0?`⚠ Mora: ${fmt(mora)}\n`:''}\n✅ Gracias por su pago`;
+
+  const monto   = pago ? (pago.monto||0) : (parseFloat(document.getElementById('montoPago')?.value)||0);
+  const mora    = pago ? (pago.mora||0)  : (parseFloat(document.getElementById('moraPago')?.value)||0);
+  const total   = monto + mora;
+  const cuota   = (cp.cuotas_pagadas||0)+1;
+  const plazo   = cp.plazo_cuotas||'∞';
+  const tipo    = pago ? (pago.tipo_movimiento||'cuota') : 'cuota';
+  const estado  = tipo==='abono_capital'?'ABONO':tipo==='abono_cuota'?'PRE-PAGO':'PAGO';
+  const ahora   = new Date();
+  const fechaHora = ahora.toLocaleDateString('es-DO')+' '+ahora.toLocaleTimeString('es-DO');
+  const recibo  = Math.floor(Math.random()*90000)+10000;
+  const cobrador= SESSION.nombre||'—';
+
+  let msg = `RNC: 1-331663-21\n`;
+  msg += `TEL: +1(849)439-2315\n`;
+  msg += `Bernymosquea450@gmail.com\n`;
+  msg += `Domingo Garcia #42\n`;
+  msg += `${'='.repeat(32)}\n`;
+  msg += `*Recibo NO.: ${recibo}*\n`;
+  msg += `${fechaHora}\n`;
+  msg += `COBRADO POR: ${cobrador}\n`;
+  msg += `${'='.repeat(32)}\n`;
+  msg += `CLIENTE: ${cp.cliente_id||''}\n`;
+  msg += `*${cp.nombre||cp.cliente_nombre}*\n`;
+  msg += `FECHA CONTRATO: ${cp.fecha_inicio||'—'}\n`;
+  msg += `MONEDA: DOMINICANA\n`;
+  msg += `${'='.repeat(32)}\n`;
+  msg += `#CUOTA    PAGO         ESTADO\n`;
+  msg += `${String(cuota+'/'+plazo).padEnd(10)}${fmt(monto).padEnd(13)}${estado}\n`;
+  if(mora>0){
+    msg += `MORA               ${fmt(mora)}\n`;
+  }
+  msg += `${'='.repeat(32)}\n`;
+  msg += `*PAGO TOTAL : ${fmt(total)}*\n`;
+  msg += `${'─'.repeat(32)}\n`;
+  msg += `FIRMA\n`;
+  msg += `Inversiones mosquea\n`;
+  msg += `Impreso : ${fechaHora}`;
+
   window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`,'_blank');
   volverRuta();
 }
@@ -754,28 +790,4 @@ async function verHistorial(prestamoId){
             <div style="font-size:10px;color:var(--muted)">Total cobrado</div>
             <div style="font-size:16px;font-weight:700;color:var(--success)">${fmt(totalCob)}</div>
           </div>
-          <div style="background:var(--panel);border-radius:10px;padding:10px;text-align:center;">
-            <div style="font-size:10px;color:var(--muted)">Intereses</div>
-            <div style="font-size:16px;font-weight:700;color:var(--warning)">${fmt(totalInt)}</div>
-          </div>
-          <div style="background:var(--panel);border-radius:10px;padding:10px;text-align:center;">
-            <div style="font-size:10px;color:var(--muted)">Capital</div>
-            <div style="font-size:16px;font-weight:700;color:var(--accent)">${fmt(totalCap)}</div>
-          </div>
-          <div style="background:var(--panel);border-radius:10px;padding:10px;text-align:center;">
-            <div style="font-size:10px;color:var(--muted)">Mora</div>
-            <div style="font-size:16px;font-weight:700;color:var(--danger)">${fmt(totalMora)}</div>
-          </div>
-        </div>
-        ${sec('✅ Cuotas pagadas',cuotas,'#44ff88')}
-        ${sec('💰 Abonos al capital',abonosCap,'#4488ff')}
-        ${sec('⏭ Abonos a próxima cuota',abonosProx,'#ff9f0a')}
-        ${pagos.length===0?'<div style="text-align:center;color:var(--muted);padding:40px 0;">Sin movimientos</div>':''}
-      </div>`;
-    document.body.appendChild(modal);
-  }catch(e){alert('Error al cargar historial');}
-}
-
-</script>
-</body>
-</html>
+          <div style="background:var(--panel);border-radius:10px;padding:10px;text-align:cent
