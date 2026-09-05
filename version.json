@@ -1,5 +1,5 @@
 {
-    "version": "5.5.14",
+    "version": "1.0",
     "url": "https://github.com/gpp1693/sistema-prestamos-updates/releases/download/v5.5.14/Instalar_CapitalPro_v5.5.14.exe",
     "notas": "- Fix código de empresa al instalar PC nueva\n- Fix sync_pago y sync_usuario con ruta_id\n- Fix incobrables sincronizan con servidor\n- Fix mora_config desde servidor\n- Fix SSL certificate Windows\n- Fix licencia después del login"
 }
